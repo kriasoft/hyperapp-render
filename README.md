@@ -9,6 +9,7 @@
 [![NPM downloads](http://img.shields.io/npm/dm/hyperapp-render.svg?style=flat-square)](https://www.npmjs.com/package/hyperapp-render)
 [![Build Status](http://img.shields.io/travis/frenzzy/hyperapp-render/master.svg?style=flat-square)](https://travis-ci.org/frenzzy/hyperapp-render)
 [![Coverage Status](https://img.shields.io/coveralls/frenzzy/hyperapp-render.svg?style=flat-square)](https://coveralls.io/github/frenzzy/hyperapp-render)
+[![Dependency Status](http://img.shields.io/david/frenzzy/hyperapp-render.svg?style=flat-square)](https://david-dm.org/frenzzy/hyperapp-render)
 [![Online Chat](http://img.shields.io/badge/chat-slack-blue.svg?style=flat-square)](https://hyperappjs.herokuapp.com "Join us")
 
 A [Hyperapp](https://github.com/hyperapp/hyperapp) higher-order `app` that allows to render views to an HTML string.
@@ -111,7 +112,7 @@ before any other code.
 
 Also consider the list of browsers supported by [hyperapp](https://github.com/hyperapp/hyperapp) itself.
 
-**Note:** `hyperapp-render/server` is for [Node.js](https://nodejs.org/en/) environment only.
+**Note:** `hyperapp-render/server` is for [Node.js](https://nodejs.org/en/) environment only (v6 or newer).
 
 ## Caveats
 

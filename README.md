@@ -12,7 +12,7 @@
 [![Dependency Status](http://img.shields.io/david/frenzzy/hyperapp-render.svg?style=flat-square)](https://david-dm.org/frenzzy/hyperapp-render)
 [![Online Chat](http://img.shields.io/badge/chat-slack-blue.svg?style=flat-square)](https://hyperappjs.herokuapp.com "Join us")
 
-A [Hyperapp](https://github.com/hyperapp/hyperapp) higher-order `app` that allows to render views to an HTML string.
+A [Hyperapp](https://github.com/hyperapp/hyperapp) higher-order `app` that allows you to render views to an HTML string.
 
 ## Installation
 
@@ -37,7 +37,7 @@ You can find the library in `window.render` and `window.renderToString`.
 
 [The basic usage example](https://codepen.io/frenzzy/pen/zpmRQY?editors=0010) is to use the `render` function,
 which adds the `toString` action to be able to render your application to an HTML string at any given time.
-That could be useful for server-side rendering or creating HTML snippets based on current application state.
+This can be useful for server-side rendering or creating HTML snippets based on current application state.
 
 ```js
 import { h, app } from 'hyperapp'
@@ -71,8 +71,8 @@ main.toString()
 // => <main><h1>1</h1><button>-</button><button>+</button></main>
 ```
 
-You also can use `renderToString` function to generate an HTML markup from any of your components without
-app initialization. That could be useful to generate an HTML markup from static views.
+You also can use `renderToString` function to generate HTML markup from any of your components without
+app initialization. That could be useful to generate HTML markup from static views.
 
 ```js
 import { renderToString } from 'hyperapp-render'
@@ -83,8 +83,8 @@ renderToString(<Component name="world" />)
 // => <h1>Hello world</h1>
 ```
 
-The library also provide [Node.js streaming](https://nodejs.org/api/stream.html) support for performant
-server-side rendering. Render to stream is available from `hyperapp-render/server` npm package.
+The library also provides [Node.js streaming](https://nodejs.org/api/stream.html) support for performant
+server-side rendering. Render-to-stream functionality is available from `hyperapp-render/server` npm package.
 
 ```js
 import { render, renderToString, renderToStream } from 'hyperapp-render/server'
@@ -102,7 +102,7 @@ renderToString(<Component />)
 
 ## Browser Support
 
-We support all ES5-compliant browsers, including Internet Explorer 9 and above
+We support all ES5-compliant browsers, including Internet Explorer 9 and above,
 but depending on your target browsers you may need to include
 [polyfills](https://en.wikipedia.org/wiki/Polyfill_(programming)) for
 [`Set`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set),
@@ -121,7 +121,7 @@ of [virtual nodes](https://github.com/hyperapp/hyperapp/blob/1.0.2/docs/concepts
 to protect your application against [XSS](https://en.wikipedia.org/wiki/Cross-site_scripting) attacks.
 
 However, it is not safe to allow "user input" for tag/node names or attribute/prop keys
-because the library does not reject injection attack on markup, see:
+because the library does not reject injection attack on markup.  See:
 
 ```js
 const tagName = 'div onclick="alert(1)"'

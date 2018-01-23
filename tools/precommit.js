@@ -18,9 +18,7 @@ function spawn(command, args) {
 
 async function run() {
   await spawn('npm', ['run', '-s', 'lint']);
-  await spawn('npm', ['run', '-s', 'build']);
   await spawn('npm', ['run', '-s', 'test']);
-  await spawn('git', ['add', 'dist/hyperapp-render*']);
 }
 
 module.exports = run();

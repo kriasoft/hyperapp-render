@@ -2,16 +2,18 @@
   "private": true,
   "name": "hyperapp-render",
   "version": "1.0.0",
-  "description": "A Hyperapp higher-order app that allows to render views to an HTML string",
+  "description": "Render Hyperapp to an HTML string with SSR and Node.js streaming support",
   "repository": "frenzzy/hyperapp-render",
   "author": "Vladimir Kutepov",
   "license": "MIT",
   "keywords": [
     "hyperapp",
-    "server",
     "render",
     "string",
-    "stream"
+    "stream",
+    "server",
+    "html",
+    "ssr"
   ],
   "main": "index.js",
   "module": "module.js",
@@ -24,7 +26,7 @@
     "babel-register": "^6.26.0",
     "chai": "^4.1.2",
     "coveralls": "^3.0.0",
-    "eslint": "^4.10.0",
+    "eslint": "^4.16.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
@@ -34,12 +36,12 @@
     "hyperapp": "^1.0.2",
     "mocha": "^5.0.0",
     "nyc": "^11.3.0",
-    "rollup": "^0.54.1",
+    "rollup": "^0.55.0",
     "rollup-plugin-babel": "^3.0.2",
     "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-node-resolve": "^3.0.0",
-    "rollup-plugin-uglify": "^2.0.1",
-    "sinon": "^4.1.6"
+    "rollup-plugin-uglify": "^3.0.0",
+    "sinon": "^4.2.0"
   },
   "scripts": {
     "lint": "eslint src test tools",

@@ -1,18 +1,25 @@
 <a href="https://hyperapp.js.org/" target="_blank">
-  <img width="64" height="64" align="right" alt="Hyperapp"
+  <img width="128" height="128" align="right" alt="Hyperapp"
   src="https://rawgit.com/frenzzy/hyperapp-render/master/logo.svg" />
 </a>
 
 # Hyperapp Render
 
-[![NPM version](http://img.shields.io/npm/v/hyperapp-render.svg?style=flat-square)](https://www.npmjs.com/package/hyperapp-render)
-[![NPM downloads](http://img.shields.io/npm/dm/hyperapp-render.svg?style=flat-square)](https://www.npmjs.com/package/hyperapp-render)
-[![Build Status](http://img.shields.io/travis/frenzzy/hyperapp-render/master.svg?style=flat-square)](https://travis-ci.org/frenzzy/hyperapp-render)
+[![NPM version](https://img.shields.io/npm/v/hyperapp-render.svg?style=flat-square)](https://www.npmjs.com/package/hyperapp-render)
+[![NPM downloads](https://img.shields.io/npm/dm/hyperapp-render.svg?style=flat-square)](https://www.npmjs.com/package/hyperapp-render)
+[![Build Status](https://img.shields.io/travis/frenzzy/hyperapp-render/master.svg?style=flat-square)](https://travis-ci.org/frenzzy/hyperapp-render)
 [![Coverage Status](https://img.shields.io/coveralls/frenzzy/hyperapp-render.svg?style=flat-square)](https://coveralls.io/github/frenzzy/hyperapp-render)
-[![Dependency Status](http://img.shields.io/david/frenzzy/hyperapp-render.svg?style=flat-square)](https://david-dm.org/frenzzy/hyperapp-render)
-[![Online Chat](http://img.shields.io/badge/chat-slack-blue.svg?style=flat-square)](https://hyperappjs.herokuapp.com "Join us")
+[![Dependency Status](https://img.shields.io/david/frenzzy/hyperapp-render.svg?style=flat-square)](https://david-dm.org/frenzzy/hyperapp-render)
+[![Online Chat](https://img.shields.io/badge/slack-join_chat-e01563.svg?style=flat-square)](https://hyperappjs.herokuapp.com)
 
 A [Hyperapp](https://github.com/hyperapp/hyperapp) higher-order `app` that allows you to render views to an HTML string.
+
+[Try it Online](https://codepen.io/frenzzy/pen/zpmRQY/left/?editors=0010)
+
+<a href="https://codepen.io/frenzzy/pen/zpmRQY/left/?editors=0010" target="_blank">
+  <img width="622" height="270" alt="Demo"
+  src="https://rawgit.com/frenzzy/hyperapp-render/master/demo.gif" />
+</a>
 
 ## Installation
 
@@ -35,7 +42,7 @@ You can find the library in `window.render` and `window.renderToString`.
 
 ## Usage
 
-[The basic usage example](https://codepen.io/frenzzy/pen/zpmRQY?editors=0010) is to use the `render` function,
+The basic usage example is to use the `render` function,
 which adds the `toString` action to be able to render your application to an HTML string at any given time.
 This can be useful for server-side rendering or creating HTML snippets based on current application state.
 
@@ -43,32 +50,15 @@ This can be useful for server-side rendering or creating HTML snippets based on 
 import { h, app } from 'hyperapp'
 import { render } from 'hyperapp-render'
 
-const state = {
-  count: 0
-}
+const state = { name: 'World' }
+const actions = { setName: name => ({ name }) }
+const view = (state, actions) => <h1>Hello {state.name}</h1>
 
-const actions = {
-  down: () => state => ({ count: state.count - 1 }),
-  up: () => state => ({ count: state.count + 1 })
-}
+const main = render(app)(state, actions, view)
 
-const view = (state, actions) => (
-  <main>
-    <h1>{state.count}</h1>
-    <button onclick={actions.down}>-</button>
-    <button onclick={actions.up}>+</button>
-  </main>
-)
-
-const main = render(app)(state, actions, view, document.body)
-
-main.toString()
-// => <main><h1>0</h1><button>-</button><button>+</button></main>
-
-main.up() // call any sync or async actions to change the application state
-
-main.toString()
-// => <main><h1>1</h1><button>-</button><button>+</button></main>
+main.toString()          // => <h1>Hello World</h1>
+main.setName('Hyperapp') // <= any sync or async action call
+main.toString()          // => <h1>Hello Hyperapp</h1>
 ```
 
 You also can use `renderToString` function to generate HTML markup from any of your components without
@@ -79,11 +69,11 @@ import { renderToString } from 'hyperapp-render'
 
 const Component = (props) => <h1>Hello {props.name}</h1>
 
-renderToString(<Component name="world" />)
-// => <h1>Hello world</h1>
+renderToString(<Component name="World" />)
+// => <h1>Hello World</h1>
 ```
 
-The library also provides [Node.js streaming](https://nodejs.org/api/stream.html) support for performant
+The library also provides [Node.js streaming](https://nodejs.org/api/stream.html) support for efficient
 server-side rendering. Render-to-stream functionality is available from `hyperapp-render/server` npm package.
 
 ```js
@@ -121,7 +111,8 @@ of [virtual nodes](https://github.com/hyperapp/hyperapp/blob/1.0.2/docs/concepts
 to protect your application against [XSS](https://en.wikipedia.org/wiki/Cross-site_scripting) attacks.
 
 However, it is not safe to allow "user input" for tag/node names or attribute/prop keys
-because the library does not reject injection attack on markup.  See:
+because the library does not reject injection attack on markup due to performance reasons.
+See:
 
 ```js
 const tagName = 'div onclick="alert(1)"'

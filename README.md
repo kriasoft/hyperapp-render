@@ -128,6 +128,23 @@ renderToString({ name: 'div', props: { innerHTML: userInput }, children: ['Hi'] 
 // => <div><script>alert(1)</script></div>
 ```
 
+## Community
+
+All feedback and suggestions are welcome!
+
+* 💬 Chat: Join us on [slack](https://hyperappjs.herokuapp.com/).
+* 📣 Stay up to date on new features and announcements on [@hyperappjs](https://twitter.com/hyperappjs).
+
+## Contributing
+
+Anyone and everyone is welcome to
+[contribute](https://github.com/frenzzy/hyperapp-render/blob/master/.github/CONTRIBUTING.md) to this project.
+The best way to start is by checking our [open issues](https://github.com/frenzzy/hyperapp-render/issues),
+[submit a new issues](https://github.com/frenzzy/hyperapp-render/blob/master/.github/CONTRIBUTING.md#bugs) or
+[feature request](https://github.com/frenzzy/hyperapp-render/blob/master/.github/CONTRIBUTING.md#features),
+participate in discussions, upvote or downvote the issues you like or dislike, send [pull
+requests](https://github.com/frenzzy/hyperapp-render/blob/master/.github/CONTRIBUTING.md#pull-requests).
+
 ## License
 
 This source code is licensed under the MIT license found in the

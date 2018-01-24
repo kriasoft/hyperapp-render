@@ -21,14 +21,10 @@ export function render(app) {
   return (initialState, actionsTemplate, view, container) =>
     app(
       initialState,
-      Object.assign(
-        {},
-        actionsTemplate,
-        {
-          toString: () => (state, actions) => renderToString(view(state, actions)),
-          toStream: () => (state, actions) => renderToStream(view(state, actions)),
-        },
-      ),
+      Object.assign({}, actionsTemplate, {
+        toString: () => (state, actions) => renderToString(view(state, actions)),
+        toStream: () => (state, actions) => renderToStream(view(state, actions)),
+      }),
       view,
       container,
     );

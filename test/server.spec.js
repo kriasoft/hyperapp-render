@@ -66,11 +66,9 @@ describe('server/render(app)(state, actions, view, container)', () => {
     count: 0,
   };
   const actions = {
-    up: (count = 1) => state => ({ count: state.count + count }),
+    up: (count = 1) => (state) => ({ count: state.count + count }),
   };
-  const view = state => (
-    <h1>{state.count}</h1>
-  );
+  const view = (state) => <h1>{state.count}</h1>;
 
   it('should create a higher-order app', () => {
     const spyApp = sinon.spy(() => 'result');

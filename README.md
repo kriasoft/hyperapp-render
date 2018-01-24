@@ -140,7 +140,7 @@ All feedback and suggestions are welcome!
 Anyone and everyone is welcome to
 [contribute](https://github.com/frenzzy/hyperapp-render/blob/master/.github/CONTRIBUTING.md) to this project.
 The best way to start is by checking our [open issues](https://github.com/frenzzy/hyperapp-render/issues),
-[submit a new issues](https://github.com/frenzzy/hyperapp-render/blob/master/.github/CONTRIBUTING.md#bugs) or
+submit a [bug report](https://github.com/frenzzy/hyperapp-render/blob/master/.github/CONTRIBUTING.md#bugs) or
 [feature request](https://github.com/frenzzy/hyperapp-render/blob/master/.github/CONTRIBUTING.md#features),
 participate in discussions, upvote or downvote the issues you like or dislike, send [pull
 requests](https://github.com/frenzzy/hyperapp-render/blob/master/.github/CONTRIBUTING.md#pull-requests).

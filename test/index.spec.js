@@ -32,7 +32,9 @@ describe('escapeHtml(value)', () => {
 
   it('should escape script tag when passed as text content', () => {
     const html = renderToString(<div>{'<script type=\'\' src=""></script>'}</div>);
-    expect(html).to.be.equal('<div>&lt;script type=&#39;&#39; src=&quot;&quot;&gt;&lt;/script&gt;</div>');
+    expect(html).to.be.equal(
+      '<div>&lt;script type=&#39;&#39; src=&quot;&quot;&gt;&lt;/script&gt;</div>',
+    );
   });
 
   it('should escape ampersand inside attributes', () => {
@@ -62,7 +64,9 @@ describe('escapeHtml(value)', () => {
 
   it('should escape script tag inside attributes', () => {
     const html = renderToString(<div data-attr={'<script type=\'\' src=""></script>'} />);
-    expect(html).to.be.equal('<div data-attr="&lt;script type=&#39;&#39; src=&quot;&quot;&gt;&lt;/script&gt;"></div>');
+    expect(html).to.be.equal(
+      '<div data-attr="&lt;script type=&#39;&#39; src=&quot;&quot;&gt;&lt;/script&gt;"></div>',
+    );
   });
 
   it('should not escape innerHTML', () => {
@@ -126,7 +130,9 @@ describe('stringifyStyles(styles)', () => {
       '-webkit-transform': 'translateX(0)',
     };
     const html = renderToString(<div style={styles} />);
-    expect(html).to.be.equal('<div style="background-color:Orange;-webkit-transform:translateX(0)"></div>');
+    expect(html).to.be.equal(
+      '<div style="background-color:Orange;-webkit-transform:translateX(0)"></div>',
+    );
   });
 
   it('should render custom properties', () => {
@@ -145,7 +151,9 @@ describe('stringifyStyles(styles)', () => {
       backgroundImage: 'url(foo;bar)',
     };
     const html = renderToString(<div style={styles} />);
-    expect(html).to.be.equal('<div style="height:NaN;font-size:Infinity;background-image:url(foo;bar)"></div>');
+    expect(html).to.be.equal(
+      '<div style="height:NaN;font-size:Infinity;background-image:url(foo;bar)"></div>',
+    );
   });
 
   it('should not add units', () => {
@@ -243,7 +251,11 @@ describe('renderer(node)(bytes)', () => {
   });
 
   it('should render chunks', () => {
-    const read = renderer(<div><input /></div>);
+    const read = renderer(
+      <div>
+        <input />
+      </div>,
+    );
     expect(read(1)).to.be.equal('<div>');
     expect(read(1)).to.be.equal('<input/>');
     expect(read(1)).to.be.equal('</div>');
@@ -279,8 +291,12 @@ describe('renderToString(node)', () => {
   });
 
   it('should render composite components', () => {
-    const Child = props => <h1>Hello {props.name}</h1>;
-    const Parent = () => <div><Child name="World" /></div>;
+    const Child = (props) => <h1>Hello {props.name}</h1>;
+    const Parent = () => (
+      <div>
+        <Child name="World" />
+      </div>
+    );
     const html = renderToString(<Parent />);
     expect(html).to.be.equal('<div><h1>Hello World</h1></div>');
   });
@@ -311,11 +327,9 @@ describe('render(app)(state, actions, view, container)', () => {
     count: 0,
   };
   const actions = {
-    up: (count = 1) => state => ({ count: state.count + count }),
+    up: (count = 1) => (state) => ({ count: state.count + count }),
   };
-  const view = state => (
-    <h1>{state.count}</h1>
-  );
+  const view = (state) => <h1>{state.count}</h1>;
 
   it('should create a higher-order app', () => {
     const spyApp = sinon.spy(() => 'result');

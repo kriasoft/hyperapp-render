@@ -43,10 +43,13 @@ function escapeHtml(value) {
 // "msTransition" => "-ms-transition"
 function hyphenateStyleName(styleName) {
   if (!cache.has(styleName)) {
-    cache.set(styleName, styleName
-      .replace(uppercasePattern, '-$&')
-      .toLowerCase()
-      .replace(msPattern, '-ms-'));
+    cache.set(
+      styleName,
+      styleName
+        .replace(uppercasePattern, '-$&')
+        .toLowerCase()
+        .replace(msPattern, '-ms-'),
+    );
   }
   return cache.get(styleName);
 }
@@ -89,7 +92,8 @@ function renderFragment(node, stack) {
   }
 
   const props = node.props;
-  if (!props) { // text node
+  if (!props) {
+    // text node
     return escapeHtml(node);
   }
 
@@ -141,11 +145,13 @@ function renderFragment(node, stack) {
 }
 
 export function renderer(node) {
-  const stack = [{
-    childIndex: 0,
-    children: [node],
-    footer: '',
-  }];
+  const stack = [
+    {
+      childIndex: 0,
+      children: [node],
+      footer: '',
+    },
+  ];
   let end = false;
   return (bytes) => {
     if (end) {
@@ -178,13 +184,9 @@ export function render(app) {
   return (initialState, actionsTemplate, view, container) =>
     app(
       initialState,
-      Object.assign(
-        {},
-        actionsTemplate,
-        {
-          toString: () => (state, actions) => renderToString(view(state, actions)),
-        },
-      ),
+      Object.assign({}, actionsTemplate, {
+        toString: () => (state, actions) => renderToString(view(state, actions)),
+      }),
       view,
       container,
     );

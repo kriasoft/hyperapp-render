@@ -13,7 +13,8 @@
   respect the opinions of others.
 
 * Please **do not** open issues or pull requests regarding the code in
-  [`Hyperapp`](https://github.com/hyperapp/hyperapp)
+  [`Hyperapp`](https://github.com/hyperapp/hyperapp) or
+  [`Babel`](https://github.com/babel/babel)
   (open them in their respective repositories).
 
 ## Bug reports

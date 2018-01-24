@@ -58,31 +58,32 @@ async function run() {
   ]);
 
   // Compile source code into a distributable format with Babel
-  await Promise.all(files.map(async (file) => {
-    const bundle = await rollup.rollup({
-      input: file.input,
-      external: ['stream'],
-      plugins: [
-        babel({
-          babelrc: false,
-          presets: [['env', { modules: false }]],
-        }),
-        ...file.output.endsWith('.min.js')
-          ? [uglify({ output: { comments: '/^!/' } })]
-          : [],
-      ],
-    });
+  await Promise.all(
+    files.map(async (file) => {
+      const bundle = await rollup.rollup({
+        input: file.input,
+        external: ['stream'],
+        plugins: [
+          babel({
+            babelrc: false,
+            presets: [['env', { modules: false }]],
+          }),
+          ...(file.output.endsWith('.min.js') ? [uglify({ output: { comments: '/^!/' } })] : []),
+        ],
+      });
 
-    bundle.write({
-      file: file.output,
-      format: file.format,
-      extend: file.extend,
-      sourcemap: true,
-      exports: 'named',
-      name: file.name,
-      banner: '/*! Hyperapp Render | MIT License | https://github.com/frenzzy/hyperapp-render */\n',
-    });
-  }));
+      bundle.write({
+        file: file.output,
+        format: file.format,
+        extend: file.extend,
+        sourcemap: true,
+        exports: 'named',
+        name: file.name,
+        banner:
+          '/*! Hyperapp Render | MIT License | https://github.com/frenzzy/hyperapp-render */\n',
+      });
+    }),
+  );
 
   // Create package.json for npm publishing
   const libPkg = Object.assign({}, pkg);

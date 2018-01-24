@@ -1,20 +1,20 @@
-import { Readable } from 'stream';
-import { renderer, renderToString } from './index';
+import { Readable } from 'stream'
+import { renderer, renderToString } from './index'
 
-export { renderer, renderToString };
+export { renderer, renderToString }
 
 export function renderToStream(node) {
-  const read = renderer(node);
+  const read = renderer(node)
   // https://nodejs.org/api/stream.html
   return new Readable({
     read(size) {
       try {
-        this.push(read(size));
+        this.push(read(size))
       } catch (err) {
-        this.emit('error', err);
+        this.emit('error', err)
       }
     },
-  });
+  })
 }
 
 export function render(app) {
@@ -27,5 +27,5 @@ export function render(app) {
       }),
       view,
       container,
-    );
+    )
 }

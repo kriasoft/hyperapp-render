@@ -5,12 +5,13 @@
 
 # Hyperapp Render
 
-[![NPM version](https://img.shields.io/npm/v/hyperapp-render.svg?style=flat-square)](https://www.npmjs.com/package/hyperapp-render)
-[![NPM downloads](https://img.shields.io/npm/dm/hyperapp-render.svg?style=flat-square)](https://www.npmjs.com/package/hyperapp-render)
-[![Build Status](https://img.shields.io/travis/frenzzy/hyperapp-render/master.svg?style=flat-square)](https://travis-ci.org/frenzzy/hyperapp-render)
-[![Coverage Status](https://img.shields.io/coveralls/frenzzy/hyperapp-render.svg?style=flat-square)](https://coveralls.io/github/frenzzy/hyperapp-render)
-[![Dependency Status](https://img.shields.io/david/frenzzy/hyperapp-render.svg?style=flat-square)](https://david-dm.org/frenzzy/hyperapp-render)
-[![Online Chat](https://img.shields.io/badge/slack-join_chat-e01563.svg?style=flat-square)](https://hyperappjs.herokuapp.com)
+[![NPM version](https://img.shields.io/npm/v/hyperapp-render.svg?style=flat-square&maxAge=3600)](https://www.npmjs.com/package/hyperapp-render)
+[![NPM downloads](https://img.shields.io/npm/dm/hyperapp-render.svg?style=flat-square&maxAge=3600)](https://npm-stat.com/charts.html?package=hyperapp-render)
+[![Build Status](https://img.shields.io/travis/frenzzy/hyperapp-render/master.svg?style=flat-square&maxAge=3600)](https://travis-ci.org/frenzzy/hyperapp-render)
+[![Coverage Status](https://img.shields.io/coveralls/frenzzy/hyperapp-render.svg?style=flat-square&maxAge=3600)](https://coveralls.io/github/frenzzy/hyperapp-render)
+[![Dependency Status](https://img.shields.io/david/frenzzy/hyperapp-render.svg?style=flat-square&maxAge=3600)](https://david-dm.org/frenzzy/hyperapp-render)
+[![Library Size](http://img.badgesize.io/frenzzy/hyperapp-render/master/dist/hyperapp-render.min.js.svg?compression=gzip&label=size&style=flat-square&maxAge=3600)](https://bundlephobia.com/result?p=hyperapp-render)
+[![Online Chat](https://img.shields.io/badge/slack-join_chat-e01563.svg?style=flat-square&maxAge=3600)](https://hyperappjs.herokuapp.com)
 
 A [Hyperapp](https://github.com/hyperapp/hyperapp) higher-order `app` that allows you to render views to an HTML string.
 

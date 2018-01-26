@@ -1,5 +1,5 @@
 <a href="https://hyperapp.js.org/" target="_blank">
-  <img width="128" height="128" align="right" alt="Hyperapp"
+  <img width="96" height="96" align="right" alt="Hyperapp"
   src="https://rawgit.com/frenzzy/hyperapp-render/master/logo.svg" />
 </a>
 
@@ -82,13 +82,11 @@ import { render, renderToString, renderToStream } from 'hyperapp-render/server'
 
 const main = render(app)(state, actions, view)
 
-// render to stream
-main.toStream()
-renderToStream(<Component />)
+main.toStream() // => <stream.Readable>
+main.toString() // => <string>
 
-// render to string
-main.toString()
-renderToString(<Component />)
+renderToStream(<Component />) // => <stream.Readable>
+renderToString(<Component />) // => <string>
 ```
 
 ## Browser Support
@@ -117,15 +115,15 @@ See:
 
 ```js
 const tagName = 'div onclick="alert(1)"'
-renderToString({ name: tagName, props: {}, children: ['Hi'] })
-// => <div onclick="alert(1)">Hi</div>
+renderToString(h(tagName, { title: 'Hey' }, 'Hi'))
+// => <div onclick="alert(1)" title="Hey︎">Hi</div>
 
 const propName = 'onclick="alert(1)" title'
-renderToString({ name: 'div', props: { [propName]: 'Hey' }, children: ['Hi'] })
-// => <div onclick="alert(1)" title="Hey">Hi</div>
+renderToString(h('div', { [propName]: 'Hey' }, 'Hi'))
+// => <div onclick="alert(1)" title="Hey︎">Hi</div>
 
 const userInput = '<script>alert(1)</script>'
-renderToString({ name: 'div', props: { innerHTML: userInput }, children: ['Hi'] })
+renderToString(h('div', { innerHTML: userInput }, 'Hi'))
 // => <div><script>alert(1)</script></div>
 ```
 

@@ -42,7 +42,7 @@ describe('server/renderToStream(node)', () => {
   })
 
   it('should emit an error for invalid input', async () => {
-    const node = { name: 'InvalidVNode', props: {}, children: null }
+    const node = { nodeName: 'InvalidVNode', attributes: {}, children: null }
     const stream = renderToStream(node)
     let err
     try {

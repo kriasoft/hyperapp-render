@@ -62,7 +62,7 @@ function stringifyStyles(styles) {
     const styleName = styleNames[i]
     const styleValue = styles[styleName]
 
-    // keep in sync with https://github.com/hyperapp/hyperapp/blob/1.0.2/src/index.js#L134
+    // keep in sync with https://github.com/hyperapp/hyperapp/blob/1.1.0/src/index.js#L135
     if (styleValue != null) {
       serialized += delimiter + hyphenateStyleName(styleName) + ':' + styleValue
       delimiter = ';'
@@ -86,29 +86,29 @@ function renderAttribute(name, value) {
 }
 
 function renderFragment(node, stack) {
-  // keep in sync with https://github.com/hyperapp/hyperapp/blob/1.0.2/src/index.js#L149
+  // keep in sync with https://github.com/hyperapp/hyperapp/blob/1.1.0/src/index.js#L150
   if (node == null) {
     return ''
   }
 
-  const props = node.props
-  if (!props) {
+  const attributes = node.attributes
+  if (!attributes) {
     // text node
     return escapeHtml(node)
   }
 
-  const tag = node.name
+  const tag = node.nodeName
   let out = ''
   let footer = ''
   if (tag) {
     // https://www.w3.org/TR/html51/syntax.html#serializing-html-fragments
     out += '<' + tag
-    const propNames = Object.keys(props)
-    for (let i = 0, len = propNames.length; i < len; i++) {
-      const name = propNames[i]
-      const value = props[name]
+    const keys = Object.keys(attributes)
+    for (let i = 0, len = keys.length; i < len; i++) {
+      const name = keys[i]
+      const value = attributes[name]
 
-      // keep in sync with https://github.com/hyperapp/hyperapp/blob/1.0.2/src/index.js#L130
+      // keep in sync with https://github.com/hyperapp/hyperapp/blob/1.1.0/src/index.js#L131
       if (name !== 'key' && name !== 'innerHTML' && typeof value !== 'function') {
         const attr = renderAttribute(name, value)
         if (attr) {
@@ -125,7 +125,7 @@ function renderFragment(node, stack) {
     }
   }
 
-  const html = props.innerHTML
+  const html = attributes.innerHTML
   if (html != null) {
     out += html
   }

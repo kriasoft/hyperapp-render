@@ -27,7 +27,7 @@ A [Hyperapp](https://github.com/hyperapp/hyperapp) higher-order `app` that allow
 Using [npm](https://www.npmjs.com/package/hyperapp-render):
 
 ```bash
-$ npm install hyperapp-render --save
+npm install hyperapp-render --save
 ```
 
 Or using a [CDN](https://en.wikipedia.org/wiki/Content_delivery_network) like
@@ -105,12 +105,12 @@ Also consider the list of browsers supported by [hyperapp](https://github.com/hy
 
 ## Caveats
 
-The library automatically escapes text content and attribute/prop values
-of [virtual nodes](https://github.com/hyperapp/hyperapp/blob/1.0.2/docs/concepts/vnodes.md)
+The library automatically escapes text content and attribute values
+of [virtual DOM nodes](https://github.com/hyperapp/hyperapp/blob/1.1.0/README.md#virtual-dom)
 to protect your application against [XSS](https://en.wikipedia.org/wiki/Cross-site_scripting) attacks.
 
-However, it is not safe to allow "user input" for tag/node names or attribute/prop keys
-because the library does not reject injection attack on markup due to performance reasons.
+However, it is not safe to allow "user input" for node names or attribute keys because
+the library does not reject injection attack on markup due to performance reasons.
 See:
 
 ```js

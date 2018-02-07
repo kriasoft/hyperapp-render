@@ -11,36 +11,36 @@ const pkg = require('../package.json')
 // The source files to be compiled by Rollup
 const files = [
   {
-    input: 'src/index.js',
+    input: 'dist/src/index.js',
     output: 'dist/index.js',
     format: 'cjs',
   },
   {
-    input: 'src/index.js',
+    input: 'dist/src/index.js',
     output: 'dist/module.js',
     format: 'es',
   },
   {
-    input: 'src/index.js',
+    input: 'dist/src/index.js',
     output: 'dist/hyperapp-render.js',
-    format: 'iife',
+    format: 'umd',
     name: 'self',
     extend: true,
   },
   {
-    input: 'src/index.js',
+    input: 'dist/src/index.js',
     output: 'dist/hyperapp-render.min.js',
-    format: 'iife',
+    format: 'umd',
     name: 'self',
     extend: true,
   },
   {
-    input: 'src/server.js',
+    input: 'dist/src/server.js',
     output: 'dist/server/index.js',
     format: 'cjs',
   },
   {
-    input: 'src/server.js',
+    input: 'dist/src/server.js',
     output: 'dist/server/module.js',
     format: 'es',
   },
@@ -66,7 +66,8 @@ async function run() {
         plugins: [
           babel({
             babelrc: false,
-            presets: [['env', { modules: false }]],
+            presets: [['@babel/preset-env', { modules: false }]],
+            comments: false,
           }),
           ...(file.output.endsWith('.min.js') ? [uglify({ output: { comments: '/^!/' } })] : []),
         ],
@@ -99,7 +100,7 @@ async function run() {
   })
   delete serverPkg.devDependencies
   delete serverPkg.scripts
-  return fs.outputJson('dist/server/package.json', serverPkg, { spaces: 2 })
+  await fs.outputJson('dist/server/package.json', serverPkg, { spaces: 2 })
 }
 
 module.exports = run()

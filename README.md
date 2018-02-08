@@ -106,7 +106,7 @@ Also consider the list of browsers supported by [hyperapp](https://github.com/hy
 ## Caveats
 
 The library automatically escapes text content and attribute values
-of [virtual DOM nodes](https://github.com/hyperapp/hyperapp/blob/1.1.0/README.md#virtual-dom)
+of [virtual DOM nodes](https://github.com/hyperapp/hyperapp/blob/1.1.1/README.md#virtual-dom)
 to protect your application against [XSS](https://en.wikipedia.org/wiki/Cross-site_scripting) attacks.
 
 However, it is not safe to allow "user input" for node names or attribute keys because

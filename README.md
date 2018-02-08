@@ -17,8 +17,8 @@ A [Hyperapp](https://github.com/hyperapp/hyperapp) higher-order `app` that allow
 
 [Try it Online](https://codepen.io/frenzzy/pen/zpmRQY/left/?editors=0010)
 
-<a href="https://codepen.io/frenzzy/pen/zpmRQY/left/?editors=0010" target="_blank">
-  <img width="622" height="270" alt="Demo"
+<a href="#usage">
+  <img width="622" height="270" alt="Examples"
   src="https://rawgit.com/frenzzy/hyperapp-render/master/demo.gif" />
 </a>
 

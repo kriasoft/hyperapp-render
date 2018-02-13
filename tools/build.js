@@ -46,7 +46,7 @@ const files = [
   },
 ]
 
-async function run() {
+async function build() {
   // Clean up the output directory
   await fs.emptyDir('dist')
 
@@ -103,4 +103,4 @@ async function run() {
   await fs.outputJson('dist/server/package.json', serverPkg, { spaces: 2 })
 }
 
-module.exports = run()
+module.exports = build()

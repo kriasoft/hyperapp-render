@@ -1,0 +1,14 @@
+{
+  "globals": {
+    "suite": true,
+    "benchmark": true
+  },
+  "rules": {
+    "import/no-extraneous-dependencies": ["error", {
+      "optionalDependencies": false,
+      "peerDependencies": false
+    }],
+    "react/jsx-filename-extension": "off",
+    "react/prop-types": "off"
+  }
+}

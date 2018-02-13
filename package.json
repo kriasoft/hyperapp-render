@@ -19,10 +19,11 @@
   "module": "module.js",
   "esnext": "src/index.js",
   "devDependencies": {
-    "@babel/core": "7.0.0-beta.39",
-    "@babel/plugin-transform-react-jsx": "7.0.0-beta.39",
-    "@babel/preset-env": "7.0.0-beta.39",
-    "@babel/register": "7.0.0-beta.39",
+    "@babel/core": "7.0.0-beta.40",
+    "@babel/plugin-transform-react-jsx": "7.0.0-beta.40",
+    "@babel/preset-env": "7.0.0-beta.40",
+    "@babel/register": "7.0.0-beta.40",
+    "benchr": "^4.3.0",
     "chai": "^4.1.2",
     "coveralls": "^3.0.0",
     "eslint": "^4.16.0",
@@ -34,23 +35,24 @@
     "eslint-plugin-react": "^7.6.0",
     "fs-extra": "^5.0.0",
     "husky": "^0.14.3",
-    "hyperapp": "^1.1.1",
+    "hyperapp": "^1.1.2",
     "mocha": "^5.0.0",
     "nyc": "^11.3.0",
     "prettier": "^1.10.2",
-    "rollup": "^0.55.1",
+    "rollup": "^0.55.5",
     "rollup-plugin-babel": "4.0.0-beta.1",
     "rollup-plugin-commonjs": "^8.3.0",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-uglify": "^3.0.0",
-    "sinon": "^4.2.2"
+    "sinon": "^4.3.0"
   },
   "scripts": {
-    "lint": "eslint src test tools",
+    "lint": "eslint benchmark src test tools",
     "test": "nyc mocha --require @babel/register",
     "watch": "mocha --require @babel/register --reporter min --watch",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "build": "node tools/build",
-    "precommit": "node tools/precommit"
+    "precommit": "node tools/precommit",
+    "benchmark": "benchr benchmark/index.bench.js --require @babel/register"
   }
 }

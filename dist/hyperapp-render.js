@@ -12,6 +12,7 @@ var msPattern = /^ms-/;
 var voidElements = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr']);
 var escapeRegExp = /["&'<>]/g;
 var escapeLookup = new Map([['"', '&quot;'], ['&', '&amp;'], ["'", '&#39;'], ['<', '&lt;'], ['>', '&gt;']]);
+var ignoreAttributes = new Set(['key', 'innerHTML', '__source']);
 
 function escaper(match) {
   return escapeLookup.get(match);
@@ -88,7 +89,7 @@ function renderFragment(node, stack) {
       var name = keys[i];
       var value = attributes[name];
 
-      if (name !== 'key' && name !== 'innerHTML' && typeof value !== 'function') {
+      if (!ignoreAttributes.has(name) && typeof value !== 'function') {
         var attr = renderAttribute(name, value);
 
         if (attr) {

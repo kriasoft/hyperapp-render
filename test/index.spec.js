@@ -237,6 +237,12 @@ describe('renderAttribute(name, value)', () => {
     expect(html).to.be.equal('<div></div>')
   })
 
+  it('should not render __source attribute', () => {
+    const source = { fileName: 'this/file.js', lineNumber: 10 }
+    const html = renderToString(<div __source={source} />)
+    expect(html).to.be.equal('<div></div>')
+  })
+
   it('should not render event attribute', () => {
     const html = renderToString(<button onclick={() => {}} />)
     expect(html).to.be.equal('<button></button>')

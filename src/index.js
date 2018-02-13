@@ -30,6 +30,12 @@ const escapeLookup = new Map([
   ['>', '&gt;'],
 ])
 
+const ignoreAttributes = new Set([
+  'key',
+  'innerHTML',
+  '__source', // https://babeljs.io/docs/plugins/transform-react-jsx-source/
+])
+
 function escaper(match) {
   return escapeLookup.get(match)
 }
@@ -62,7 +68,7 @@ function stringifyStyles(styles) {
     const styleName = styleNames[i]
     const styleValue = styles[styleName]
 
-    // keep in sync with https://github.com/hyperapp/hyperapp/blob/1.1.1/src/index.js#L135
+    // keep in sync with https://github.com/hyperapp/hyperapp/blob/1.1.2/src/index.js#L135
     if (styleValue != null) {
       serialized += delimiter + hyphenateStyleName(styleName) + ':' + styleValue
       delimiter = ';'
@@ -86,7 +92,7 @@ function renderAttribute(name, value) {
 }
 
 function renderFragment(node, stack) {
-  // keep in sync with https://github.com/hyperapp/hyperapp/blob/1.1.1/src/index.js#L150
+  // keep in sync with https://github.com/hyperapp/hyperapp/blob/1.1.2/src/index.js#L150
   if (node == null) {
     return ''
   }
@@ -108,8 +114,8 @@ function renderFragment(node, stack) {
       const name = keys[i]
       const value = attributes[name]
 
-      // keep in sync with https://github.com/hyperapp/hyperapp/blob/1.1.1/src/index.js#L131
-      if (name !== 'key' && name !== 'innerHTML' && typeof value !== 'function') {
+      // keep in sync with https://github.com/hyperapp/hyperapp/blob/1.1.2/src/index.js#L131
+      if (!ignoreAttributes.has(name) && typeof value !== 'function') {
         const attr = renderAttribute(name, value)
         if (attr) {
           out += ' ' + attr

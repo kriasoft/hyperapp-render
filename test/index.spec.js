@@ -297,7 +297,7 @@ describe('renderToString(node)', () => {
   })
 
   it('should render composite components', () => {
-    const Child = (props) => <h1>Hello {props.name}</h1>
+    const Child = ({ name }) => <h1>Hello {name}</h1>
     const Parent = () => (
       <div>
         <Child name="World" />

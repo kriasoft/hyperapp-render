@@ -68,7 +68,7 @@ app initialization. That could be useful to generate HTML markup from static vie
 ```js
 import { renderToString } from 'hyperapp-render'
 
-const Component = (props) => <h1>Hello {props.name}</h1>
+const Component = ({ name }) => <h1>Hello {name}</h1>
 
 renderToString(<Component name="World" />)
 // => <h1>Hello World</h1>
@@ -106,7 +106,7 @@ Also consider the list of browsers supported by [hyperapp](https://github.com/hy
 ## Caveats
 
 The library automatically escapes text content and attribute values
-of [virtual DOM nodes](https://github.com/hyperapp/hyperapp/blob/1.1.1/README.md#virtual-dom)
+of [virtual DOM nodes](https://github.com/hyperapp/hyperapp/blob/1.1.2/README.md#virtual-dom)
 to protect your application against [XSS](https://en.wikipedia.org/wiki/Cross-site_scripting) attacks.
 
 However, it is not safe to allow "user input" for node names or attribute keys because
@@ -118,8 +118,8 @@ const tagName = 'div onclick="alert(1)"'
 renderToString(h(tagName, { title: 'Hey' }, 'Hi'))
 // => <div onclick="alert(1)" title="Hey︎">Hi</div>
 
-const propName = 'onclick="alert(1)" title'
-renderToString(h('div', { [propName]: 'Hey' }, 'Hi'))
+const attributeName = 'onclick="alert(1)" title'
+renderToString(h('div', { [attributeName]: 'Hey' }, 'Hi'))
 // => <div onclick="alert(1)" title="Hey︎">Hi</div>
 
 const userInput = '<script>alert(1)</script>'

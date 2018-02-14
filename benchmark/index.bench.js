@@ -77,8 +77,8 @@ suite('renderAttribute(name, value)', () => {
 })
 
 suite('renderToString(node)', () => {
-  const Fragment = (props, children) => h('', props, children)
-  const Component = (props, children) => <h1 {...props}>{children}</h1>
+  const Fragment = (attributes, children) => h('', attributes, children)
+  const Component = (attributes, children) => <h1 {...attributes}>{children}</h1>
 
   benchmark('basic', () => {
     renderToString(

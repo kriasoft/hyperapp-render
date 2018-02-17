@@ -6,14 +6,10 @@ Find problematic patterns in code:
 npm run lint
 ```
 
-Run unit tests once:
+Run unit tests:
 
 ```bash
 npm run test
 ```
 
-Run unit tests in watch mode:
-
-```shell
-npm run watch
-```
+For more information visit http://facebook.github.io/jest/

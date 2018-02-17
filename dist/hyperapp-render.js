@@ -10,9 +10,9 @@ var cache = new Map();
 var uppercasePattern = /([A-Z])/g;
 var msPattern = /^ms-/;
 var voidElements = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr']);
+var ignoreAttributes = new Set(['key', 'innerHTML', '__source']);
 var escapeRegExp = /["&'<>]/g;
 var escapeLookup = new Map([['"', '&quot;'], ['&', '&amp;'], ["'", '&#39;'], ['<', '&lt;'], ['>', '&gt;']]);
-var ignoreAttributes = new Set(['key', 'innerHTML', '__source']);
 
 function escaper(match) {
   return escapeLookup.get(match);
@@ -106,10 +106,10 @@ function renderFragment(node, stack) {
     }
   }
 
-  var html = attributes.innerHTML;
+  var innerHTML = attributes.innerHTML;
 
-  if (html != null) {
-    out += html;
+  if (innerHTML != null) {
+    out += innerHTML;
   }
 
   var children = node.children;

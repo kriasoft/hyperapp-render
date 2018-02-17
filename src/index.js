@@ -20,6 +20,12 @@ const voidElements = new Set([
   'wbr',
 ])
 
+const ignoreAttributes = new Set([
+  'key',
+  'innerHTML',
+  '__source', // https://babeljs.io/docs/plugins/transform-react-jsx-source/
+])
+
 // https://www.w3.org/International/questions/qa-escapes#use
 const escapeRegExp = /["&'<>]/g
 const escapeLookup = new Map([
@@ -28,12 +34,6 @@ const escapeLookup = new Map([
   ["'", '&#39;'],
   ['<', '&lt;'],
   ['>', '&gt;'],
-])
-
-const ignoreAttributes = new Set([
-  'key',
-  'innerHTML',
-  '__source', // https://babeljs.io/docs/plugins/transform-react-jsx-source/
 ])
 
 function escaper(match) {
@@ -97,7 +97,7 @@ function renderFragment(node, stack) {
     return ''
   }
 
-  const attributes = node.attributes
+  const { attributes } = node
   if (!attributes) {
     // text node
     return escapeHtml(node)
@@ -131,12 +131,12 @@ function renderFragment(node, stack) {
     }
   }
 
-  const html = attributes.innerHTML
-  if (html != null) {
-    out += html
+  const { innerHTML } = attributes
+  if (innerHTML != null) {
+    out += innerHTML
   }
 
-  const children = node.children
+  const { children } = node
   if (children.length > 0) {
     stack.push({
       childIndex: 0,

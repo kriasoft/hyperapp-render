@@ -5,7 +5,6 @@
   ],
   "rules": {
     "no-plusplus": "off",
-    "prefer-destructuring": "off",
     "prefer-template": "off"
   }
 }

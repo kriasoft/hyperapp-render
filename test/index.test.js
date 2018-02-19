@@ -2,7 +2,7 @@
 import { h, app } from 'hyperapp'
 import { renderer, renderToString, render } from '../src'
 
-describe('escapeHtml(value)', () => {
+describe('escape', () => {
   it('should escape ampersand when passed as text content', () => {
     const html = renderToString(<div>{'&'}</div>)
     expect(html).toBe('<div>&amp;</div>')
@@ -71,7 +71,7 @@ describe('escapeHtml(value)', () => {
   })
 })
 
-describe('stringifyStyles(styles)', () => {
+describe('stringify styles', () => {
   it('should generate markup for style attribute', () => {
     const styles = {
       left: 0,
@@ -159,9 +159,24 @@ describe('stringifyStyles(styles)', () => {
     const html = renderToString(<div style={styles} />)
     expect(html).toBe('<div style="--foo:5;flex:0;opacity:0.5"></div>')
   })
+
+  it('should render cssText', () => {
+    const styles = {
+      color: 'red',
+      cssText: 'color:blue;font-size:10px',
+      fontSize: '12px',
+    }
+    const html = renderToString(<div style={styles} />)
+    expect(html).toBe('<div style="color:blue;font-size:10px"></div>')
+  })
+
+  it('should render non-object style', () => {
+    const html = renderToString(<div style="color:red;font-size:12px" />)
+    expect(html).toBe('<div style="color:red;font-size:12px"></div>')
+  })
 })
 
-describe('renderAttribute(name, value)', () => {
+describe('stringify attributes', () => {
   it('should render attribute', () => {
     const html = renderToString(<div title="foo" />)
     expect(html).toBe('<div title="foo"></div>')
@@ -306,8 +321,12 @@ describe('renderToString(node)', () => {
     expect(html).toBe('<custom-element-name arabicForm="foo"></custom-element-name>')
   })
 
-  it('should render undefined, null and booleans as empty string', () => {
-    const html = renderToString(<div>{[undefined, null, false, true, 0]}</div>)
+  it('should render undefined, null and booleans as an empty string', () => {
+    const html = renderToString({
+      nodeName: 'div',
+      attributes: {},
+      children: [undefined, null, false, true, 0],
+    })
     expect(html).toBe('<div>0</div>')
   })
 

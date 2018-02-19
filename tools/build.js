@@ -66,7 +66,16 @@ async function build() {
         plugins: [
           babel({
             babelrc: false,
-            presets: [['@babel/preset-env', { modules: false }]],
+            presets: [
+              [
+                '@babel/preset-env',
+                {
+                  modules: false,
+                  loose: true,
+                  exclude: ['transform-typeof-symbol'],
+                },
+              ],
+            ],
             comments: false,
           }),
           ...(file.output.endsWith('.min.js') ? [uglify({ output: { comments: '/^!/' } })] : []),
@@ -81,7 +90,7 @@ async function build() {
         exports: 'named',
         name: file.name,
         banner:
-          '/*! Hyperapp Render | MIT License | https://github.com/hyperappjs/hyperapp-render */\n',
+          '/*! Hyperapp Render | MIT License | https://github.com/hyperapp/hyperapp-render */\n',
       })
     }),
   )

@@ -2,7 +2,7 @@
 import { h } from 'hyperapp'
 import { renderToString } from '../src'
 
-suite('escapeHtml(value)', () => {
+suite('escape', () => {
   benchmark('empty', () => {
     renderToString(<div>{null}</div>)
   })
@@ -20,7 +20,7 @@ suite('escapeHtml(value)', () => {
   })
 })
 
-suite('stringifyStyles(styles)', () => {
+suite('stringify styles', () => {
   benchmark('empty', () => {
     const style = {
       color: null,
@@ -58,7 +58,7 @@ suite('stringifyStyles(styles)', () => {
   })
 })
 
-suite('renderAttribute(name, value)', () => {
+suite('stringify attributes', () => {
   benchmark('empty', () => {
     renderToString(<div data-empty={null} />)
   })
@@ -76,7 +76,7 @@ suite('renderAttribute(name, value)', () => {
   })
 })
 
-suite('renderToString(node)', () => {
+suite('stringify elements', () => {
   const Fragment = (attributes, children) => h('', attributes, children)
   const Component = (attributes, children) => <h1 {...attributes}>{children}</h1>
 

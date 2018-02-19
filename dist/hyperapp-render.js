@@ -1,4 +1,4 @@
-/*! Hyperapp Render | MIT License | https://github.com/frenzzy/hyperapp-render */
+/*! Hyperapp Render | MIT License | https://github.com/hyperapp/hyperapp-render */
 
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
@@ -6,7 +6,7 @@
 	(factory((global.self = global.self || {})));
 }(this, (function (exports) { 'use strict';
 
-var cache = new Map();
+var styleNameCache = new Map();
 var uppercasePattern = /([A-Z])/g;
 var msPattern = /^ms-/;
 var voidElements = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr']);
@@ -19,15 +19,15 @@ function escaper(match) {
 }
 
 function escapeHtml(value) {
-  return String(value).replace(escapeRegExp, escaper);
+  if (typeof value === 'number') {
+    return '' + value;
+  }
+
+  return ('' + value).replace(escapeRegExp, escaper);
 }
 
 function hyphenateStyleName(styleName) {
-  if (!cache.has(styleName)) {
-    cache.set(styleName, styleName.replace(uppercasePattern, '-$&').toLowerCase().replace(msPattern, '-ms-'));
-  }
-
-  return cache.get(styleName);
+  return styleNameCache.get(styleName) || styleNameCache.set(styleName, styleName.replace(uppercasePattern, '-$&').toLowerCase().replace(msPattern, '-ms-')).get(styleName);
 }
 
 function stringifyStyles(styles) {
@@ -48,26 +48,8 @@ function stringifyStyles(styles) {
   return serialized || null;
 }
 
-function renderAttribute(name, value) {
-  var val = value;
-
-  if (name === 'style' && val) {
-    val = stringifyStyles(val);
-  }
-
-  if (val == null || val === false) {
-    return '';
-  }
-
-  if (val === true) {
-    return name;
-  }
-
-  return name + '="' + escapeHtml(val) + '"';
-}
-
 function renderFragment(node, stack) {
-  if (node == null) {
+  if (node == null || typeof node === 'boolean') {
     return '';
   }
 
@@ -89,11 +71,15 @@ function renderFragment(node, stack) {
       var name = keys[i];
       var value = attributes[name];
 
-      if (!ignoreAttributes.has(name) && typeof value !== 'function') {
-        var attr = renderAttribute(name, value);
+      if (name === 'style' && value && typeof value === 'object') {
+        value = value.cssText != null ? value.cssText : stringifyStyles(value);
+      }
 
-        if (attr) {
-          out += ' ' + attr;
+      if (value != null && value !== false && typeof value !== 'function' && !ignoreAttributes.has(name)) {
+        out += ' ' + name;
+
+        if (value !== true) {
+          out += '="' + escapeHtml(value) + '"';
         }
       }
     }

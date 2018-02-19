@@ -3,7 +3,7 @@
   "name": "hyperapp-render",
   "version": "1.2.0",
   "description": "Render Hyperapp to an HTML string with SSR and Node.js streaming support",
-  "repository": "frenzzy/hyperapp-render",
+  "repository": "hyperappjs/hyperapp-render",
   "author": "Vladimir Kutepov",
   "license": "MIT",
   "keywords": [

@@ -1,4 +1,4 @@
-const cache = new Map()
+const styleNameCache = new Map()
 const uppercasePattern = /([A-Z])/g
 const msPattern = /^ms-/
 
@@ -41,23 +41,29 @@ function escaper(match) {
 }
 
 function escapeHtml(value) {
-  return String(value).replace(escapeRegExp, escaper)
+  if (typeof value === 'number') {
+    // better performance for safe values
+    return '' + value
+  }
+  return ('' + value).replace(escapeRegExp, escaper)
 }
 
 // "backgroundColor" => "background-color"
 // "MozTransition" => "-moz-transition"
 // "msTransition" => "-ms-transition"
 function hyphenateStyleName(styleName) {
-  if (!cache.has(styleName)) {
-    cache.set(
-      styleName,
-      styleName
-        .replace(uppercasePattern, '-$&')
-        .toLowerCase()
-        .replace(msPattern, '-ms-'),
-    )
-  }
-  return cache.get(styleName)
+  return (
+    styleNameCache.get(styleName) ||
+    styleNameCache
+      .set(
+        styleName,
+        styleName
+          .replace(uppercasePattern, '-$&')
+          .toLowerCase()
+          .replace(msPattern, '-ms-'),
+      )
+      .get(styleName)
+  )
 }
 
 function stringifyStyles(styles) {
@@ -77,23 +83,9 @@ function stringifyStyles(styles) {
   return serialized || null
 }
 
-function renderAttribute(name, value) {
-  let val = value
-  if (name === 'style' && val) {
-    val = stringifyStyles(val)
-  }
-  if (val == null || val === false) {
-    return ''
-  }
-  if (val === true) {
-    return name
-  }
-  return name + '="' + escapeHtml(val) + '"'
-}
-
 function renderFragment(node, stack) {
   // keep in sync with https://github.com/hyperapp/hyperapp/blob/1.1.2/src/index.js#L150
-  if (node == null) {
+  if (node == null || typeof node === 'boolean') {
     return ''
   }
 
@@ -112,13 +104,22 @@ function renderFragment(node, stack) {
     const keys = Object.keys(attributes)
     for (let i = 0, len = keys.length; i < len; i++) {
       const name = keys[i]
-      const value = attributes[name]
+      let value = attributes[name]
+
+      if (name === 'style' && value && typeof value === 'object') {
+        value = value.cssText != null ? value.cssText : stringifyStyles(value)
+      }
 
       // keep in sync with https://github.com/hyperapp/hyperapp/blob/1.1.2/src/index.js#L131
-      if (!ignoreAttributes.has(name) && typeof value !== 'function') {
-        const attr = renderAttribute(name, value)
-        if (attr) {
-          out += ' ' + attr
+      if (
+        value != null &&
+        value !== false &&
+        typeof value !== 'function' &&
+        !ignoreAttributes.has(name)
+      ) {
+        out += ' ' + name
+        if (value !== true) {
+          out += '="' + escapeHtml(value) + '"'
         }
       }
     }

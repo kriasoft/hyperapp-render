@@ -12,6 +12,7 @@
     "react/jsx-curly-brace-presence": "off",
     "react/jsx-filename-extension": "off",
     "react/no-unknown-property": "off",
-    "react/prop-types": "off"
+    "react/prop-types": "off",
+    "react/style-prop-object": "off"
   }
 }

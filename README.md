@@ -1,16 +1,16 @@
 <a href="https://hyperapp.js.org/" target="_blank">
   <img width="96" height="96" align="right" alt="Hyperapp"
-  src="https://rawgit.com/hyperapp/hyperapp-render/master/logo.svg" />
+  src="https://rawgit.com/HyperappCommunity/hyperapp-render/master/logo.svg" />
 </a>
 
 # Hyperapp Render
 
 [![NPM version](https://img.shields.io/npm/v/hyperapp-render.svg?style=flat-square&maxAge=3600)](https://www.npmjs.com/package/hyperapp-render)
 [![NPM downloads](https://img.shields.io/npm/dm/hyperapp-render.svg?style=flat-square&maxAge=3600)](https://npm-stat.com/charts.html?package=hyperapp-render)
-[![Build Status](https://img.shields.io/travis/hyperapp/hyperapp-render/master.svg?style=flat-square&maxAge=3600)](https://travis-ci.org/hyperapp/hyperapp-render)
-[![Coverage Status](https://img.shields.io/codecov/c/github/hyperapp/hyperapp-render.svg?style=flat-square&maxAge=3600)](https://codecov.io/gh/hyperapp/hyperapp-render)
-[![Dependency Status](https://img.shields.io/david/hyperapp/hyperapp-render.svg?style=flat-square&maxAge=3600)](https://david-dm.org/hyperapp/hyperapp-render)
-[![Library Size](http://img.badgesize.io/hyperapp/hyperapp-render/master/dist/hyperapp-render.min.js.svg?compression=gzip&label=size&style=flat-square&maxAge=3600)](https://bundlephobia.com/result?p=hyperapp-render)
+[![Build Status](https://img.shields.io/travis/HyperappCommunity/hyperapp-render/master.svg?style=flat-square&maxAge=3600)](https://travis-ci.org/HyperappCommunity/hyperapp-render)
+[![Coverage Status](https://img.shields.io/codecov/c/github/HyperappCommunity/hyperapp-render.svg?style=flat-square&maxAge=3600)](https://codecov.io/gh/HyperappCommunity/hyperapp-render)
+[![Dependency Status](https://img.shields.io/david/HyperappCommunity/hyperapp-render.svg?style=flat-square&maxAge=3600)](https://david-dm.org/HyperappCommunity/hyperapp-render)
+[![Library Size](http://img.badgesize.io/HyperappCommunity/hyperapp-render/master/dist/hyperapp-render.min.js.svg?compression=gzip&label=size&style=flat-square&maxAge=3600)](https://bundlephobia.com/result?p=hyperapp-render)
 [![Online Chat](https://img.shields.io/badge/slack-join_chat-e01563.svg?style=flat-square&maxAge=3600)](https://hyperappjs.herokuapp.com)
 
 A [Hyperapp](https://github.com/hyperapp/hyperapp) higher-order `app` that allows you to render views to an HTML string.
@@ -19,7 +19,7 @@ A [Hyperapp](https://github.com/hyperapp/hyperapp) higher-order `app` that allow
 
 <a href="#usage">
   <img width="622" height="270" alt="Examples"
-  src="https://rawgit.com/hyperapp/hyperapp-render/master/demo.gif" />
+  src="https://rawgit.com/HyperappCommunity/hyperapp-render/master/demo.gif" />
 </a>
 
 ## Installation
@@ -137,19 +137,19 @@ All feedback and suggestions are welcome!
 ## Contributing
 
 Anyone and everyone is welcome to
-[contribute](https://github.com/hyperapp/hyperapp-render/blob/master/.github/CONTRIBUTING.md) to this project.
-The best way to start is by checking our [open issues](https://github.com/hyperapp/hyperapp-render/issues),
-submit a [bug report](https://github.com/hyperapp/hyperapp-render/blob/master/.github/CONTRIBUTING.md#bugs) or
-[feature request](https://github.com/hyperapp/hyperapp-render/blob/master/.github/CONTRIBUTING.md#features),
+[contribute](https://github.com/HyperappCommunity/hyperapp-render/blob/master/.github/CONTRIBUTING.md) to this project.
+The best way to start is by checking our [open issues](https://github.com/HyperappCommunity/hyperapp-render/issues),
+submit a [bug report](https://github.com/HyperappCommunity/hyperapp-render/blob/master/.github/CONTRIBUTING.md#bugs) or
+[feature request](https://github.com/HyperappCommunity/hyperapp-render/blob/master/.github/CONTRIBUTING.md#features),
 participate in discussions, upvote or downvote the issues you like or dislike, send [pull
-requests](https://github.com/hyperapp/hyperapp-render/blob/master/.github/CONTRIBUTING.md#pull-requests).
+requests](https://github.com/HyperappCommunity/hyperapp-render/blob/master/.github/CONTRIBUTING.md#pull-requests).
 
 ## License
 
 This source code is licensed under the MIT license found in the
-[LICENSE.txt](https://github.com/hyperapp/hyperapp-render/blob/master/LICENSE.txt) file.
+[LICENSE.txt](https://github.com/HyperappCommunity/hyperapp-render/blob/master/LICENSE.txt) file.
 
 ---
 Made with ♥ by
 [Vladimir Kutepov](https://github.com/frenzzy) and
-[contributors](https://github.com/hyperapp/hyperapp-render/graphs/contributors)
+[contributors](https://github.com/HyperappCommunity/hyperapp-render/graphs/contributors)

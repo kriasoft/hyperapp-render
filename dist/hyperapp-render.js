@@ -1,4 +1,4 @@
-/*! Hyperapp Render | MIT License | https://github.com/hyperapp/hyperapp-render */
+/*! Hyperapp Render | MIT License | https://github.com/HyperappCommunity/hyperapp-render */
 
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
@@ -40,7 +40,12 @@ function stringifyStyles(styles) {
     var styleValue = styles[styleName];
 
     if (styleValue != null) {
-      serialized += delimiter + hyphenateStyleName(styleName) + ':' + styleValue;
+      if (styleName === 'cssText') {
+        serialized += delimiter + styleValue;
+      } else {
+        serialized += delimiter + hyphenateStyleName(styleName) + ':' + styleValue;
+      }
+
       delimiter = ';';
     }
   }
@@ -72,7 +77,7 @@ function renderFragment(node, stack) {
       var value = attributes[name];
 
       if (name === 'style' && value && typeof value === 'object') {
-        value = value.cssText != null ? value.cssText : stringifyStyles(value);
+        value = stringifyStyles(value);
       }
 
       if (value != null && value !== false && typeof value !== 'function' && !ignoreAttributes.has(name)) {

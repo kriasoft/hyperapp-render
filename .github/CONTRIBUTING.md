@@ -1,6 +1,6 @@
 # Contributing to Hyperapp Render
 
-♥ [Hyperapp Render](https://github.com/hyperapp/hyperapp-render) and want to
+♥ [Hyperapp Render](https://github.com/HyperappCommunity/hyperapp-render) and want to
 get involved? Thanks! We're actively looking for folks interested in helping
 out and there are plenty of ways you can help!
 
@@ -14,7 +14,7 @@ patches and features.
 
 ## Using the issue tracker
 
-The [issue tracker](https://github.com/hyperapp/hyperapp-render/issues) is
+The [issue tracker](https://github.com/HyperappCommunity/hyperapp-render/issues) is
 the preferred channel for [bug reports](#bugs), [features requests](#features)
 and [submitting pull requests](#pull-requests), but please respect the following
 restrictions:
@@ -106,7 +106,7 @@ included in the project:
    # Navigate to the newly cloned directory
    cd hyperapp-render
    # Assign the original repo to a remote called "upstream"
-   git remote add upstream https://github.com/hyperapp/hyperapp-render.git
+   git remote add upstream https://github.com/HyperappCommunity/hyperapp-render.git
    ```
 
 2. If you cloned a while ago, get the latest changes from upstream:
@@ -146,4 +146,4 @@ included in the project:
 
 **IMPORTANT**: By submitting a patch, you agree to allow the project
 owners to license your work under the terms of the
-[MIT License](https://github.com/hyperapp/hyperapp-render/blob/master/LICENSE.txt).
+[MIT License](https://github.com/HyperappCommunity/hyperapp-render/blob/master/LICENSE.txt).

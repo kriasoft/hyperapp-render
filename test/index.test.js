@@ -162,12 +162,12 @@ describe('stringify styles', () => {
 
   it('should render cssText', () => {
     const styles = {
-      color: 'red',
+      top: 0,
       cssText: 'color:blue;font-size:10px',
-      fontSize: '12px',
+      bottom: 0,
     }
     const html = renderToString(<div style={styles} />)
-    expect(html).toBe('<div style="color:blue;font-size:10px"></div>')
+    expect(html).toBe('<div style="top:0;color:blue;font-size:10px;bottom:0"></div>')
   })
 
   it('should render non-object style', () => {

@@ -90,7 +90,7 @@ async function build() {
         exports: 'named',
         name: file.name,
         banner:
-          '/*! Hyperapp Render | MIT License | https://github.com/hyperapp/hyperapp-render */\n',
+          '/*! Hyperapp Render | MIT License | https://github.com/HyperappCommunity/hyperapp-render */\n',
       })
     }),
   )

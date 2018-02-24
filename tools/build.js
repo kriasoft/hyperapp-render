@@ -54,7 +54,7 @@ async function build() {
   await Promise.all([
     fs.copy('src', 'dist/src'),
     fs.copy('README.md', 'dist/README.md'),
-    fs.copy('LICENSE.txt', 'dist/LICENSE.txt'),
+    fs.copy('LICENSE.md', 'dist/LICENSE.md'),
   ])
 
   // Compile source code into a distributable format with Babel
@@ -89,8 +89,7 @@ async function build() {
         sourcemap: true,
         exports: 'named',
         name: file.name,
-        banner:
-          '/*! Hyperapp Render | MIT License | https://github.com/HyperappCommunity/hyperapp-render */\n',
+        banner: '/*! Hyperapp Render | MIT License | https://github.com/hyperapp/render */\n',
       })
     }),
   )

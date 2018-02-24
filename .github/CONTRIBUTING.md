@@ -1,6 +1,6 @@
 # Contributing to Hyperapp Render
 
-♥ [Hyperapp Render](https://github.com/hyperapp/render) and want to
+♥ [@hyperapp/render](https://github.com/hyperapp/render) and want to
 get involved? Thanks! We're actively looking for folks interested in helping
 out and there are plenty of ways you can help!
 
@@ -102,7 +102,7 @@ included in the project:
 
    ```bash
    # Clone your fork of the repo into the current directory
-   git clone https://github.com/<your-username>/hyperapp-render.git
+   git clone https://github.com/<your-username>/render.git hyperapp-render
    # Navigate to the newly cloned directory
    cd hyperapp-render
    # Assign the original repo to a remote called "upstream"

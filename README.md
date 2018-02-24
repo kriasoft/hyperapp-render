@@ -1,7 +1,7 @@
-# <img height=24 src=https://cdn.rawgit.com/JorgeBucaran/f53d2c00bafcf36e84ffd862f0dc2950/raw/882f20c970ff7d61aa04d44b92fc3530fa758bc0/Hyperapp.svg> Hyperapp Render
+# @hyperapp/render
 
-[![NPM version](https://img.shields.io/npm/v/hyperapp-render.svg?maxAge=3600)](https://www.npmjs.com/package/hyperapp-render)
-[![Library Size](http://img.badgesize.io/hyperapp/render/master/dist/hyperapp-render.min.js.svg?compression=gzip&label=size&maxAge=3600)](https://bundlephobia.com/result?p=hyperapp-render)
+[![NPM version](https://img.shields.io/npm/v/@hyperapp/render.svg?maxAge=3600)](https://www.npmjs.com/package/@hyperapp/render)
+[![Library Size](http://img.badgesize.io/hyperapp/render/master/dist/hyperapp-render.min.js.svg?compression=gzip&label=size&maxAge=3600)](https://bundlephobia.com/result?p=@hyperapp/render)
 [![Build Status](https://img.shields.io/travis/hyperapp/render/master.svg?maxAge=3600)](https://travis-ci.org/hyperapp/render)
 [![Slack](https://hyperappjs.herokuapp.com/badge.svg)](https://hyperappjs.herokuapp.com "Join us")
 
@@ -16,19 +16,19 @@ A [Hyperapp](https://github.com/hyperapp/hyperapp) higher-order `app` that allow
 
 ## Installation
 
-Using [npm](https://www.npmjs.com/package/hyperapp-render):
+Using [npm](https://www.npmjs.com/package/@hyperapp/render):
 
 ```bash
-npm install hyperapp-render --save
+npm install @hyperapp/render --save
 ```
 
 Or using a [CDN](https://en.wikipedia.org/wiki/Content_delivery_network) like
-[unpkg.com](https://unpkg.com/hyperapp-render@latest/hyperapp-render.min.js) or
-[jsDelivr](https://cdn.jsdelivr.net/npm/hyperapp-render@latest/hyperapp-render.min.js)
+[unpkg.com](https://unpkg.com/@hyperapp/render@latest/hyperapp-render.min.js) or
+[jsDelivr](https://cdn.jsdelivr.net/npm/@hyperapp/render@latest/hyperapp-render.min.js)
 with the following script tag:
 
 ```html
-<script src="https://unpkg.com/hyperapp-render@latest/hyperapp-render.min.js"></script>
+<script src="https://unpkg.com/@hyperapp/render@latest/hyperapp-render.min.js"></script>
 ```
 
 You can find the library in `window.render` and `window.renderToString`.
@@ -41,7 +41,7 @@ This can be useful for server-side rendering or creating HTML snippets based on 
 
 ```js
 import { h, app } from 'hyperapp'
-import { render } from 'hyperapp-render'
+import { render } from '@hyperapp/render'
 
 const state = { name: 'World' }
 const actions = { setName: name => ({ name }) }
@@ -58,7 +58,7 @@ You also can use `renderToString` function to generate HTML markup from any of y
 app initialization. That could be useful to generate HTML markup from static views.
 
 ```js
-import { renderToString } from 'hyperapp-render'
+import { renderToString } from '@hyperapp/render'
 
 const Component = ({ name }) => <h1>Hello {name}</h1>
 
@@ -67,10 +67,10 @@ renderToString(<Component name="World" />)
 ```
 
 The library also provides [Node.js streaming](https://nodejs.org/api/stream.html) support for efficient
-server-side rendering. Render-to-stream functionality is available from `hyperapp-render/server` npm package.
+server-side rendering. Render-to-stream functionality is available from `@hyperapp/render/server` npm package.
 
 ```js
-import { render, renderToString, renderToStream } from 'hyperapp-render/server'
+import { render, renderToString, renderToStream } from '@hyperapp/render/server'
 
 const main = render(app)(state, actions, view)
 
@@ -93,7 +93,7 @@ before any other code.
 
 Also consider the list of browsers supported by [hyperapp](https://github.com/hyperapp/hyperapp) itself.
 
-**Note:** `hyperapp-render/server` is for [Node.js](https://nodejs.org/en/) environment only (v6 or newer).
+**Note:** `@hyperapp/render/server` is for [Node.js](https://nodejs.org/en/) environment only (v6 or newer).
 
 ## Caveats
 
@@ -121,5 +121,5 @@ renderToString(h('div', { innerHTML: userInput }, 'Hi'))
 
 ## License
 
-Hyperapp Render is MIT licensed.
+@hyperapp/render is MIT licensed.
 See [LICENSE](https://github.com/hyperapp/render/blob/master/LICENSE.md).

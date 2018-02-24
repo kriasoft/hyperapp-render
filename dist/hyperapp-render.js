@@ -1,4 +1,4 @@
-/*! Hyperapp Render | MIT License | https://github.com/hyperapp/render */
+/*! @hyperapp/render | MIT | https://github.com/hyperapp/render */
 
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :

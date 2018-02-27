@@ -67,7 +67,7 @@ function hyphenateStyleName(styleName) {
 }
 
 function stringifyStyles(styles) {
-  let serialized = ''
+  let out = ''
   let delimiter = ''
   const styleNames = Object.keys(styles)
   for (let i = 0, len = styleNames.length; i < len; i++) {
@@ -77,14 +77,14 @@ function stringifyStyles(styles) {
     // keep in sync with https://github.com/hyperapp/hyperapp/blob/1.1.2/src/index.js#L135
     if (styleValue != null) {
       if (styleName === 'cssText') {
-        serialized += delimiter + styleValue
+        out += delimiter + styleValue
       } else {
-        serialized += delimiter + hyphenateStyleName(styleName) + ':' + styleValue
+        out += delimiter + hyphenateStyleName(styleName) + ':' + styleValue
       }
       delimiter = ';'
     }
   }
-  return serialized || null
+  return out || null
 }
 
 function renderFragment(node, stack) {

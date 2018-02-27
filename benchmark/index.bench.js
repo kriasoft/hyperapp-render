@@ -20,7 +20,7 @@ suite('escape', () => {
   })
 })
 
-suite('stringify styles', () => {
+suite('styles', () => {
   benchmark('empty', () => {
     const style = {
       color: null,
@@ -58,7 +58,7 @@ suite('stringify styles', () => {
   })
 })
 
-suite('stringify attributes', () => {
+suite('attributes', () => {
   benchmark('empty', () => {
     renderToString(<div data-empty={null} />)
   })
@@ -76,7 +76,7 @@ suite('stringify attributes', () => {
   })
 })
 
-suite('stringify elements', () => {
+suite('elements', () => {
   const Fragment = (attributes, children) => h('', attributes, children)
   const Component = (attributes, children) => <h1 {...attributes}>{children}</h1>
 

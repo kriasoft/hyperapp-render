@@ -31,7 +31,7 @@ function hyphenateStyleName(styleName) {
 }
 
 function stringifyStyles(styles) {
-  var serialized = '';
+  var out = '';
   var delimiter = '';
   var styleNames = Object.keys(styles);
 
@@ -41,16 +41,16 @@ function stringifyStyles(styles) {
 
     if (styleValue != null) {
       if (styleName === 'cssText') {
-        serialized += delimiter + styleValue;
+        out += delimiter + styleValue;
       } else {
-        serialized += delimiter + hyphenateStyleName(styleName) + ':' + styleValue;
+        out += delimiter + hyphenateStyleName(styleName) + ':' + styleValue;
       }
 
       delimiter = ';';
     }
   }
 
-  return serialized || null;
+  return out || null;
 }
 
 function renderFragment(node, stack) {

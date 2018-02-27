@@ -1,17 +1,17 @@
 # @hyperapp/render
 
-[![NPM version](https://img.shields.io/npm/v/@hyperapp/render.svg?maxAge=3600)](https://www.npmjs.com/package/@hyperapp/render)
-[![Library Size](http://img.badgesize.io/hyperapp/render/master/dist/hyperapp-render.min.js.svg?compression=gzip&label=size&maxAge=3600)](https://bundlephobia.com/result?p=@hyperapp/render)
-[![Build Status](https://img.shields.io/travis/hyperapp/render/master.svg?maxAge=3600)](https://travis-ci.org/hyperapp/render)
-[![Slack](https://hyperappjs.herokuapp.com/badge.svg)](https://hyperappjs.herokuapp.com "Join us")
+[![npm version](https://img.shields.io/npm/v/@hyperapp/render.svg?maxAge=3600)](https://www.npmjs.com/package/@hyperapp/render)
+[![npm downloads](https://img.shields.io/npm/dm/@hyperapp/render.svg?maxAge=3600)](https://npm-stat.com/charts.html?package=@hyperapp/render)
+[![library size](http://img.badgesize.io/hyperapp/render/master/dist/hyperapp-render.min.js.svg?compression=gzip&label=size&maxAge=3600)](https://bundlephobia.com/result?p=@hyperapp/render)
+[![slack chat](https://hyperappjs.herokuapp.com/badge.svg)](https://hyperappjs.herokuapp.com "Join us")
 
 A [Hyperapp](https://github.com/hyperapp/hyperapp) higher-order `app` that allows you to render views to an HTML string.
 
 [Try it Online](https://codepen.io/frenzzy/pen/zpmRQY/left/?editors=0010)
 
-<a href=#usage>
-  <img width=622 height=270 alt=Examples
-  src=https://cdn.rawgit.com/hyperapp/render/master/demo.gif>
+<a href="#usage">
+  <img width="622" height="270" alt="Examples"
+  src="https://cdn.rawgit.com/hyperapp/render/master/demo.gif">
 </a>
 
 ## Installation
@@ -121,5 +121,4 @@ renderToString(h('div', { innerHTML: userInput }, 'Hi'))
 
 ## License
 
-@hyperapp/render is MIT licensed.
-See [LICENSE](https://github.com/hyperapp/render/blob/master/LICENSE.md).
+[MIT](https://github.com/hyperapp/render/blob/master/LICENSE.md)

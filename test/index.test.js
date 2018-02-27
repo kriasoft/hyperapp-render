@@ -71,7 +71,7 @@ describe('escape', () => {
   })
 })
 
-describe('stringify styles', () => {
+describe('styles', () => {
   it('should generate markup for style attribute', () => {
     const styles = {
       left: 0,
@@ -176,7 +176,7 @@ describe('stringify styles', () => {
   })
 })
 
-describe('stringify attributes', () => {
+describe('attributes', () => {
   it('should render attribute', () => {
     const html = renderToString(<div title="foo" />)
     expect(html).toBe('<div title="foo"></div>')

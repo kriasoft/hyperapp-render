@@ -146,4 +146,4 @@ included in the project:
 
 **IMPORTANT**: By submitting a patch, you agree to allow the project
 owners to license your work under the terms of the
-[MIT License](https://github.com/hyperapp/render/blob/master/LICENSE.txt).
+[MIT License](https://github.com/hyperapp/render/blob/master/LICENSE.md).

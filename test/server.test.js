@@ -18,7 +18,7 @@ function readFromStream(stream) {
   })
 }
 
-describe('server/renderer(node)(bytes)', () => {
+describe('server/renderer(view, state, actions)(bytes)', () => {
   it('should render markup', () => {
     const read = renderer(<div />)
     expect(read(Infinity)).toBe('<div></div>')
@@ -26,14 +26,14 @@ describe('server/renderer(node)(bytes)', () => {
   })
 })
 
-describe('server/renderToString(node)', () => {
+describe('server/renderToString(view, state, actions)', () => {
   it('should render markup', () => {
     const html = renderToString(<div>hello world</div>)
     expect(html).toBe('<div>hello world</div>')
   })
 })
 
-describe('server/renderToStream(node)', () => {
+describe('server/renderToStream(view, state, actions)', () => {
   it('should return a readable stream', () => {
     const stream = renderToStream(<div>hello world</div>)
     expect(stream).toBeInstanceOf(Readable)
@@ -60,50 +60,48 @@ describe('server/renderToStream(node)', () => {
 })
 
 describe('server/render(app)(state, actions, view, container)', () => {
-  const initialState = {
-    count: 0,
-  }
-  const actions = {
+  const testState = { count: 0 }
+  const testActions = {
     up: (count = 1) => (state) => ({ count: state.count + count }),
   }
-  const view = (state) => <h1>{state.count}</h1>
+  const testView = (state) => <h1>{state.count}</h1>
 
   it('should create a higher-order app', () => {
-    const spyApp = jest.fn(() => 'result')
-    const renderApp = render(spyApp)
+    const mockApp = jest.fn(() => ({ result: true }))
+    const renderApp = render(mockApp)
     expect(renderApp).toBeInstanceOf(Function)
-    expect(spyApp).not.toBeCalled()
-    const main = renderApp(initialState, actions, view, 'container')
-    expect(spyApp).toBeCalled()
-    expect(spyApp.mock.calls[0][0]).toBe(initialState)
-    expect(spyApp.mock.calls[0][1]).not.toBe(actions)
-    expect(spyApp.mock.calls[0][2]).toBe(view)
-    expect(spyApp.mock.calls[0][3]).toBe('container')
-    expect(main).toBe('result')
+    expect(mockApp).not.toBeCalled()
+    const actions = renderApp(testState, testActions, testView, 'container')
+    expect(mockApp).toBeCalled()
+    expect(mockApp.mock.calls[0][0]).toBe(testState)
+    expect(mockApp.mock.calls[0][1]).not.toBe(testActions)
+    expect(mockApp.mock.calls[0][2]).toBe(testView)
+    expect(mockApp.mock.calls[0][3]).toBe('container')
+    expect(actions).toHaveProperty('result', true)
   })
 
   it('should not mutate original actions', () => {
-    render(app)(initialState, actions, view)
-    expect(actions).toEqual({ up: actions.up })
+    render(app)(testState, testActions, testView)
+    expect(testActions).toEqual({ up: testActions.up })
   })
 
   it('should render app with current state to string', () => {
-    const main = render(app)(initialState, actions, view)
-    expect(main.toString).toBeInstanceOf(Function)
-    expect(main.toString()).toBe('<h1>0</h1>')
-    main.up()
-    expect(main.toString()).toBe('<h1>1</h1>')
-    main.up(100)
-    expect(main.toString()).toBe('<h1>101</h1>')
+    const acitons = render(app)(testState, testActions, testView)
+    expect(acitons.toString).toBeInstanceOf(Function)
+    expect(acitons.toString()).toBe('<h1>0</h1>')
+    acitons.up()
+    expect(acitons.toString()).toBe('<h1>1</h1>')
+    acitons.up(100)
+    expect(acitons.toString()).toBe('<h1>101</h1>')
   })
 
   it('should render app with current state to stream', async () => {
-    const main = render(app)(initialState, actions, view)
-    expect(main.toStream).toBeInstanceOf(Function)
-    expect(await readFromStream(main.toStream())).toBe('<h1>0</h1>')
-    main.up()
-    expect(await readFromStream(main.toStream())).toBe('<h1>1</h1>')
-    main.up(100)
-    expect(await readFromStream(main.toStream())).toBe('<h1>101</h1>')
+    const actions = render(app)(testState, testActions, testView)
+    expect(actions.toStream).toBeInstanceOf(Function)
+    expect(await readFromStream(actions.toStream())).toBe('<h1>0</h1>')
+    actions.up()
+    expect(await readFromStream(actions.toStream())).toBe('<h1>1</h1>')
+    actions.up(100)
+    expect(await readFromStream(actions.toStream())).toBe('<h1>101</h1>')
   })
 })

@@ -45,6 +45,7 @@ function escapeHtml(value) {
     // better performance for safe values
     return '' + value
   }
+
   return ('' + value).replace(escapeRegExp, escaper)
 }
 
@@ -70,43 +71,35 @@ function stringifyStyles(styles) {
   let out = ''
   let delimiter = ''
   const styleNames = Object.keys(styles)
-  for (let i = 0, len = styleNames.length; i < len; i++) {
+
+  for (let i = 0; i < styleNames.length; i++) {
     const styleName = styleNames[i]
     const styleValue = styles[styleName]
 
-    // keep in sync with https://github.com/hyperapp/hyperapp/blob/1.1.2/src/index.js#L135
     if (styleValue != null) {
       if (styleName === 'cssText') {
         out += delimiter + styleValue
       } else {
         out += delimiter + hyphenateStyleName(styleName) + ':' + styleValue
       }
+
       delimiter = ';'
     }
   }
+
   return out || null
 }
 
-function renderFragment(node, stack) {
-  // keep in sync with https://github.com/hyperapp/hyperapp/blob/1.1.2/src/index.js#L150
-  if (node == null || typeof node === 'boolean') {
-    return ''
-  }
-
-  const { attributes } = node
-  if (!attributes) {
-    // text node
-    return escapeHtml(node)
-  }
-
-  const tag = node.nodeName
+// https://www.w3.org/TR/html51/syntax.html#serializing-html-fragments
+function renderFragment({ nodeName, attributes, children }, stack) {
   let out = ''
   let footer = ''
-  if (tag) {
-    // https://www.w3.org/TR/html51/syntax.html#serializing-html-fragments
-    out += '<' + tag
+
+  if (nodeName) {
+    out += '<' + nodeName
     const keys = Object.keys(attributes)
-    for (let i = 0, len = keys.length; i < len; i++) {
+
+    for (let i = 0; i < keys.length; i++) {
       const name = keys[i]
       let value = attributes[name]
 
@@ -114,7 +107,6 @@ function renderFragment(node, stack) {
         value = stringifyStyles(value)
       }
 
-      // keep in sync with https://github.com/hyperapp/hyperapp/blob/1.1.2/src/index.js#L131
       if (
         value != null &&
         value !== false &&
@@ -122,26 +114,27 @@ function renderFragment(node, stack) {
         !ignoreAttributes.has(name)
       ) {
         out += ' ' + name
+
         if (value !== true) {
           out += '="' + escapeHtml(value) + '"'
         }
       }
     }
 
-    if (voidElements.has(tag)) {
+    if (voidElements.has(nodeName)) {
       out += '/>'
     } else {
       out += '>'
-      footer = '</' + tag + '>'
+      footer = '</' + nodeName + '>'
     }
   }
 
   const { innerHTML } = attributes
+
   if (innerHTML != null) {
     out += innerHTML
   }
 
-  const { children } = node
   if (children.length > 0) {
     stack.push({
       childIndex: 0,
@@ -155,11 +148,19 @@ function renderFragment(node, stack) {
   return out
 }
 
-export function renderer(node) {
+function resolveNode(node, state, actions) {
+  if (typeof node === 'function') {
+    return resolveNode(node(state, actions), state, actions)
+  }
+
+  return node
+}
+
+export function renderer(view, state, actions) {
   const stack = [
     {
       childIndex: 0,
-      children: [node],
+      children: [view],
       footer: '',
     },
   ]
@@ -168,37 +169,61 @@ export function renderer(node) {
     if (end) {
       return null
     }
+
     let out = ''
+
     while (out.length < bytes) {
       if (stack.length === 0) {
         end = true
         break
       }
+
       const frame = stack[stack.length - 1]
+
       if (frame.childIndex >= frame.children.length) {
         out += frame.footer
         stack.pop()
       } else {
-        const child = frame.children[frame.childIndex++]
-        out += renderFragment(child, stack)
+        const node = resolveNode(frame.children[frame.childIndex++], state, actions)
+
+        if (node != null && typeof node !== 'boolean') {
+          if (node.pop) {
+            // array
+            stack.push({
+              childIndex: 0,
+              children: node,
+              footer: '',
+            })
+          } else if (node.attributes) {
+            // element
+            out += renderFragment(node, stack)
+          } else {
+            // text node
+            out += escapeHtml(node)
+          }
+        }
       }
     }
+
     return out
   }
 }
 
-export function renderToString(node) {
-  return renderer(node)(Infinity)
+export function renderToString(view, state, actions) {
+  return renderer(view, state, actions)(Infinity)
 }
 
-export function render(app) {
-  return (initialState, actionsTemplate, view, container) =>
-    app(
+export function render(nextApp) {
+  return (initialState, actionsTemplate, view, container) => {
+    const actions = nextApp(
       initialState,
-      Object.assign({}, actionsTemplate, {
-        toString: () => (state, actions) => renderToString(view(state, actions)),
-      }),
+      Object.assign({}, actionsTemplate, { getState: () => (state) => state }),
       view,
       container,
     )
+
+    actions.toString = () => renderToString(view, actions.getState(), actions)
+
+    return actions
+  }
 }

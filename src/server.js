@@ -3,8 +3,9 @@ import { renderer, renderToString } from './index'
 
 export { renderer, renderToString }
 
-export function renderToStream(node) {
-  const read = renderer(node)
+export function renderToStream(view, state, actions) {
+  const read = renderer(view, state, actions)
+
   // https://nodejs.org/api/stream.html
   return new Readable({
     read(size) {
@@ -17,15 +18,18 @@ export function renderToStream(node) {
   })
 }
 
-export function render(app) {
-  return (initialState, actionsTemplate, view, container) =>
-    app(
+export function render(nextApp) {
+  return (initialState, actionsTemplate, view, container) => {
+    const actions = nextApp(
       initialState,
-      Object.assign({}, actionsTemplate, {
-        toString: () => (state, actions) => renderToString(view(state, actions)),
-        toStream: () => (state, actions) => renderToStream(view(state, actions)),
-      }),
+      Object.assign({}, actionsTemplate, { getState: () => (state) => state }),
       view,
       container,
     )
+
+    actions.toString = () => renderToString(view, actions.getState(), actions)
+    actions.toStream = () => renderToStream(view, actions.getState(), actions)
+
+    return actions
+  }
 }

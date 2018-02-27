@@ -35,7 +35,7 @@ function stringifyStyles(styles) {
   var delimiter = '';
   var styleNames = Object.keys(styles);
 
-  for (var i = 0, len = styleNames.length; i < len; i++) {
+  for (var i = 0; i < styleNames.length; i++) {
     var styleName = styleNames[i];
     var styleValue = styles[styleName];
 
@@ -53,26 +53,18 @@ function stringifyStyles(styles) {
   return out || null;
 }
 
-function renderFragment(node, stack) {
-  if (node == null || typeof node === 'boolean') {
-    return '';
-  }
-
-  var attributes = node.attributes;
-
-  if (!attributes) {
-    return escapeHtml(node);
-  }
-
-  var tag = node.nodeName;
+function renderFragment(_ref, stack) {
+  var nodeName = _ref.nodeName,
+      attributes = _ref.attributes,
+      children = _ref.children;
   var out = '';
   var footer = '';
 
-  if (tag) {
-    out += '<' + tag;
+  if (nodeName) {
+    out += '<' + nodeName;
     var keys = Object.keys(attributes);
 
-    for (var i = 0, len = keys.length; i < len; i++) {
+    for (var i = 0; i < keys.length; i++) {
       var name = keys[i];
       var value = attributes[name];
 
@@ -89,11 +81,11 @@ function renderFragment(node, stack) {
       }
     }
 
-    if (voidElements.has(tag)) {
+    if (voidElements.has(nodeName)) {
       out += '/>';
     } else {
       out += '>';
-      footer = '</' + tag + '>';
+      footer = '</' + nodeName + '>';
     }
   }
 
@@ -102,8 +94,6 @@ function renderFragment(node, stack) {
   if (innerHTML != null) {
     out += innerHTML;
   }
-
-  var children = node.children;
 
   if (children.length > 0) {
     stack.push({
@@ -118,10 +108,18 @@ function renderFragment(node, stack) {
   return out;
 }
 
-function renderer(node) {
+function resolveNode(node, state, actions) {
+  if (typeof node === 'function') {
+    return resolveNode(node(state, actions), state, actions);
+  }
+
+  return node;
+}
+
+function renderer(view, state, actions) {
   var stack = [{
     childIndex: 0,
-    children: [node],
+    children: [view],
     footer: ''
   }];
   var end = false;
@@ -144,26 +142,45 @@ function renderer(node) {
         out += frame.footer;
         stack.pop();
       } else {
-        var child = frame.children[frame.childIndex++];
-        out += renderFragment(child, stack);
+        var node = resolveNode(frame.children[frame.childIndex++], state, actions);
+
+        if (node != null && typeof node !== 'boolean') {
+          if (node.pop) {
+            stack.push({
+              childIndex: 0,
+              children: node,
+              footer: ''
+            });
+          } else if (node.attributes) {
+            out += renderFragment(node, stack);
+          } else {
+            out += escapeHtml(node);
+          }
+        }
       }
     }
 
     return out;
   };
 }
-function renderToString(node) {
-  return renderer(node)(Infinity);
+function renderToString(view, state, actions) {
+  return renderer(view, state, actions)(Infinity);
 }
-function render(app) {
+function render(nextApp) {
   return function (initialState, actionsTemplate, view, container) {
-    return app(initialState, Object.assign({}, actionsTemplate, {
-      toString: function toString() {
-        return function (state, actions) {
-          return renderToString(view(state, actions));
+    var actions = nextApp(initialState, Object.assign({}, actionsTemplate, {
+      getState: function getState() {
+        return function (state) {
+          return state;
         };
       }
     }), view, container);
+
+    actions.toString = function () {
+      return renderToString(view, actions.getState(), actions);
+    };
+
+    return actions;
   };
 }
 

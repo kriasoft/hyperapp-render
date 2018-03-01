@@ -1,4 +1,4 @@
-# @hyperapp/render
+# <img height="24" src="https://cdn.rawgit.com/hyperapp/render/master/logo.svg"> Hyperapp Render
 
 [![npm version](https://img.shields.io/npm/v/@hyperapp/render.svg?maxAge=3600)](https://www.npmjs.com/package/@hyperapp/render)
 [![npm downloads](https://img.shields.io/npm/dm/@hyperapp/render.svg?maxAge=3600)](https://npm-stat.com/charts.html?package=@hyperapp/render)
@@ -121,4 +121,4 @@ renderToString(h('div', { innerHTML: userInput }, 'Hi'))
 
 ## License
 
-[MIT](https://github.com/hyperapp/render/blob/master/LICENSE.md)
+Hyperapp Render is MIT licensed. See [LICENSE](https://github.com/hyperapp/render/blob/master/LICENSE.md).

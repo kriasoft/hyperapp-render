@@ -258,7 +258,7 @@ describe('attributes', () => {
   })
 })
 
-describe('renderer(node)(bytes)', () => {
+describe('renderer(view, state, actions)(bytes)', () => {
   it('should create a reader function', () => {
     const read = renderer(<div />)
     expect(read).toBeInstanceOf(Function)
@@ -283,7 +283,7 @@ describe('renderer(node)(bytes)', () => {
   })
 })
 
-describe('renderToString(node)', () => {
+describe('renderToString(view, state, actions)', () => {
   it('should render simple markup', () => {
     const html = renderToString(<div>hello world</div>)
     expect(html).toBe('<div>hello world</div>')
@@ -339,43 +339,69 @@ describe('renderToString(node)', () => {
     const html = renderToString(h('', { innerHTML: '<sciprt>alert("hello world")</sciprt>' }))
     expect(html).toBe('<sciprt>alert("hello world")</sciprt>')
   })
+
+  it('should render an array of elements', () => {
+    const html = renderToString([<meta />, <link />])
+    expect(html).toBe('<meta/><link/>')
+  })
 })
 
 describe('render(app)(state, actions, view, container)', () => {
-  const initialState = {
-    count: 0,
-  }
-  const actions = {
+  const testState = { count: 0 }
+  const testActions = {
     up: (count = 1) => (state) => ({ count: state.count + count }),
+    getState: () => (state) => state,
   }
-  const view = (state) => <h1>{state.count}</h1>
+  const testView = (state) => <h1>{state.count}</h1>
 
   it('should create a higher-order app', () => {
-    const spyApp = jest.fn(() => 'result')
-    const renderApp = render(spyApp)
+    const mockApp = jest.fn(() => ({ result: true }))
+    const renderApp = render(mockApp)
     expect(renderApp).toBeInstanceOf(Function)
-    expect(spyApp).not.toBeCalled()
-    const main = renderApp(initialState, actions, view, 'container')
-    expect(spyApp).toBeCalled()
-    expect(spyApp.mock.calls[0][0]).toBe(initialState)
-    expect(spyApp.mock.calls[0][1]).not.toBe(actions)
-    expect(spyApp.mock.calls[0][2]).toBe(view)
-    expect(spyApp.mock.calls[0][3]).toBe('container')
-    expect(main).toBe('result')
+    expect(mockApp).not.toBeCalled()
+    const actions = renderApp(testState, testActions, testView, 'container')
+    expect(mockApp).toBeCalled()
+    expect(mockApp.mock.calls[0][0]).toBe(testState)
+    expect(mockApp.mock.calls[0][1]).not.toBe(testActions)
+    expect(mockApp.mock.calls[0][2]).toBe(testView)
+    expect(mockApp.mock.calls[0][3]).toBe('container')
+    expect(actions).toHaveProperty('result', true)
   })
 
   it('should not mutate original actions', () => {
-    render(app)(initialState, actions, view)
-    expect(actions).toEqual({ up: actions.up })
+    render(app)(testState, testActions, testView)
+    expect(testActions).toEqual({
+      up: testActions.up,
+      getState: testActions.getState,
+    })
+  })
+
+  it('should not mutate store', () => {
+    const actions = render(app)(testState, testActions, testView)
+    expect(actions.getState()).toEqual({ count: 0 })
+    expect(actions.toString()).toBe('<h1>0</h1>')
+    expect(actions.getState()).toEqual({ count: 0 })
   })
 
   it('should render app with current state', () => {
-    const main = render(app)(initialState, actions, view)
-    expect(main.toString).toBeInstanceOf(Function)
-    expect(main.toString()).toBe('<h1>0</h1>')
-    main.up()
-    expect(main.toString()).toBe('<h1>1</h1>')
-    main.up(100)
-    expect(main.toString()).toBe('<h1>101</h1>')
+    const actions = render(app)(testState, testActions, testView)
+    expect(actions.toString).toBeInstanceOf(Function)
+    expect(actions.toString()).toBe('<h1>0</h1>')
+    actions.up()
+    expect(actions.toString()).toBe('<h1>1</h1>')
+    actions.up(100)
+    expect(actions.toString()).toBe('<h1>101</h1>')
+  })
+
+  it('should provide state and actions to nested views', () => {
+    const Component = () => (state, actions) => {
+      expect(actions).toBeInstanceOf(Object)
+      return <h1>{state.count}</h1>
+    }
+    const view = () => <Component />
+    const actions = render(app)(testState, testActions, view)
+    expect(actions.toString()).toBe('<h1>0</h1>')
+    actions.up(5)
+    expect(actions.toString()).toBe('<h1>5</h1>')
   })
 })

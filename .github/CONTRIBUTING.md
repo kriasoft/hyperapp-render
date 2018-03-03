@@ -1,6 +1,6 @@
 # Contributing to Hyperapp Render
 
-♥ [@hyperapp/render](https://github.com/hyperapp/render) and want to
+♥ [Hyperapp Render](https://github.com/hyperapp/render) and want to
 get involved? Thanks! We're actively looking for folks interested in helping
 out and there are plenty of ways you can help!
 

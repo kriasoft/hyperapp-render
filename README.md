@@ -31,7 +31,7 @@ with the following script tag:
 <script src="https://unpkg.com/@hyperapp/render@latest/hyperapp-render.min.js"></script>
 ```
 
-You can find the library in `window.render` and `window.renderToString`.
+You can find the library in `window.hyperappRender`.
 
 ## Usage
 
@@ -41,13 +41,13 @@ This can be useful for server-side rendering or creating HTML snippets based on 
 
 ```js
 import { h, app } from 'hyperapp'
-import { render } from '@hyperapp/render'
+import { withRender } from '@hyperapp/render'
 
 const state = { name: 'World' }
 const actions = { setName: name => ({ name }) }
 const view = (state, actions) => <h1>Hello {state.name}</h1>
 
-const main = render(app)(state, actions, view)
+const main = withRender(app)(state, actions, view)
 
 main.toString()          // => <h1>Hello World</h1>
 main.setName('Hyperapp') // <= any sync or async action call
@@ -70,9 +70,9 @@ The library also provides [Node.js streaming](https://nodejs.org/api/stream.html
 server-side rendering. Render-to-stream functionality is available from `@hyperapp/render/server` npm package.
 
 ```js
-import { render, renderToString, renderToStream } from '@hyperapp/render/server'
+import { withRender, renderToString, renderToStream } from '@hyperapp/render/server'
 
-const main = render(app)(state, actions, view)
+const main = withRender(app)(state, actions, view)
 
 main.toStream() // => <stream.Readable>
 main.toString() // => <string>
@@ -106,17 +106,17 @@ the library does not reject injection attack on markup due to performance reason
 See:
 
 ```js
-const tagName = 'div onclick="alert(1)"'
-renderToString(h(tagName, { title: 'Hey' }, 'Hi'))
-// => <div onclick="alert(1)" title="Hey︎">Hi</div>
+const Component = 'div onclick="alert()"'
+renderToString(<Component title="XSS">Hi</Component>)
+// => <div onclick="alert()" title="XSS">Hi</div>
 
-const attributeName = 'onclick="alert(1)" title'
-renderToString(h('div', { [attributeName]: 'Hey' }, 'Hi'))
-// => <div onclick="alert(1)" title="Hey︎">Hi</div>
+const attributes = { 'onclick="alert()" title': 'XSS' }
+renderToString(<div {...attributes}>Hi</div>)
+// => <div onclick="alert()" title="XSS">Hi</div>
 
-const userInput = '<script>alert(1)</script>'
-renderToString(h('div', { innerHTML: userInput }, 'Hi'))
-// => <div><script>alert(1)</script></div>
+const userInput = '<script>alert()</script>'
+renderToString(<div innerHTML={userInput} title="XSS">Hi</div>)
+// => <div title="XSS"><script>alert()</script></div>
 ```
 
 ## License

@@ -213,7 +213,7 @@ export function renderToString(view, state, actions) {
   return renderer(view, state, actions)(Infinity)
 }
 
-export function render(nextApp) {
+export function withRender(nextApp) {
   return (initialState, actionsTemplate, view, container) => {
     const actions = nextApp(
       initialState,

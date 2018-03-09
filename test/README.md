@@ -1,18 +1,19 @@
 # Testing
 
-[![build status](https://img.shields.io/travis/hyperapp/render/master.svg?maxAge=3600)](https://travis-ci.org/hyperapp/render)
-[![coverage status](https://img.shields.io/codecov/c/github/hyperapp/render.svg?maxAge=3600)](https://codecov.io/gh/hyperapp/render)
+[![build status](https://travis-ci.org/hyperapp/render.svg?branch=master)](https://travis-ci.org/hyperapp/render)
+[![coverage status](https://codecov.io/gh/hyperapp/render/branch/master/graph/badge.svg)](https://codecov.io/gh/hyperapp/render)
+[![dependency status](https://david-dm.org/hyperapp/render/status.svg)](https://david-dm.org/hyperapp/render)
 
-Find problematic patterns in code:
+Find problematic patterns in code using [ESLint](https://eslint.org/)
+and format code using [Prettier](https://prettier.io/)
+by following [Airbnb Style Guide](https://github.com/airbnb/javascript):
 
 ```bash
 npm run lint
 ```
 
-Run unit tests:
+Run unit tests using [Jest](http://facebook.github.io/jest/):
 
 ```bash
 npm run test
 ```
-
-For more information visit http://facebook.github.io/jest/

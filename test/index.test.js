@@ -1,6 +1,6 @@
 /** @jsx h */
 import { h, app } from 'hyperapp'
-import { renderer, renderToString, render } from '../src'
+import { renderer, renderToString, withRender } from '../src'
 
 describe('escape', () => {
   it('should escape ampersand when passed as text content', () => {
@@ -346,7 +346,7 @@ describe('renderToString(view, state, actions)', () => {
   })
 })
 
-describe('render(app)(state, actions, view, container)', () => {
+describe('withRender(app)(state, actions, view, container)', () => {
   const testState = { count: 0 }
   const testActions = {
     up: (count = 1) => (state) => ({ count: state.count + count }),
@@ -356,7 +356,7 @@ describe('render(app)(state, actions, view, container)', () => {
 
   it('should create a higher-order app', () => {
     const mockApp = jest.fn(() => ({ result: true }))
-    const renderApp = render(mockApp)
+    const renderApp = withRender(mockApp)
     expect(renderApp).toBeInstanceOf(Function)
     expect(mockApp).not.toBeCalled()
     const actions = renderApp(testState, testActions, testView, 'container')
@@ -369,7 +369,7 @@ describe('render(app)(state, actions, view, container)', () => {
   })
 
   it('should not mutate original actions', () => {
-    render(app)(testState, testActions, testView)
+    withRender(app)(testState, testActions, testView)
     expect(testActions).toEqual({
       up: testActions.up,
       getState: testActions.getState,
@@ -377,14 +377,14 @@ describe('render(app)(state, actions, view, container)', () => {
   })
 
   it('should not mutate store', () => {
-    const actions = render(app)(testState, testActions, testView)
+    const actions = withRender(app)(testState, testActions, testView)
     expect(actions.getState()).toEqual({ count: 0 })
     expect(actions.toString()).toBe('<h1>0</h1>')
     expect(actions.getState()).toEqual({ count: 0 })
   })
 
   it('should render app with current state', () => {
-    const actions = render(app)(testState, testActions, testView)
+    const actions = withRender(app)(testState, testActions, testView)
     expect(actions.toString).toBeInstanceOf(Function)
     expect(actions.toString()).toBe('<h1>0</h1>')
     actions.up()
@@ -399,7 +399,7 @@ describe('render(app)(state, actions, view, container)', () => {
       return <h1>{state.count}</h1>
     }
     const view = () => <Component />
-    const actions = render(app)(testState, testActions, view)
+    const actions = withRender(app)(testState, testActions, view)
     expect(actions.toString()).toBe('<h1>0</h1>')
     actions.up(5)
     expect(actions.toString()).toBe('<h1>5</h1>')

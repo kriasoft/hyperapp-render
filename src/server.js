@@ -18,7 +18,7 @@ export function renderToStream(view, state, actions) {
   })
 }
 
-export function render(nextApp) {
+export function withRender(nextApp) {
   return (initialState, actionsTemplate, view, container) => {
     const actions = nextApp(
       initialState,

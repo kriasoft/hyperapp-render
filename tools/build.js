@@ -24,15 +24,13 @@ const files = [
     input: 'dist/src/index.js',
     output: 'dist/hyperapp-render.js',
     format: 'umd',
-    name: 'self',
-    extend: true,
+    name: 'hyperappRender',
   },
   {
     input: 'dist/src/index.js',
     output: 'dist/hyperapp-render.min.js',
     format: 'umd',
-    name: 'self',
-    extend: true,
+    name: 'hyperappRender',
   },
   {
     input: 'dist/src/server.js',
@@ -85,7 +83,6 @@ async function build() {
       bundle.write({
         file: file.output,
         format: file.format,
-        extend: file.extend,
         sourcemap: true,
         exports: 'named',
         name: file.name,

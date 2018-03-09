@@ -3,7 +3,7 @@
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :
-	(factory((global.self = global.self || {})));
+	(factory((global.hyperappRender = {})));
 }(this, (function (exports) { 'use strict';
 
 var styleNameCache = new Map();
@@ -166,7 +166,7 @@ function renderer(view, state, actions) {
 function renderToString(view, state, actions) {
   return renderer(view, state, actions)(Infinity);
 }
-function render(nextApp) {
+function withRender(nextApp) {
   return function (initialState, actionsTemplate, view, container) {
     var actions = nextApp(initialState, Object.assign({}, actionsTemplate, {
       getState: function getState() {
@@ -186,7 +186,7 @@ function render(nextApp) {
 
 exports.renderer = renderer;
 exports.renderToString = renderToString;
-exports.render = render;
+exports.withRender = withRender;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

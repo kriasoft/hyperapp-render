@@ -15,9 +15,14 @@
     "html",
     "ssr"
   ],
-  "main": "index.js",
-  "module": "module.js",
-  "esnext": "src/index.js",
+  "main": "node/index.js",
+  "module": "node/module.js",
+  "esnext": "src/node.js",
+  "browser": {
+    "node/index.js": "./browser/index.js",
+    "node/module.js": "./browser/module.js",
+    "src/node.js": "./src/browser.js"
+  },
   "devDependencies": {
     "@babel/core": "7.0.0-beta.40",
     "@babel/plugin-transform-react-jsx": "7.0.0-beta.40",
@@ -45,10 +50,10 @@
     "rollup-plugin-uglify": "^3.0.0"
   },
   "scripts": {
-    "lint": "eslint benchmark src test tools --fix",
+    "lint": "eslint benchmark src test tools",
     "test": "jest --coverage",
     "build": "node tools/build",
     "precommit": "node tools/precommit",
-    "benchmark": "benchr benchmark/index.bench.js --require @babel/register"
+    "benchmark": "benchr benchmark/benchmark.js --require @babel/register"
   }
 }

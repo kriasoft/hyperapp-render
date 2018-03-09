@@ -1,5 +1,5 @@
 import { Readable } from 'stream'
-import { renderer, renderToString } from './index'
+import { renderer, renderToString } from './browser'
 
 export { renderer, renderToString }
 

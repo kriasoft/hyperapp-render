@@ -11,35 +11,35 @@ const pkg = require('../package.json')
 // The source files to be compiled by Rollup
 const files = [
   {
-    input: 'dist/src/index.js',
-    output: 'dist/index.js',
-    format: 'cjs',
-  },
-  {
-    input: 'dist/src/index.js',
-    output: 'dist/module.js',
-    format: 'es',
-  },
-  {
-    input: 'dist/src/index.js',
+    input: 'dist/src/browser.js',
     output: 'dist/hyperapp-render.js',
     format: 'umd',
     name: 'hyperappRender',
   },
   {
-    input: 'dist/src/index.js',
+    input: 'dist/src/browser.js',
     output: 'dist/hyperapp-render.min.js',
     format: 'umd',
     name: 'hyperappRender',
   },
   {
-    input: 'dist/src/server.js',
-    output: 'dist/server/index.js',
+    input: 'dist/src/browser.js',
+    output: 'dist/browser/index.js',
     format: 'cjs',
   },
   {
-    input: 'dist/src/server.js',
-    output: 'dist/server/module.js',
+    input: 'dist/src/browser.js',
+    output: 'dist/browser/module.js',
+    format: 'es',
+  },
+  {
+    input: 'dist/src/node.js',
+    output: 'dist/node/index.js',
+    format: 'cjs',
+  },
+  {
+    input: 'dist/src/node.js',
+    output: 'dist/node/module.js',
     format: 'es',
   },
 ]
@@ -98,14 +98,33 @@ async function build() {
   delete libPkg.scripts
   await fs.outputJson('dist/package.json', libPkg, { spaces: 2 })
 
-  // Create server/package.json for convenient import
-  const serverPkg = Object.assign({}, pkg, {
-    name: 'server',
-    esnext: '../src/server.js',
-  })
-  delete serverPkg.devDependencies
-  delete serverPkg.scripts
-  await fs.outputJson('dist/server/package.json', serverPkg, { spaces: 2 })
+  // Create browser/package.json for convenient import
+  await fs.outputJson(
+    'dist/browser/package.json',
+    {
+      private: true,
+      name: 'browser',
+      version: pkg.version,
+      main: 'index.js',
+      module: 'module.js',
+      esnext: '../src/browser.js',
+    },
+    { spaces: 2 },
+  )
+
+  // Create node/package.json for convenient import
+  await fs.outputJson(
+    'dist/node/package.json',
+    {
+      private: true,
+      name: 'node',
+      version: pkg.version,
+      main: 'index.js',
+      module: 'module.js',
+      esnext: '../src/node.js',
+    },
+    { spaces: 2 },
+  )
 }
 
 module.exports = build()

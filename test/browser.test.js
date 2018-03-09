@@ -1,6 +1,6 @@
 /** @jsx h */
 import { h, app } from 'hyperapp'
-import { renderer, renderToString, withRender } from '../src'
+import { renderer, renderToString, withRender } from '../src/browser'
 
 describe('escape', () => {
   it('should escape ampersand when passed as text content', () => {

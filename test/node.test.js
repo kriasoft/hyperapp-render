@@ -1,7 +1,7 @@
 /** @jsx h */
 import { h, app } from 'hyperapp'
 import { Readable, Writable } from 'stream'
-import { renderer, renderToString, renderToStream, withRender } from '../src/server'
+import { renderer, renderToString, renderToStream, withRender } from '../src/node'
 
 function readFromStream(stream) {
   return new Promise((resolve, reject) => {
@@ -18,7 +18,7 @@ function readFromStream(stream) {
   })
 }
 
-describe('server/renderer(view, state, actions)(bytes)', () => {
+describe('renderer(view, state, actions)(bytes)', () => {
   it('should render markup', () => {
     const read = renderer(<div />)
     expect(read(Infinity)).toBe('<div></div>')
@@ -26,14 +26,14 @@ describe('server/renderer(view, state, actions)(bytes)', () => {
   })
 })
 
-describe('server/renderToString(view, state, actions)', () => {
+describe('renderToString(view, state, actions)', () => {
   it('should render markup', () => {
     const html = renderToString(<div>hello world</div>)
     expect(html).toBe('<div>hello world</div>')
   })
 })
 
-describe('server/renderToStream(view, state, actions)', () => {
+describe('renderToStream(view, state, actions)', () => {
   it('should return a readable stream', () => {
     const stream = renderToStream(<div>hello world</div>)
     expect(stream).toBeInstanceOf(Readable)
@@ -59,7 +59,7 @@ describe('server/renderToStream(view, state, actions)', () => {
   })
 })
 
-describe('server/withRender(app)(state, actions, view, container)', () => {
+describe('withRender(app)(state, actions, view, container)', () => {
   const testState = { count: 0 }
   const testActions = {
     up: (count = 1) => (state) => ({ count: state.count + count }),

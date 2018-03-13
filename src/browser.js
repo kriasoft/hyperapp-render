@@ -31,7 +31,7 @@ const escapeRegExp = /["&'<>]/g
 const escapeLookup = new Map([
   ['"', '&quot;'],
   ['&', '&amp;'],
-  ["'", '&#39;'],
+  ["'", '&#39;'], // shorter than "&apos;" and "&#x27;" plus supports HTML4
   ['<', '&lt;'],
   ['>', '&gt;'],
 ])

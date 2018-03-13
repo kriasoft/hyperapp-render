@@ -20,8 +20,8 @@ that allows you to render views to an HTML string.
 
 ## Getting Started
 
-Our first example is an interactive app from which you can generate an HTML markup for different purposes
-at any given time. Go ahead and [try it online](https://codepen.io/frenzzy/pen/zpmRQY/left/?editors=0010).
+Our first example is an interactive app from which you can generate an HTML markup.
+Go ahead and [try it online](https://codepen.io/frenzzy/pen/zpmRQY/left/?editors=0010).
 
 ```js
 import { h, app } from 'hyperapp'
@@ -45,7 +45,7 @@ const view = (state, actions) => (
 const main = withRender(app)(state, actions, view, document.body)
 
 main.toString()       // => <main><h1>Hello</h1><input value="Hello"/></main>
-main.setText('World') // <= here could be any sync or async action call!
+main.setText('World') // <= any sync or async action call
 main.toString()       // => <main><h1>World</h1><input value="World"/></main>
 ```
 
@@ -63,17 +63,25 @@ Or using a [CDN](https://en.wikipedia.org/wiki/Content_delivery_network) like
 with the following script tag:
 
 ```html
-<script src="https://unpkg.com/@hyperapp/render@latest/hyperapp-render.min.js"></script>
+<script src="https://unpkg.com/@hyperapp/render/hyperapp-render.min.js"></script>
 ```
 
 You can find the library in `window.hyperappRender`.
+
+We support all ES5-compliant browsers, including Internet Explorer 9 and above,
+but depending on your target browsers you may need to include
+[polyfills](https://en.wikipedia.org/wiki/Polyfill_(programming)) for
+[`Set`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set),
+[`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) and
+[`Object.assign`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign)
+before any other code.
 
 ## Usage
 
 The library provides a few functions which you can use depending on your needs or personal preferences.
 
 ```js
-import { withRender, renderToString, renderToStream } from '@hyperapp/render/server'
+import { withRender, renderToString, renderToStream } from '@hyperapp/render'
 
 const main = withRender(app)(state, actions, view, container)
 
@@ -81,17 +89,17 @@ main.toString()                      // => <string>
 renderToString(<Component />)        // => <string>
 renderToString(view, state, actions) // => <string>
 
-main.toStream()                      // => <stream.Readable>
-renderToStream(<Component />)        // => <stream.Readable>
-renderToStream(view, state, actions) // => <stream.Readable>
+main.toStream()                      // => <stream.Readable> => <string>
+renderToStream(<Component />)        // => <stream.Readable> => <string>
+renderToStream(view, state, actions) // => <stream.Readable> => <string>
 ```
 
 **Note:** functions `toStream` and `renderToStream` are available in
 [Node.js](https://nodejs.org/en/) environment only (v6 or newer).
 
-## Examples
+## Overview
 
-The basic usage example is to use the `withRender` function,
+The library exposes three functions. The first of these is `withRender` high-order function,
 which adds the `toString` action to be able to render your application to an HTML string at any given time.
 This can be useful for server-side rendering or creating HTML snippets based on current application state.
 
@@ -110,7 +118,7 @@ main.setName('Hyperapp') // <= any sync or async action call
 main.toString()          // => <h1>Hello Hyperapp</h1>
 ```
 
-You also can use `renderToString` function to generate HTML markup from any of your views without
+The second `renderToString` function generates HTML markup from any of your views without
 app initialization. That could be useful to generate HTML markup from static views.
 
 ```js
@@ -122,9 +130,11 @@ renderToString(<Component name="World" />)
 // => <h1>Hello World</h1>
 ```
 
-Functions `toStream` and `renderToStream` returns a
+The last `renderToStream` function and `toStream` equivalent return a
 [Readable stream](https://nodejs.org/api/stream.html#stream_readable_streams) that outputs an HTML string.
 The HTML output by this stream is exactly equal to what `toString` or `renderToString` would return.
+They are designed for more performant server-side rendering and here are examples how they could be used
+with [Express](http://expressjs.com/) or [Koa](http://koajs.com/):
 
 ```js
 app.get('/', (req, res) => {
@@ -156,16 +166,6 @@ app.get('/', (req, res) => {
 })
 ```
 
-## Browser Support
-
-We support all ES5-compliant browsers, including Internet Explorer 9 and above,
-but depending on your target browsers you may need to include
-[polyfills](https://en.wikipedia.org/wiki/Polyfill_(programming)) for
-[`Set`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set),
-[`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) and
-[`Object.assign`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign)
-before any other code.
-
 ## Caveats
 
 The library automatically escapes text content and attribute values
@@ -177,8 +177,8 @@ the library does not reject injection attack on markup due to performance reason
 See:
 
 ```js
-const Element = 'div onclick="alert()"'
-renderToString(<Element title="XSS">Hi</Element>)
+const Node = 'div onclick="alert()"'
+renderToString(<Node title="XSS">Hi</Node>)
 // => <div onclick="alert()" title="XSS">Hi</div>
 
 const attributes = { 'onclick="alert()" title': 'XSS' }
@@ -186,7 +186,7 @@ renderToString(<div {...attributes}>Hi</div>)
 // => <div onclick="alert()" title="XSS">Hi</div>
 
 const userInput = '<script>alert()</script>'
-renderToString(<div innerHTML={userInput} title="XSS">Hi</div>)
+renderToString(<div title="XSS" innerHTML={userInput}>Hi</div>)
 // => <div title="XSS"><script>alert()</script></div>
 ```
 

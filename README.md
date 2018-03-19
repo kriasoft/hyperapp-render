@@ -1,8 +1,8 @@
 # <img height="24" src="https://cdn.rawgit.com/hyperapp/render/master/logo.svg"> Hyperapp Render
 
-[![npm version](https://img.shields.io/npm/v/@hyperapp/render.svg?maxAge=3600)](https://www.npmjs.com/package/@hyperapp/render)
-[![library size](http://img.badgesize.io/hyperapp/render/master/dist/hyperapp-render.min.js.svg?compression=gzip&label=size&maxAge=3600)](https://bundlephobia.com/result?p=@hyperapp/render)
-[![npm downloads](https://img.shields.io/npm/dm/@hyperapp/render.svg?maxAge=3600)](https://npm-stat.com/charts.html?package=@hyperapp/render)
+[![npm version](https://img.shields.io/npm/v/@hyperapp/render.svg)](https://www.npmjs.com/package/@hyperapp/render)
+[![library size](http://img.badgesize.io/hyperapp/render/master/dist/hyperapp-render.min.js.svg?compression=gzip&label=size)](https://bundlephobia.com/result?p=@hyperapp/render)
+[![npm downloads](https://img.shields.io/npm/dm/@hyperapp/render.svg)](https://npm-stat.com/charts.html?package=@hyperapp/render)
 [![slack chat](https://hyperappjs.herokuapp.com/badge.svg)](https://hyperappjs.herokuapp.com "Join us")
 
 A [Hyperapp](https://github.com/hyperapp/hyperapp) higher-order `app`
@@ -10,7 +10,7 @@ that allows you to render views to an HTML string.
 
 * **User experience** — Generate HTML on the server and send the markup
   down on the initial request for faster page loads. Built-in
-  [mounting](https://github.com/hyperapp/hyperapp/tree/d91e4667ee4e684eb874235e46ce919f502d4aae#mounting)
+  [mounting](https://github.com/hyperapp/hyperapp/tree/1.2.0#mounting)
   feature in Hyperapp is allowing you to have a very performant first-load experience.
 * **Accessibility** — Allow search engines to crawl your pages for
   [SEO](https://en.wikipedia.org/wiki/Search_engine_optimization) purposes.
@@ -23,7 +23,7 @@ that allows you to render views to an HTML string.
 Our first example is an interactive app from which you can generate an HTML markup.
 Go ahead and [try it online](https://codepen.io/frenzzy/pen/zpmRQY/left/?editors=0010).
 
-```js
+```jsx
 import { h, app } from 'hyperapp'
 import { withRender } from '@hyperapp/render'
 
@@ -80,7 +80,7 @@ before any other code.
 
 The library provides a few functions which you can use depending on your needs or personal preferences.
 
-```js
+```jsx
 import { withRender, renderToString, renderToStream } from '@hyperapp/render'
 
 const main = withRender(app)(state, actions, view, container)
@@ -103,7 +103,7 @@ The library exposes three functions. The first of these is `withRender` high-ord
 which adds the `toString` action to be able to render your application to an HTML string at any given time.
 This can be useful for server-side rendering or creating HTML snippets based on current application state.
 
-```js
+```jsx
 import { h, app } from 'hyperapp'
 import { withRender } from '@hyperapp/render'
 
@@ -121,7 +121,7 @@ main.toString()          // => <h1>Hello Hyperapp</h1>
 The second `renderToString` function generates HTML markup from any of your views without
 app initialization. That could be useful to generate HTML markup from static views.
 
-```js
+```jsx
 import { renderToString } from '@hyperapp/render'
 
 const Component = ({ name }) => <h1>Hello {name}</h1>
@@ -136,7 +136,7 @@ The HTML output by this stream is exactly equal to what `toString` or `renderToS
 They are designed for more performant server-side rendering and here are examples how they could be used
 with [Express](http://expressjs.com/) or [Koa](http://koajs.com/):
 
-```js
+```jsx
 app.get('/', (req, res) => {
   res.write('<!doctype html><html><head>')
   res.write('<title>Page</title>')
@@ -151,7 +151,7 @@ app.get('/', (req, res) => {
 })
 ```
 
-```js
+```jsx
 app.get('/', (req, res) => {
   res.write('<!doctype html>')
   const stream = renderToStream(
@@ -169,14 +169,14 @@ app.get('/', (req, res) => {
 ## Caveats
 
 The library automatically escapes text content and attribute values
-of [virtual DOM nodes](https://github.com/hyperapp/hyperapp/blob/1.1.2/README.md#virtual-dom)
+of [virtual DOM nodes](https://github.com/hyperapp/hyperapp/tree/1.2.0#view)
 to protect your application against [XSS](https://en.wikipedia.org/wiki/Cross-site_scripting) attacks.
 
 However, it is not safe to allow "user input" for node names or attribute keys because
 the library does not reject injection attack on markup due to performance reasons.
 See:
 
-```js
+```jsx
 const Node = 'div onclick="alert()"'
 renderToString(<Node title="XSS">Hi</Node>)
 // => <div onclick="alert()" title="XSS">Hi</div>

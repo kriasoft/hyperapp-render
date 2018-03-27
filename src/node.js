@@ -1,7 +1,7 @@
 import { Readable } from 'stream'
-import { renderer, renderToString } from './browser'
+import { renderer, renderToString } from './index'
 
-export { renderer, renderToString }
+export { renderToString }
 
 export function renderToStream(view, state, actions) {
   const read = renderer(view, state, actions)

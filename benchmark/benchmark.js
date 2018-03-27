@@ -1,6 +1,6 @@
 /** @jsx h */
 import { h } from 'hyperapp'
-import { renderToString } from '../src/browser'
+import { renderToString } from '../src/index'
 
 suite('escape', () => {
   benchmark('empty', () => {

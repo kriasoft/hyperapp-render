@@ -166,6 +166,7 @@
   function renderToString(view, state, actions) {
     return renderer(view, state, actions)(Infinity);
   }
+
   function withRender(nextApp) {
     return function (initialState, actionsTemplate, view, container) {
       var actions = nextApp(initialState, Object.assign({}, actionsTemplate, {
@@ -184,7 +185,6 @@
     };
   }
 
-  exports.renderer = renderer;
   exports.renderToString = renderToString;
   exports.withRender = withRender;
 

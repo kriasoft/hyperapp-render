@@ -1,7 +1,7 @@
 /** @jsx h */
 import { h, app } from 'hyperapp'
 import { Readable, Writable } from 'stream'
-import { renderer, renderToString, renderToStream, withRender } from '../src/node'
+import { renderToString, renderToStream, withRender } from '../src/node'
 
 function readFromStream(stream) {
   return new Promise((resolve, reject) => {
@@ -17,14 +17,6 @@ function readFromStream(stream) {
     stream.pipe(writable)
   })
 }
-
-describe('renderer(view, state, actions)(bytes)', () => {
-  it('should render markup', () => {
-    const read = renderer(<div />)
-    expect(read(Infinity)).toBe('<div></div>')
-    expect(read(Infinity)).toBe(null)
-  })
-})
 
 describe('renderToString(view, state, actions)', () => {
   it('should render markup', () => {

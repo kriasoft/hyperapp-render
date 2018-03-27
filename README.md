@@ -1,8 +1,8 @@
 # <img height="24" src="https://cdn.rawgit.com/hyperapp/render/master/logo.svg"> Hyperapp Render
 
 [![npm version](https://img.shields.io/npm/v/@hyperapp/render.svg)](https://www.npmjs.com/package/@hyperapp/render)
-[![library size](http://img.badgesize.io/hyperapp/render/master/dist/hyperapp-render.min.js.svg?compression=gzip&label=size)](https://bundlephobia.com/result?p=@hyperapp/render)
-[![npm downloads](https://img.shields.io/npm/dm/@hyperapp/render.svg)](https://npm-stat.com/charts.html?package=@hyperapp/render)
+[![npm downloads](https://img.shields.io/npm/dw/@hyperapp/render.svg)](https://www.npmjs.com/package/@hyperapp/render)
+[![library size](https://img.shields.io/bundlephobia/minzip/@hyperapp/render.svg)](https://bundlephobia.com/result?p=@hyperapp/render)
 [![slack chat](https://hyperappjs.herokuapp.com/badge.svg)](https://hyperappjs.herokuapp.com "Join us")
 
 A [Hyperapp](https://github.com/hyperapp/hyperapp) higher-order `app`
@@ -42,7 +42,7 @@ const view = (state, actions) => (
   </main>
 )
 
-const main = withRender(app)(state, actions, view, document.body)
+const main = withRender(app)(state, actions, view)
 
 main.toString()       // => <main><h1>Hello</h1><input value="Hello"/></main>
 main.setText('World') // <= any sync or async action call

@@ -48,11 +48,12 @@
     "rollup-plugin-babel": "4.0.0-beta.2",
     "rollup-plugin-commonjs": "^9.1.0",
     "rollup-plugin-node-resolve": "^3.3.0",
-    "rollup-plugin-uglify": "^3.0.0"
+    "rollup-plugin-uglify": "^3.0.0",
+    "typescript": "^2.9.2"
   },
   "scripts": {
     "lint": "eslint benchmark src test tools",
-    "test": "jest",
+    "test": "jest && tsc -p test/ts",
     "build": "node tools/build",
     "precommit": "node tools/precommit",
     "benchmark": "benchr benchmark/benchmark.js --require @babel/register"

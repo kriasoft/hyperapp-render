@@ -17,6 +17,7 @@
   ],
   "main": "node/index.js",
   "module": "node/module.js",
+  "typings": "render.d.ts",
   "esnext": "src/node.js",
   "browser": {
     "node/index.js": "./browser/index.js",

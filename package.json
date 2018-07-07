@@ -53,7 +53,7 @@
   },
   "scripts": {
     "lint": "eslint benchmark src test tools",
-    "test": "jest && tsc -p test/ts",
+    "test": "jest --coverage --no-cache && tsc -p test/ts",
     "build": "node tools/build",
     "precommit": "node tools/precommit",
     "benchmark": "benchr benchmark/benchmark.js --require @babel/register"

@@ -5,10 +5,17 @@
     "jsx": "react",
     "jsxFactory": "h",
     "baseUrl": "../..",
+    "typeRoots": [
+      "node_modules/@types/node/index.d.ts"
+    ],
+    "moduleResolution": "node",
     "paths": {
       "render": ["src", "render.d.ts"],
       "hyperapp": ["node_modules/hyperapp/hyperapp.d.ts"]
     },
+    "types": [
+      "node"
+    ],
     "target": "es6"
   },
   "include": ["*.ts", "*.tsx", "**/*.ts", "**/*.tsx"]

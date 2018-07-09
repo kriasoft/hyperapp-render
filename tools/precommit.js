@@ -2,23 +2,12 @@ process.on('unhandledRejection', (error) => {
   throw error
 })
 
-const cp = require('child_process')
-
-function spawn(command, args) {
-  return new Promise((resolve, reject) => {
-    cp.spawn(command, args, { stdio: ['ignore', 'inherit', 'inherit'] }).on('close', (code) => {
-      if (code === 0) {
-        resolve()
-      } else {
-        reject(new Error(`Exit with code ${code} from "${command} ${args.join(' ')}"`))
-      }
-    })
-  })
-}
+const lint = require('./lint')
+const test = require('./test')
 
 async function precommit() {
-  await spawn('npm', ['run', '--silent', 'lint'])
-  await spawn('npm', ['run', '--silent', 'test'])
+  await lint()
+  await test()
 }
 
-module.exports = precommit()
+module.exports = precommit().catch(process.exit)

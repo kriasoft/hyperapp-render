@@ -12,11 +12,11 @@ before_install:
   - npm install --global codecov
 
 install:
-  - npm install --no-save
+  - npm install
 
 script:
   - npm run lint
-  - npm run test
+  - npm run test -- --coverage
   - npm run build
 
 after_success:

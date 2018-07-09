@@ -1,5 +1,5 @@
-import { h, ActionsType, View } from 'hyperapp'
-import { renderer, renderToString } from '../../src/index'
+import { h, app, ActionsType, View } from 'hyperapp'
+import { renderToStream, withRender, App, Render, renderToString } from '../../src/node'
 
 namespace Counter {
   export interface State {
@@ -31,9 +31,16 @@ const view: View<Counter.State, Counter.Actions> = (state, actions) => (
   </main>
 )
 
-const counterRendererString = renderer(view, Counter.state, Counter.actions)(Infinity)
-
 const counterString = renderToString(view, Counter.state, Counter.actions)
 
-console.log(counterRendererString)
+const counterStream = renderToStream(view, Counter.state, Counter.actions)
+
+const counterRender = withRender<
+  App<Counter.State, Counter.Actions>,
+  Render<Counter.State, Counter.Actions>
+>(app)(Counter.state, Counter.actions, view, document.body)
+
 console.log(counterString)
+console.log(counterStream)
+console.log(counterRender.toString())
+console.log(counterRender.toStream())

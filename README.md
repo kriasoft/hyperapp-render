@@ -3,18 +3,18 @@
 [![npm version](https://img.shields.io/npm/v/@hyperapp/render.svg)](https://www.npmjs.com/package/@hyperapp/render)
 [![npm downloads](https://img.shields.io/npm/dw/@hyperapp/render.svg)](https://www.npmjs.com/package/@hyperapp/render)
 [![library size](https://img.shields.io/bundlephobia/minzip/@hyperapp/render.svg)](https://bundlephobia.com/result?p=@hyperapp/render)
-[![slack chat](https://hyperappjs.herokuapp.com/badge.svg)](https://hyperappjs.herokuapp.com "Join us")
+[![slack chat](https://hyperappjs.herokuapp.com/badge.svg)](https://hyperappjs.herokuapp.com 'Join us')
 
 A [Hyperapp](https://github.com/hyperapp/hyperapp) higher-order `app`
 that allows you to render views to an HTML string.
 
-* **User experience** — Generate HTML on the server and send the markup
+- **User experience** — Generate HTML on the server and send the markup
   down on the initial request for faster page loads. Built-in
   [mounting](https://github.com/hyperapp/hyperapp/tree/1.2.0#mounting)
   feature in Hyperapp is allowing you to have a very performant first-load experience.
-* **Accessibility** — Allow search engines to crawl your pages for
+- **Accessibility** — Allow search engines to crawl your pages for
   [SEO](https://en.wikipedia.org/wiki/Search_engine_optimization) purposes.
-* **Testability** — [Check HTML validity](https://en.wikipedia.org/wiki/Validator) and use
+- **Testability** — [Check HTML validity](https://en.wikipedia.org/wiki/Validator) and use
   [snapshot testing](https://facebook.github.io/jest/docs/en/snapshot-testing.html)
   to improve quality of your software.
 
@@ -49,6 +49,9 @@ main.setText('World') // <= any sync or async action call
 main.toString()       // => <main><h1>World</h1><input value="World"/></main>
 ```
 
+Looking for a boilerplate? Try [Hyperapp Starter](https://github.com/frenzzy/hyperapp-starter)
+with pre-configured server-side rendering and many more.
+
 ## Installation
 
 Using [npm](https://www.npmjs.com/package/@hyperapp/render):
@@ -70,7 +73,7 @@ You can find the library in `window.hyperappRender`.
 
 We support all ES5-compliant browsers, including Internet Explorer 9 and above,
 but depending on your target browsers you may need to include
-[polyfills](https://en.wikipedia.org/wiki/Polyfill_(programming)) for
+[polyfills](<https://en.wikipedia.org/wiki/Polyfill_(programming)>) for
 [`Set`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set),
 [`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) and
 [`Object.assign`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign)

@@ -5,7 +5,7 @@ process.on('unhandledRejection', (error) => {
 const fs = require('fs-extra')
 const rollup = require('rollup')
 const babel = require('rollup-plugin-babel')
-const uglify = require('rollup-plugin-uglify')
+const { uglify } = require('rollup-plugin-uglify')
 const pkg = require('../package.json')
 
 // The source files to be compiled by Rollup
@@ -49,11 +49,9 @@ async function build() {
   await fs.emptyDir('dist')
 
   // Copy source code, readme and license
-  await Promise.all([
-    fs.copy('src', 'dist/src'),
-    fs.copy('README.md', 'dist/README.md'),
-    fs.copy('LICENSE.md', 'dist/LICENSE.md'),
-  ])
+  await fs.copy('src', 'dist/src')
+  await fs.copy('README.md', 'dist/README.md')
+  await fs.copy('LICENSE.md', 'dist/LICENSE.md')
 
   // Compile source code into a distributable format with Babel
   await Promise.all(
@@ -70,6 +68,7 @@ async function build() {
                 {
                   modules: false,
                   loose: true,
+                  useBuiltIns: 'entry',
                   exclude: ['transform-typeof-symbol'],
                 },
               ],
@@ -107,6 +106,7 @@ async function build() {
       version: pkg.version,
       main: 'index.js',
       module: 'module.js',
+      typings: '../src/browser.d.ts',
       esnext: '../src/browser.js',
     },
     { spaces: 2 },
@@ -121,6 +121,7 @@ async function build() {
       version: pkg.version,
       main: 'index.js',
       module: 'module.js',
+      typings: '../src/node.d.ts',
       esnext: '../src/node.js',
     },
     { spaces: 2 },

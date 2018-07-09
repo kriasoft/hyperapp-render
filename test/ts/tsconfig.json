@@ -11,7 +11,7 @@
     ],
     "moduleResolution": "node",
     "paths": {
-      "render": ["src", "render.d.ts"]
+      "render": ["src"]
     },
     "types": [
       "node",

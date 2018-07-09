@@ -5,6 +5,7 @@
   ],
   "rules": {
     "no-plusplus": "off",
-    "prefer-template": "off"
+    "prefer-template": "off",
+    "react/jsx-one-expression-per-line": "off"
   }
 }

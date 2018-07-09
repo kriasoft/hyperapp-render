@@ -22,7 +22,7 @@ export function withRender(nextApp) {
   return (initialState, actionsTemplate, view, container) => {
     const actions = nextApp(
       initialState,
-      Object.assign({}, actionsTemplate, { getState: () => (state) => state }),
+      { ...actionsTemplate, getState: () => (state) => state },
       view,
       container,
     )

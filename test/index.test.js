@@ -253,8 +253,8 @@ describe('attributes', () => {
   })
 
   it('should not render event attribute', () => {
-    const html = renderToString(<button onclick={() => {}} />)
-    expect(html).toBe('<button></button>')
+    const html = renderToString(<button type="button" onclick={() => {}} />)
+    expect(html).toBe('<button type="button"></button>')
   })
 })
 

@@ -12,7 +12,7 @@ before_install:
   - npm install --global codecov
 
 install:
-  - npm install --no-save
+  - npm install
 
 script:
   - npm run lint

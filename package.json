@@ -50,8 +50,8 @@
     "rollup-plugin-uglify": "^3.0.0",
     "typescript": "^2.9.2"
   },
-  "dependencies": {
-    "@types/node": "^10.5.2",
+  "peerDependencies": {
+    "@types/node": ">=6.x",
     "hyperapp": "^1.2.6"
   },
   "scripts": {

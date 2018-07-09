@@ -6,15 +6,15 @@ import { renderToString } from './index'
 
 export { renderToString }
 
-export function renderToStream<View, State, Actions> (
+export function renderToStream<View, State, Actions>(
   view: View,
   state?: State,
-  actions?: Actions
+  actions?: Actions,
 ): Readable
 
 export type RenderActions = {
-  toString (): string
-  toStream (): Readable
+  toString(): string
+  toStream(): Readable
 }
 
 export interface Render<State, Actions> {
@@ -22,7 +22,7 @@ export interface Render<State, Actions> {
     state: State,
     actions: ActionsType<State, Actions>,
     view: View<State, Actions>,
-    container: Element | null
+    container: Element | null,
   ): RenderActions
 }
 
@@ -31,8 +31,8 @@ export interface App<State, Actions> {
     state: State,
     actions: ActionsType<State, Actions>,
     view: View<State, Actions>,
-    container: Element | null
+    container: Element | null,
   ): Actions
 }
 
-export function withRender<App, Render> (app: App): Render
+export function withRender<App, Render>(app: App): Render

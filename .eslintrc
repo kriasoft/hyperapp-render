@@ -1,11 +1,11 @@
 {
   "extends": [
     "airbnb",
-    "plugin:prettier/recommended"
+    "eslint-config-prettier",
+    "eslint-config-prettier/react"
   ],
   "rules": {
     "no-plusplus": "off",
-    "prefer-template": "off",
-    "react/jsx-one-expression-per-line": "off"
+    "prefer-template": "off"
   }
 }

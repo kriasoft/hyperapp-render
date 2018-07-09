@@ -39,7 +39,6 @@
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-import": "^2.13.0",
     "eslint-plugin-jsx-a11y": "^6.1.0",
-    "eslint-plugin-prettier": "^2.6.2",
     "eslint-plugin-react": "^7.10.0",
     "fs-extra": "^6.0.1",
     "husky": "^0.14.3",
@@ -58,8 +57,8 @@
     "hyperapp": "^1.2.6"
   },
   "scripts": {
-    "lint": "eslint benchmark src test tools",
-    "test": "jest --coverage && tsc -p test/ts",
+    "lint": "node tools/lint",
+    "test": "node tools/test",
     "build": "node tools/build",
     "precommit": "node tools/precommit",
     "benchmark": "benchr benchmark/benchmark.js --require @babel/register"

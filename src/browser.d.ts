@@ -6,7 +6,7 @@ import { renderToString } from './index'
 export { renderToString }
 
 export type RenderActions = {
-  toString (): string
+  toString(): string
 }
 
 export interface Render<State, Actions> {
@@ -14,7 +14,7 @@ export interface Render<State, Actions> {
     state: State,
     actions: ActionsType<State, Actions>,
     view: View<State, Actions>,
-    container: Element | null
+    container: Element | null,
   ): RenderActions
 }
 
@@ -23,8 +23,8 @@ export interface App<State, Actions> {
     state: State,
     actions: ActionsType<State, Actions>,
     view: View<State, Actions>,
-    container: Element | null
+    container: Element | null,
   ): Actions
 }
 
-export function withRender<App, Render> (app: App): Render
+export function withRender<App, Render>(app: App): Render

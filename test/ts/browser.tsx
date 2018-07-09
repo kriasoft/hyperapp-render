@@ -1,5 +1,5 @@
-import { h, app, ActionsType, View } from "hyperapp"
-import { withRender, App, Render, renderToString } from "../../src/browser"
+import { h, app, ActionsType, View } from 'hyperapp'
+import { withRender, App, Render, renderToString } from '../../src/browser'
 
 namespace Counter {
   export interface State {
@@ -12,14 +12,14 @@ namespace Counter {
   }
 
   export const state: State = {
-    count: 0
+    count: 0,
   }
 
   export const actions: ActionsType<State, Actions> = {
-    down: () => state => ({ count: state.count - 1 }),
-    up: (value: number) => state => ({
-      count: state.count + value
-    })
+    down: () => (state) => ({ count: state.count - 1 }),
+    up: (value: number) => (state) => ({
+      count: state.count + value,
+    }),
   }
 }
 
@@ -31,18 +31,12 @@ const view: View<Counter.State, Counter.Actions> = (state, actions) => (
   </main>
 )
 
-const counterString = renderToString(
-  view,
-  Counter.state,
-  Counter.actions
-)
+const counterString = renderToString(view, Counter.state, Counter.actions)
 
-const counterRender = withRender<App<Counter.State, Counter.Actions>, Render<Counter.State, Counter.Actions>>(app)(
-  Counter.state,
-  Counter.actions,
-  view,
-  document.body
-)
+const counterRender = withRender<
+  App<Counter.State, Counter.Actions>,
+  Render<Counter.State, Counter.Actions>
+>(app)(Counter.state, Counter.actions, view, document.body)
 
 console.log(counterString)
 console.log(counterRender.toString())

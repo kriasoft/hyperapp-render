@@ -1,13 +1,13 @@
 import { View } from 'hyperapp'
 
-export function renderer<View, State, Actions> (
+export function renderer<View, State, Actions>(
   view: View,
   state?: State,
-  actions?: Actions
+  actions?: Actions,
 ): (bytes: number) => string
 
-export function renderToString<View, State, Actions> (
+export function renderToString<View, State, Actions>(
   view: View,
   state?: State,
-  actions?: Actions
+  actions?: Actions,
 ): string

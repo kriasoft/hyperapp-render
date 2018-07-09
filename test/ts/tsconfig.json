@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "noEmit": true,
+    "jsx": "react",
+    "jsxFactory": "h",
+    "baseUrl": "../..",
+    "typeRoots": [
+      "node_modules/@types/node",
+      "node_modules/hyperapp"
+    ],
+    "moduleResolution": "node",
+    "paths": {
+      "render": ["src", "render.d.ts"]
+    },
+    "types": [
+      "node",
+      "hyperapp",
+    ],
+    "target": "es6"
+  },
+  "include": ["*.ts", "*.tsx", "**/*.ts", "**/*.tsx"]
+}

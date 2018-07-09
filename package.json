@@ -17,6 +17,7 @@
   ],
   "main": "node/index.js",
   "module": "node/module.js",
+  "typings": "render.d.ts",
   "esnext": "src/node.js",
   "browser": {
     "node/index.js": "./browser/index.js",
@@ -28,6 +29,7 @@
     "@babel/plugin-transform-react-jsx": "7.0.0-beta.44",
     "@babel/preset-env": "7.0.0-beta.44",
     "@babel/register": "7.0.0-beta.44",
+    "@types/node": "^6.0",
     "babel-core": "^7.0.0-0",
     "babel-jest": "^22.4.3",
     "benchr": "^4.3.0",
@@ -40,18 +42,23 @@
     "eslint-plugin-react": "^7.7.0",
     "fs-extra": "^5.0.0",
     "husky": "^0.14.3",
-    "hyperapp": "^1.2.5",
+    "hyperapp": "^1.2.6",
     "jest": "^22.4.3",
     "prettier": "^1.11.1",
     "rollup": "^0.57.1",
     "rollup-plugin-babel": "4.0.0-beta.2",
     "rollup-plugin-commonjs": "^9.1.0",
     "rollup-plugin-node-resolve": "^3.3.0",
-    "rollup-plugin-uglify": "^3.0.0"
+    "rollup-plugin-uglify": "^3.0.0",
+    "typescript": "^2.9.2"
+  },
+  "peerDependencies": {
+    "@types/node": ">=6.x",
+    "hyperapp": "^1.2.6"
   },
   "scripts": {
     "lint": "eslint benchmark src test tools",
-    "test": "jest",
+    "test": "jest --coverage --no-cache && tsc -p test/ts",
     "build": "node tools/build",
     "precommit": "node tools/precommit",
     "benchmark": "benchr benchmark/benchmark.js --require @babel/register"

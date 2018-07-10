@@ -1,4 +1,4 @@
-export as namespace render
+export as namespace hyperappRender
 
 import { ActionsType, View } from 'hyperapp'
 import { renderToString } from './index'

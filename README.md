@@ -61,8 +61,8 @@ npm install @hyperapp/render --save
 ```
 
 Or using a [CDN](https://en.wikipedia.org/wiki/Content_delivery_network) like
-[unpkg.com](https://unpkg.com/@hyperapp/render@latest/hyperapp-render.min.js) or
-[jsDelivr](https://cdn.jsdelivr.net/npm/@hyperapp/render@latest/hyperapp-render.min.js)
+[unpkg.com](https://unpkg.com/@hyperapp/render/hyperapp-render.min.js) or
+[jsDelivr](https://cdn.jsdelivr.net/npm/@hyperapp/render/hyperapp-render.min.js)
 with the following script tag:
 
 ```html

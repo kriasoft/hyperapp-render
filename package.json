@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@hyperapp/render",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Render Hyperapp to an HTML string with SSR and Node.js streaming support",
   "repository": "hyperapp/render",
   "author": "Vladimir Kutepov",
@@ -25,14 +25,17 @@
     "src/node.d.ts": "./src/browser.d.ts",
     "src/node.js": "./src/browser.js"
   },
+  "dependencies": {
+    "@types/node": "*",
+    "hyperapp": "^1.2.0"
+  },
   "devDependencies": {
     "@babel/core": "7.0.0-beta.52",
     "@babel/plugin-transform-react-jsx": "7.0.0-beta.52",
     "@babel/preset-env": "7.0.0-beta.52",
     "@babel/register": "7.0.0-beta.52",
-    "@types/node": "^6.0.114",
     "babel-core": "^7.0.0-0",
-    "babel-jest": "^23.2.0",
+    "babel-jest": "^23.4.0",
     "benchr": "^4.3.0",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^17.0.0",
@@ -42,8 +45,7 @@
     "eslint-plugin-react": "^7.10.0",
     "fs-extra": "^6.0.1",
     "husky": "^0.14.3",
-    "hyperapp": "^1.2.6",
-    "jest": "^23.3.0",
+    "jest": "^23.4.0",
     "prettier": "^1.13.7",
     "rollup": "^0.62.0",
     "rollup-plugin-babel": "4.0.0-beta.7",
@@ -51,10 +53,6 @@
     "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-uglify": "^4.0.0",
     "typescript": "^2.9.2"
-  },
-  "peerDependencies": {
-    "@types/node": ">=6.x",
-    "hyperapp": "^1.2.6"
   },
   "scripts": {
     "lint": "node tools/lint",

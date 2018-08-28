@@ -13,12 +13,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - [BREAKING] Rename higher-order app from `render` to `withRender`.
 - [BREAKING] Rename global exports from `window.*` to `window.hyperappRender.*`.
-- [BREAKING] Rename server package from `@hyperapp/render/server` to `@hyperapp/render`.
+- [BREAKING] Rename server package from `hyperapp-render/server` to `hyperapp-render`.
 - Add support for [lazy components](https://github.com/hyperapp/hyperapp/tree/1.2.0#lazy-components).
 
 ## [1.3.0] - 2018-02-24
 
-- Scoped npm package name. Use `@hyperapp/render` instead of `hyperapp-render`.
 - Render `style` attribute with `cssText` correctly.
 - Better performance for numeric attributes.
 

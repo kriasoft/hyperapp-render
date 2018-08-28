@@ -120,8 +120,7 @@ suite('elements', () => {
         <span>
           A
           <span>
-            B
-            <span>C</span>
+            B<span>C</span>
           </span>
         </span>
       </div>,

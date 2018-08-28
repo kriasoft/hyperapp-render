@@ -18,9 +18,9 @@ function spawn(command, args) {
 
 async function lint() {
   const fix = process.argv.includes('--fix')
-  const eslintOptions = fix ? '--fix' : ''
+  const eslintOptions = fix ? ['--fix'] : []
   const prettierOptions = fix ? '--write' : '--list-different'
-  await spawn('eslint', [eslintOptions, '{benchmark,src,test,tools}/**/*.js'])
+  await spawn('eslint', [...eslintOptions, '{benchmark,src,test,tools}/**/*.js'])
   await spawn('prettier', [prettierOptions, '{benchmark,src,test,tools}/**/*.{js,ts,tsx,md}'])
 }
 

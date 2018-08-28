@@ -1,8 +1,8 @@
 # <img height="24" src="https://cdn.rawgit.com/hyperapp/render/master/logo.svg"> Hyperapp Render
 
-[![npm version](https://img.shields.io/npm/v/@hyperapp/render.svg)](https://www.npmjs.com/package/@hyperapp/render)
-[![npm downloads](https://img.shields.io/npm/dw/@hyperapp/render.svg)](https://www.npmjs.com/package/@hyperapp/render)
-[![library size](https://img.shields.io/bundlephobia/minzip/@hyperapp/render.svg)](https://bundlephobia.com/result?p=@hyperapp/render)
+[![npm version](https://img.shields.io/npm/v/hyperapp-render.svg)](https://www.npmjs.com/package/hyperapp-render)
+[![npm downloads](https://img.shields.io/npm/dw/hyperapp-render.svg)](https://www.npmjs.com/package/hyperapp-render)
+[![library size](https://img.shields.io/bundlephobia/minzip/hyperapp-render.svg)](https://bundlephobia.com/result?p=hyperapp-render)
 [![slack chat](https://hyperappjs.herokuapp.com/badge.svg)](https://hyperappjs.herokuapp.com 'Join us')
 
 A [Hyperapp](https://github.com/hyperapp/hyperapp) higher-order `app`
@@ -25,7 +25,7 @@ Go ahead and [try it online](https://codepen.io/frenzzy/pen/zpmRQY/left/?editors
 
 ```jsx
 import { h, app } from 'hyperapp'
-import { withRender } from '@hyperapp/render'
+import { withRender } from 'hyperapp-render'
 
 const state = {
   text: 'Hello'
@@ -54,19 +54,19 @@ with pre-configured server-side rendering and many more.
 
 ## Installation
 
-Using [npm](https://www.npmjs.com/package/@hyperapp/render):
+Using [npm](https://www.npmjs.com/package/hyperapp-render):
 
 ```bash
-npm install @hyperapp/render --save
+npm install hyperapp-render --save
 ```
 
 Or using a [CDN](https://en.wikipedia.org/wiki/Content_delivery_network) like
-[unpkg.com](https://unpkg.com/@hyperapp/render/hyperapp-render.min.js) or
-[jsDelivr](https://cdn.jsdelivr.net/npm/@hyperapp/render/hyperapp-render.min.js)
+[unpkg.com](https://unpkg.com/hyperapp-render/hyperapp-render.min.js) or
+[jsDelivr](https://cdn.jsdelivr.net/npm/hyperapp-render/hyperapp-render.min.js)
 with the following script tag:
 
 ```html
-<script src="https://unpkg.com/@hyperapp/render/hyperapp-render.min.js"></script>
+<script src="https://unpkg.com/hyperapp-render/hyperapp-render.min.js"></script>
 ```
 
 You can find the library in `window.hyperappRender`.
@@ -84,7 +84,7 @@ before any other code.
 The library provides a few functions which you can use depending on your needs or personal preferences.
 
 ```jsx
-import { withRender, renderToString, renderToStream } from '@hyperapp/render'
+import { withRender, renderToString, renderToStream } from 'hyperapp-render'
 
 const main = withRender(app)(state, actions, view, container)
 
@@ -108,7 +108,7 @@ This can be useful for server-side rendering or creating HTML snippets based on 
 
 ```jsx
 import { h, app } from 'hyperapp'
-import { withRender } from '@hyperapp/render'
+import { withRender } from 'hyperapp-render'
 
 const state = { name: 'World' }
 const actions = { setName: name => ({ name }) }
@@ -125,7 +125,7 @@ The second `renderToString` function generates HTML markup from any of your view
 app initialization. That could be useful to generate HTML markup from static views.
 
 ```jsx
-import { renderToString } from '@hyperapp/render'
+import { renderToString } from 'hyperapp-render'
 
 const Component = ({ name }) => <h1>Hello {name}</h1>
 

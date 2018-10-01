@@ -3,7 +3,7 @@
   "name": "hyperapp-render",
   "version": "2.1.0",
   "description": "Render Hyperapp to an HTML string with SSR and Node.js streaming support",
-  "repository": "hyperapp/render",
+  "repository": "kriasoft/hyperapp-render",
   "author": "Vladimir Kutepov",
   "license": "MIT",
   "keywords": [
@@ -30,35 +30,40 @@
     "hyperapp": "^1.2.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0",
+    "@babel/core": "^7.1.2",
     "@babel/plugin-transform-react-jsx": "^7.0.0",
-    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-env": "^7.1.0",
     "@babel/register": "^7.0.0",
     "babel-core": "^7.0.0-0",
-    "babel-jest": "^23.4.2",
+    "babel-jest": "^23.6.0",
     "benchr": "^4.3.0",
-    "eslint": "^5.4.0",
+    "eslint": "^5.6.1",
     "eslint-config-airbnb": "^17.1.0",
-    "eslint-config-prettier": "^3.0.1",
+    "eslint-config-prettier": "^3.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.11.1",
     "fs-extra": "^7.0.0",
-    "husky": "^0.14.3",
-    "jest": "^23.5.0",
-    "prettier": "^1.14.2",
-    "rollup": "^0.65.0",
-    "rollup-plugin-babel": "^4.0.2",
-    "rollup-plugin-commonjs": "^9.1.6",
-    "rollup-plugin-node-resolve": "^3.3.0",
-    "rollup-plugin-uglify": "^4.0.0",
-    "typescript": "^3.0.1"
+    "husky": "^1.0.1",
+    "jest": "^23.6.0",
+    "prettier": "^1.14.3",
+    "rollup": "^0.66.2",
+    "rollup-plugin-babel": "^4.0.3",
+    "rollup-plugin-commonjs": "^9.1.8",
+    "rollup-plugin-node-resolve": "^3.4.0",
+    "rollup-plugin-uglify": "^6.0.0",
+    "typescript": "^3.1.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "node tools/pre-commit"
+    }
   },
   "scripts": {
     "lint": "node tools/lint",
     "test": "node tools/test",
     "build": "node tools/build",
-    "precommit": "node tools/precommit",
-    "benchmark": "benchr benchmark/benchmark.js --require @babel/register"
+    "benchmark": "benchr benchmark/benchmark.js --require @babel/register",
+    "pre-commit": "node tools/pre-commit"
   }
 }

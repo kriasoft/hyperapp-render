@@ -1,4 +1,4 @@
-# <img height="24" src="https://cdn.rawgit.com/hyperapp/render/master/logo.svg"> Hyperapp Render
+# <img height="24" src="https://cdn.rawgit.com/kriasoft/hyperapp-render/master/logo.svg"> Hyperapp Render
 
 [![npm version](https://img.shields.io/npm/v/hyperapp-render.svg)](https://www.npmjs.com/package/hyperapp-render)
 [![npm downloads](https://img.shields.io/npm/dw/hyperapp-render.svg)](https://www.npmjs.com/package/hyperapp-render)
@@ -195,4 +195,5 @@ renderToString(<div title="XSS" innerHTML={userInput}>Hi</div>)
 
 ## License
 
-Hyperapp Render is MIT licensed. See [LICENSE](https://github.com/hyperapp/render/blob/master/LICENSE.md).
+Hyperapp Render is MIT licensed.
+See [LICENSE](https://github.com/kriasoft/hyperapp-render/blob/master/LICENSE.md).

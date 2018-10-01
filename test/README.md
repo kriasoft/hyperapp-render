@@ -1,8 +1,8 @@
 # Testing
 
-[![build status](https://travis-ci.org/hyperapp/render.svg?branch=master)](https://travis-ci.org/hyperapp/render)
-[![coverage status](https://codecov.io/gh/hyperapp/render/branch/master/graph/badge.svg)](https://codecov.io/gh/hyperapp/render)
-[![dependency status](https://david-dm.org/hyperapp/render/status.svg)](https://david-dm.org/hyperapp/render)
+[![Build Status](https://img.shields.io/travis/kriasoft/hyperapp-render/master.svg)](https://travis-ci.org/kriasoft/hyperapp-render)
+[![Coverage Status](https://img.shields.io/codecov/c/github/kriasoft/hyperapp-render.svg)](https://codecov.io/gh/kriasoft/hyperapp-render)
+[![Dependency Status](https://img.shields.io/david/kriasoft/hyperapp-render.svg)](https://david-dm.org/kriasoft/hyperapp-render)
 
 Find problematic patterns in code using [ESLint](https://eslint.org/) and [Prettier](https://prettier.io/)
 by following [Airbnb Style Guide](https://github.com/airbnb/javascript):

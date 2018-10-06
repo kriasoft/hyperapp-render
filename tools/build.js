@@ -1,7 +1,3 @@
-process.on('unhandledRejection', (error) => {
-  throw error
-})
-
 const fs = require('fs-extra')
 const rollup = require('rollup')
 const babel = require('rollup-plugin-babel')

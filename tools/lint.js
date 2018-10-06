@@ -1,7 +1,3 @@
-process.on('unhandledRejection', (error) => {
-  throw error
-})
-
 const cp = require('child_process')
 
 function spawn(command, args) {

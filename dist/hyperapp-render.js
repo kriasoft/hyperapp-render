@@ -6,90 +6,161 @@
   (factory((global.hyperappRender = {})));
 }(this, (function (exports) { 'use strict';
 
+  var isArray = Array.isArray;
+  var hasOwnProperty = Object.prototype.hasOwnProperty;
   var styleNameCache = new Map();
-  var uppercasePattern = /([A-Z])/g;
+  var uppercasePattern = /[A-Z]/g;
   var msPattern = /^ms-/;
+  var escapeRegExp = /["&'<>]/;
   var voidElements = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr']);
-  var ignoreAttributes = new Set(['key', 'innerHTML', '__source']);
-  var escapeRegExp = /["&'<>]/g;
-  var escapeLookup = new Map([['"', '&quot;'], ['&', '&amp;'], ["'", '&#39;'], ['<', '&lt;'], ['>', '&gt;']]);
-
-  function escaper(match) {
-    return escapeLookup.get(match);
-  }
-
   function escapeHtml(value) {
+    var str = '' + value;
+
     if (typeof value === 'number') {
-      return '' + value;
+      return str;
     }
 
-    return ('' + value).replace(escapeRegExp, escaper);
+    var match = escapeRegExp.exec(str);
+
+    if (!match) {
+      return str;
+    }
+
+    var index = match.index;
+    var lastIndex = 0;
+    var out = '';
+
+    for (var _escape = ''; index < str.length; index++) {
+      switch (str.charCodeAt(index)) {
+        case 34:
+          _escape = '&quot;';
+          break;
+
+        case 38:
+          _escape = '&amp;';
+          break;
+
+        case 39:
+          _escape = '&#39;';
+          break;
+
+        case 60:
+          _escape = '&lt;';
+          break;
+
+        case 62:
+          _escape = '&gt;';
+          break;
+
+        default:
+          continue;
+      }
+
+      if (lastIndex !== index) {
+        out += str.substring(lastIndex, index);
+      }
+
+      lastIndex = index + 1;
+      out += _escape;
+    }
+
+    return lastIndex !== index ? out + str.substring(lastIndex, index) : out;
+  }
+  function concatClassNames(value) {
+    if (typeof value === 'string' || typeof value === 'number') {
+      return value || '';
+    }
+
+    var out = '';
+    var delimiter = '';
+
+    if (isArray(value)) {
+      for (var i = 0; i < value.length; i++) {
+        var name = concatClassNames(value[i]);
+
+        if (name !== '') {
+          out += delimiter + name;
+          delimiter = ' ';
+        }
+      }
+    } else {
+      for (var _name in value) {
+        if (hasOwnProperty.call(value, _name) && value[_name]) {
+          out += delimiter + _name;
+          delimiter = ' ';
+        }
+      }
+    }
+
+    return out;
   }
 
   function hyphenateStyleName(styleName) {
     return styleNameCache.get(styleName) || styleNameCache.set(styleName, styleName.replace(uppercasePattern, '-$&').toLowerCase().replace(msPattern, '-ms-')).get(styleName);
   }
 
-  function stringifyStyles(styles) {
+  function stringifyStyles(style) {
     var out = '';
     var delimiter = '';
-    var styleNames = Object.keys(styles);
 
-    for (var i = 0; i < styleNames.length; i++) {
-      var styleName = styleNames[i];
-      var styleValue = styles[styleName];
+    for (var name in style) {
+      if (hasOwnProperty.call(style, name)) {
+        var value = style[name];
 
-      if (styleValue != null) {
-        if (styleName === 'cssText') {
-          out += delimiter + styleValue;
-        } else {
-          out += delimiter + hyphenateStyleName(styleName) + ':' + styleValue;
+        if (value != null) {
+          if (name === 'cssText') {
+            out += delimiter + value;
+          } else {
+            out += delimiter + hyphenateStyleName(name) + ':' + value;
+          }
+
+          delimiter = ';';
         }
-
-        delimiter = ';';
       }
     }
 
-    return out || null;
+    return out;
   }
 
-  function renderFragment(_ref, stack) {
-    var nodeName = _ref.nodeName,
-        attributes = _ref.attributes,
-        children = _ref.children;
+  function renderFragment(name, props, children, stack) {
     var out = '';
     var footer = '';
 
-    if (nodeName) {
-      out += '<' + nodeName;
-      var keys = Object.keys(attributes);
+    if (name) {
+      out += '<' + name;
 
-      for (var i = 0; i < keys.length; i++) {
-        var name = keys[i];
-        var value = attributes[name];
+      for (var prop in props) {
+        if (hasOwnProperty.call(props, prop)) {
+          var value = props[prop];
 
-        if (name === 'style' && value && typeof value === 'object') {
-          value = stringifyStyles(value);
-        }
+          if (value != null && prop !== 'key' && prop !== 'innerHTML' && prop !== '__source' && !(prop[0] === 'o' && prop[1] === 'n')) {
+            if (prop === 'class' || prop === 'className') {
+              prop = 'class';
+              value = concatClassNames(value) || false;
+            } else if (prop === 'style' && value && typeof value === 'object') {
+              value = stringifyStyles(value) || false;
+            }
 
-        if (value != null && value !== false && typeof value !== 'function' && !ignoreAttributes.has(name)) {
-          out += ' ' + name;
+            if (value !== false) {
+              out += ' ' + prop;
 
-          if (value !== true) {
-            out += '="' + escapeHtml(value) + '"';
+              if (value !== true) {
+                out += '="' + escapeHtml(value) + '"';
+              }
+            }
           }
         }
       }
 
-      if (voidElements.has(nodeName)) {
+      if (voidElements.has(name)) {
         out += '/>';
       } else {
         out += '>';
-        footer = '</' + nodeName + '>';
+        footer = '</' + name + '>';
       }
     }
 
-    var innerHTML = attributes.innerHTML;
+    var innerHTML = props.innerHTML;
 
     if (innerHTML != null) {
       out += innerHTML;
@@ -145,14 +216,16 @@
           var node = resolveNode(frame.children[frame.childIndex++], state, actions);
 
           if (node != null && typeof node !== 'boolean') {
-            if (node.pop) {
+            if (isArray(node)) {
               stack.push({
                 childIndex: 0,
                 children: node,
                 footer: ''
               });
-            } else if (node.attributes) {
-              out += renderFragment(node, stack);
+            } else if (node.type === 3) {
+              out += escapeHtml(node.name);
+            } else if (typeof node === 'object') {
+              out += renderFragment(node.name || node.nodeName, node.props || node.attributes, node.children, stack);
             } else {
               out += escapeHtml(node);
             }
@@ -167,26 +240,7 @@
     return renderer(view, state, actions)(Infinity);
   }
 
-  function withRender(nextApp) {
-    return function (initialState, actionsTemplate, view, container) {
-      var actions = nextApp(initialState, Object.assign({}, actionsTemplate, {
-        getState: function getState() {
-          return function (state) {
-            return state;
-          };
-        }
-      }), view, container);
-
-      actions.toString = function () {
-        return renderToString(view, actions.getState(), actions);
-      };
-
-      return actions;
-    };
-  }
-
   exports.renderToString = renderToString;
-  exports.withRender = withRender;
 
   Object.defineProperty(exports, '__esModule', { value: true });
 

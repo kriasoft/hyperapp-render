@@ -1,7 +1,7 @@
 /** @jsx h */
-import { h, app } from 'hyperapp'
+import { h } from 'hyperapp'
 import { Readable, Writable } from 'stream'
-import { renderToString, renderToStream, withRender } from '../src/node'
+import { renderToString, renderToStream } from '../src/node'
 
 function readFromStream(stream) {
   return new Promise((resolve, reject) => {
@@ -19,7 +19,7 @@ function readFromStream(stream) {
 }
 
 describe('renderToString(view, state, actions)', () => {
-  it('should render markup', () => {
+  it('should render simple markup', () => {
     const html = renderToString(<div>hello world</div>)
     expect(html).toBe('<div>hello world</div>')
   })
@@ -48,52 +48,5 @@ describe('renderToStream(view, state, actions)', () => {
     const stream = renderToStream(<div>hello world</div>)
     const html = await readFromStream(stream)
     expect(html).toBe('<div>hello world</div>')
-  })
-})
-
-describe('withRender(app)(state, actions, view, container)', () => {
-  const testState = { count: 0 }
-  const testActions = {
-    up: (count = 1) => (state) => ({ count: state.count + count }),
-  }
-  const testView = (state) => <h1>{state.count}</h1>
-
-  it('should create a higher-order app', () => {
-    const mockApp = jest.fn(() => ({ result: true }))
-    const renderApp = withRender(mockApp)
-    expect(renderApp).toBeInstanceOf(Function)
-    expect(mockApp).not.toBeCalled()
-    const actions = renderApp(testState, testActions, testView, 'container')
-    expect(mockApp).toBeCalled()
-    expect(mockApp.mock.calls[0][0]).toBe(testState)
-    expect(mockApp.mock.calls[0][1]).not.toBe(testActions)
-    expect(mockApp.mock.calls[0][2]).toBe(testView)
-    expect(mockApp.mock.calls[0][3]).toBe('container')
-    expect(actions).toHaveProperty('result', true)
-  })
-
-  it('should not mutate original actions', () => {
-    withRender(app)(testState, testActions, testView)
-    expect(testActions).toEqual({ up: testActions.up })
-  })
-
-  it('should render app with current state to string', () => {
-    const acitons = withRender(app)(testState, testActions, testView)
-    expect(acitons.toString).toBeInstanceOf(Function)
-    expect(acitons.toString()).toBe('<h1>0</h1>')
-    acitons.up()
-    expect(acitons.toString()).toBe('<h1>1</h1>')
-    acitons.up(100)
-    expect(acitons.toString()).toBe('<h1>101</h1>')
-  })
-
-  it('should render app with current state to stream', async () => {
-    const actions = withRender(app)(testState, testActions, testView)
-    expect(actions.toStream).toBeInstanceOf(Function)
-    expect(await readFromStream(actions.toStream())).toBe('<h1>0</h1>')
-    actions.up()
-    expect(await readFromStream(actions.toStream())).toBe('<h1>1</h1>')
-    actions.up(100)
-    expect(await readFromStream(actions.toStream())).toBe('<h1>101</h1>')
   })
 })

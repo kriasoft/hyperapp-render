@@ -11,5 +11,8 @@
 .*      text eol=lf
 *.js    text eol=lf
 *.json  text eol=lf
+*.map   text eol=lf
 *.md    text eol=lf
 *.svg   text eol=lf
+*.ts    text eol=lf
+*.tsx   text eol=lf

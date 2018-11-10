@@ -1,7 +1,3 @@
-process.on('unhandledRejection', (error) => {
-  throw error
-})
-
 const cp = require('child_process')
 const jest = require('jest')
 
@@ -23,7 +19,7 @@ function spawn(command, args) {
 }
 
 async function test() {
-  await spawn('node_modules/typescript/bin/tsc', ['--project', 'test/ts'])
+  await spawn('tsc', ['--project', '.'])
   await jest.run(['--config', JSON.stringify(jestConfig), ...process.argv.slice(2)])
 }
 

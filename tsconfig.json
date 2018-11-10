@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "jsxFactory": "h",
+    "module": "commonjs",
+    "noEmit": true,
+    "strict": true
+  },
+  "include": ["src", "test"]
+}

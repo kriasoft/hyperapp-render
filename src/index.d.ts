@@ -1,4 +1,8 @@
-import { View } from 'hyperapp'
+export function escapeHtml(value: any): string
+
+export function concatClassNames(value: any): string
+
+export function stringifyStyles(style: any): string
 
 export function renderer<View, State, Actions>(
   view: View,

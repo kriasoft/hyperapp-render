@@ -1,129 +1,135 @@
 /** @jsx h */
 import { h } from 'hyperapp'
-import { renderToString } from '../src/index'
+import { escapeHtml, concatClassNames, stringifyStyles, renderToString } from '../src/index'
 
-suite('escape', () => {
-  benchmark('empty', () => {
-    renderToString(<div>{null}</div>)
+suite('escapeHtml(value)', () => {
+  benchmark('numeric value', () => {
+    escapeHtml(123456789.012)
   })
 
-  benchmark('number', () => {
-    renderToString(<div>{1.23}</div>)
+  benchmark('no special characters', () => {
+    escapeHtml('hello world')
   })
 
-  benchmark('string', () => {
-    renderToString(<div>text</div>)
+  benchmark('single special character', () => {
+    escapeHtml('hello wor&d')
   })
 
-  benchmark('special characters', () => {
-    renderToString(<div>{`"&'<>`}</div>)
+  benchmark('many special characters', () => {
+    escapeHtml('<b>"&&"</b>')
   })
 })
 
-suite('styles', () => {
-  benchmark('empty', () => {
-    const style = {
+suite('concatClassNames(value)', () => {
+  benchmark('string value', () => {
+    concatClassNames('foo bar baz')
+  })
+
+  benchmark('values array', () => {
+    concatClassNames(['foo', 'bar', 'baz', null])
+  })
+
+  benchmark('values map', () => {
+    concatClassNames({ foo: true, bar: 'ok', baz: 1, qux: null })
+  })
+
+  benchmark('mixed values', () => {
+    concatClassNames(['foo', false, 0, null, { bar: 'ok', baz: 1, qux: null }])
+  })
+
+  benchmark('nested values', () => {
+    concatClassNames(['foo', ['bar', { baz: 1 }, [false, { qux: null }]]])
+  })
+})
+
+suite('stringifyStyles(style)', () => {
+  benchmark('no values', () => {
+    stringifyStyles({
       color: null,
       border: null,
       opacity: null,
-    }
-    renderToString(<div style={style} />)
+    })
   })
 
-  benchmark('basic', () => {
-    const style = {
+  benchmark('basic styles', () => {
+    stringifyStyles({
       color: '#000',
       border: '1px solid',
       opacity: 0.5,
-    }
-    renderToString(<div style={style} />)
+    })
   })
 
-  benchmark('camel-case', () => {
-    const style = {
+  benchmark('camel-case styles', () => {
+    stringifyStyles({
       backgroundColor: '#000',
       borderTop: '1px solid',
       lineHeight: 1.23,
-    }
-    renderToString(<div style={style} />)
+    })
   })
 
   benchmark('vendor specific', () => {
-    const style = {
+    stringifyStyles({
+      webkitTransform: 'rotate(5deg)',
       MozTransform: 'rotate(5deg)',
       msTransform: 'rotate(5deg)',
-      transform: 'rotate(5deg)',
-    }
-    renderToString(<div style={style} />)
+    })
   })
 })
 
-suite('attributes', () => {
-  benchmark('empty', () => {
-    renderToString(<div data-empty={null} />)
+suite('renderAttributes(props)', () => {
+  benchmark('no value', () => {
+    renderToString(<div data-foo={null} />)
   })
 
-  benchmark('boolean', () => {
-    renderToString(<div data-boolean />)
+  benchmark('boolean value', () => {
+    renderToString(<div data-foo />)
   })
 
-  benchmark('regular', () => {
-    renderToString(<div data-regular="text" />)
+  benchmark('string value', () => {
+    renderToString(<div data-foo="bar" />)
   })
 
-  benchmark('special', () => {
-    renderToString(<div key="key" innerHTML="<p>text</p>" />)
+  benchmark('special attributes', () => {
+    renderToString(<div key="foo" innerHTML="<p>bar</p>" />)
   })
 })
 
-suite('elements', () => {
-  const Fragment = (attributes, children) => h('', attributes, children)
+suite('renderToString(node)', () => {
+  const Fragment = ''
   const Component = (attributes, children) => <h1 {...attributes}>{children}</h1>
 
   benchmark('basic', () => {
-    renderToString(
-      <div>
-        <h1>Hello World</h1>
-      </div>,
-    )
+    renderToString(<h1>Hello World</h1>)
   })
 
   benchmark('fragment', () => {
-    renderToString(
-      <div>
-        <Fragment>Hello World</Fragment>
-      </div>,
-    )
+    renderToString(<Fragment>Hello World</Fragment>)
   })
 
   benchmark('component', () => {
-    renderToString(
-      <div>
-        <Component>Hello World</Component>
-      </div>,
-    )
+    renderToString(<Component>Hello World</Component>)
   })
 
   benchmark('array', () => {
     renderToString(
-      <div>
+      <Fragment>
         <span>A</span>
         <span>B</span>
         <span>C</span>
-      </div>,
+      </Fragment>,
     )
   })
 
   benchmark('nested', () => {
     renderToString(
-      <div>
+      <Fragment>
         <span>
           A
           <span>
             B<span>C</span>
           </span>
         </span>
-      </div>,
+      </Fragment>,
     )
   })
 })

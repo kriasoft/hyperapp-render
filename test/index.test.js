@@ -65,9 +65,86 @@ describe('escape', () => {
     )
   })
 
+  it('should escape url', () => {
+    const html = renderToString(<a href="https://example.com/q?a=x&b=y#z">ref</a>)
+    expect(html).toBe('<a href="https://example.com/q?a=x&amp;b=y#z">ref</a>')
+  })
+
   it('should not escape innerHTML', () => {
     const html = renderToString(<div innerHTML={'<!--comment-->'} />)
     expect(html).toBe('<div><!--comment--></div>')
+  })
+})
+
+describe('class', () => {
+  it('should render a string', () => {
+    const html = renderToString(<div class="foo bar" />)
+    expect(html).toBe('<div class="foo bar"></div>')
+  })
+
+  it('should not render an empty string', () => {
+    const html = renderToString(<div class="" />)
+    expect(html).toBe('<div></div>')
+  })
+
+  it('should not render an empty object', () => {
+    const html = renderToString(<div class={{}} />)
+    expect(html).toBe('<div></div>')
+  })
+
+  it('should not render an empty array', () => {
+    const html = renderToString(<div class={[]} />)
+    expect(html).toBe('<div></div>')
+  })
+
+  it('should not render falsy values', () => {
+    const html = renderToString(<div class={['', null, false, undefined, 0, NaN]} />)
+    expect(html).toBe('<div></div>')
+  })
+
+  it('should render an array of values', () => {
+    const html = renderToString(<div class={['foo', 'bar', false, 'baz']} />)
+    expect(html).toBe('<div class="foo bar baz"></div>')
+  })
+
+  it('should support nested arrays', () => {
+    const html = renderToString(<div class={['foo', ['bar', [false, 'baz']]]} />)
+    expect(html).toBe('<div class="foo bar baz"></div>')
+  })
+
+  it('should render an object of class names', () => {
+    const className = {
+      foo: true,
+      bar: true,
+      quux: false,
+      baz: true,
+    }
+    const html = renderToString(<div class={className} />)
+    expect(html).toBe('<div class="foo bar baz"></div>')
+  })
+
+  it('should render a mix of array of object values', () => {
+    const className = [
+      'foo',
+      'foo-bar',
+      {
+        'foo-baz': true,
+      },
+      ['fum', 'bam', 'pow'],
+    ]
+    const html = renderToString(<div class={className} />)
+    expect(html).toBe('<div class="foo foo-bar foo-baz fum bam pow"></div>')
+  })
+
+  it('should render className as class', () => {
+    const html = renderToString(<div className={['foo', { bar: true }]} />)
+    expect(html).toBe('<div class="foo bar"></div>')
+  })
+
+  it('should not throw an exception', () => {
+    const className = Object.create({ hasOwnProperty: null })
+    const html = renderToString(<div className={className} />)
+    expect(html).toBe('<div></div>')
   })
 })
 
@@ -95,11 +172,14 @@ describe('styles', () => {
 
   it('should create vendor-prefixed markup correctly', () => {
     const styles = {
-      msTransition: 'none',
+      WebkitTransition: 'none',
       MozTransition: 'none',
+      msTransition: 'none',
     }
     const html = renderToString(<div style={styles} />)
-    expect(html).toBe('<div style="-ms-transition:none;-moz-transition:none"></div>')
+    expect(html).toBe(
+      '<div style="-webkit-transition:none;-moz-transition:none;-ms-transition:none"></div>',
+    )
   })
 
   it('should render style attribute when styles exist', () => {
@@ -174,6 +254,12 @@ describe('styles', () => {
     const html = renderToString(<div style="color:red;font-size:12px" />)
     expect(html).toBe('<div style="color:red;font-size:12px"></div>')
   })
+
+  it('should not throw an exception', () => {
+    const style = Object.create({ hasOwnProperty: null })
+    const html = renderToString(<div style={style} />)
+    expect(html).toBe('<div></div>')
+  })
 })
 
 describe('attributes', () => {
@@ -221,7 +307,7 @@ describe('attributes', () => {
     expect(html).toBe('<div data-attr="sample"></div>')
   })
 
-  it('should not render attribute with falsey value', () => {
+  it('should not render attribute with falsy value', () => {
     const html = renderToString(<div data-attr={false} />)
     expect(html).toBe('<div></div>')
   })
@@ -255,6 +341,12 @@ describe('attributes', () => {
   it('should not render event attribute', () => {
     const html = renderToString(<button type="button" onclick={() => {}} />)
     expect(html).toBe('<button type="button"></button>')
+  })
+
+  it('should not throw an exception', () => {
+    const attributes = Object.create({ hasOwnProperty: null })
+    const html = renderToString(<div {...attributes} />)
+    expect(html).toBe('<div></div>')
   })
 })
 
@@ -331,17 +423,65 @@ describe('renderToString(view, state, actions)', () => {
   })
 
   it('should render content of JSX fragment', () => {
-    const html = renderToString(h('', {}, [<meta />, <link />]))
+    const Fragment = ''
+    const html = renderToString(
+      <Fragment>
+        <meta />
+        <link />
+      </Fragment>,
+    )
     expect(html).toBe('<meta/><link/>')
   })
 
   it('should render raw html without extra markup', () => {
-    const html = renderToString(h('', { innerHTML: '<sciprt>alert("hello world")</sciprt>' }))
-    expect(html).toBe('<sciprt>alert("hello world")</sciprt>')
+    const Fragment = ''
+    const html = renderToString(<Fragment innerHTML="<sciprt>alert('hello world')</sciprt>" />)
+    expect(html).toBe(`<sciprt>alert('hello world')</sciprt>`)
   })
 
   it('should render an array of elements', () => {
     const html = renderToString([<meta />, <link />])
     expect(html).toBe('<meta/><link/>')
+  })
+
+  it('should support Hyperapp V2', () => {
+    const VNode = {
+      name: 'div',
+      props: {},
+      children: [
+        {
+          name: 'foo bar baz',
+          props: {},
+          children: [],
+          element: null,
+          key: null,
+          type: 3,
+        },
+      ],
+      element: null,
+      key: null,
+      type: 1,
+    }
+    const html = renderToString(VNode)
+    expect(html).toBe('<div>foo bar baz</div>')
+  })
+
+  it('should render counter', () => {
+    const testState = { count: 100 }
+    const testActions = {
+      up: () => (state) => ({ count: state.count + 1 }),
+      getState: () => (state) => state,
+    }
+    const testView = (state, actions) => {
+      expect(state).toBe(testState)
+      expect(actions).toBe(testActions)
+      return (
+        <button type="button" onclick={actions.up}>
+          {state.count}
+        </button>
+      )
+    }
+    const html = renderToString(testView, testState, testActions)
+    expect(html).toBe('<button type="button">100</button>')
   })
 })

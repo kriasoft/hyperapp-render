@@ -1,6 +1,11 @@
+const { isArray } = Array
+const { hasOwnProperty } = Object.prototype
 const styleNameCache = new Map()
-const uppercasePattern = /([A-Z])/g
+const uppercasePattern = /[A-Z]/g
 const msPattern = /^ms-/
+
+// https://www.w3.org/International/questions/qa-escapes#use
+const escapeRegExp = /["&'<>]/
 
 // https://www.w3.org/TR/html/syntax.html#void-elements
 const voidElements = new Set([
@@ -20,33 +25,82 @@ const voidElements = new Set([
   'wbr',
 ])
 
-const ignoreAttributes = new Set([
-  'key',
-  'innerHTML',
-  '__source', // https://babeljs.io/docs/plugins/transform-react-jsx-source/
-])
-
-// https://www.w3.org/International/questions/qa-escapes#use
-const escapeRegExp = /["&'<>]/g
-const escapeLookup = new Map([
-  ['"', '&quot;'],
-  ['&', '&amp;'],
-  ["'", '&#39;'], // shorter than "&apos;" and "&#x27;" plus supports HTML4
-  ['<', '&lt;'],
-  ['>', '&gt;'],
-])
-
-function escaper(match) {
-  return escapeLookup.get(match)
-}
-
-function escapeHtml(value) {
+// credits to https://github.com/component/escape-html
+export function escapeHtml(value) {
+  const str = '' + value
   if (typeof value === 'number') {
     // better performance for safe values
-    return '' + value
+    return str
   }
 
-  return ('' + value).replace(escapeRegExp, escaper)
+  const match = escapeRegExp.exec(str)
+  if (!match) {
+    return str
+  }
+
+  let { index } = match
+  let lastIndex = 0
+  let out = ''
+
+  for (let escape = ''; index < str.length; index++) {
+    switch (str.charCodeAt(index)) {
+      case 34: // "
+        escape = '&quot;'
+        break
+      case 38: // &
+        escape = '&amp;'
+        break
+      case 39: // '
+        escape = '&#39;' // shorter than "&apos;" and "&#x27;" plus supports HTML4
+        break
+      case 60: // <
+        escape = '&lt;'
+        break
+      case 62: // >
+        escape = '&gt;'
+        break
+      default:
+        continue
+    }
+
+    if (lastIndex !== index) {
+      out += str.substring(lastIndex, index)
+    }
+
+    lastIndex = index + 1
+    out += escape
+  }
+
+  return lastIndex !== index ? out + str.substring(lastIndex, index) : out
+}
+
+// credits to https://github.com/jorgebucaran/classcat
+export function concatClassNames(value) {
+  if (typeof value === 'string' || typeof value === 'number') {
+    return value || ''
+  }
+
+  let out = ''
+  let delimiter = ''
+
+  if (isArray(value)) {
+    for (let i = 0; i < value.length; i++) {
+      const name = concatClassNames(value[i])
+      if (name !== '') {
+        out += delimiter + name
+        delimiter = ' '
+      }
+    }
+  } else {
+    for (const name in value) {
+      if (hasOwnProperty.call(value, name) && value[name]) {
+        out += delimiter + name
+        delimiter = ' '
+      }
+    }
+  }
+
+  return out
 }
 
 // "backgroundColor" => "background-color"
@@ -67,69 +121,74 @@ function hyphenateStyleName(styleName) {
   )
 }
 
-function stringifyStyles(styles) {
+export function stringifyStyles(style) {
   let out = ''
   let delimiter = ''
-  const styleNames = Object.keys(styles)
 
-  for (let i = 0; i < styleNames.length; i++) {
-    const styleName = styleNames[i]
-    const styleValue = styles[styleName]
+  for (const name in style) {
+    if (hasOwnProperty.call(style, name)) {
+      const value = style[name]
 
-    if (styleValue != null) {
-      if (styleName === 'cssText') {
-        out += delimiter + styleValue
-      } else {
-        out += delimiter + hyphenateStyleName(styleName) + ':' + styleValue
+      if (value != null) {
+        if (name === 'cssText') {
+          out += delimiter + value
+        } else {
+          out += delimiter + hyphenateStyleName(name) + ':' + value
+        }
+        delimiter = ';'
       }
-
-      delimiter = ';'
     }
   }
 
-  return out || null
+  return out
 }
 
 // https://www.w3.org/TR/html51/syntax.html#serializing-html-fragments
-function renderFragment({ nodeName, attributes, children }, stack) {
+function renderFragment(name, props, children, stack) {
   let out = ''
   let footer = ''
 
-  if (nodeName) {
-    out += '<' + nodeName
-    const keys = Object.keys(attributes)
+  if (name) {
+    out += '<' + name
 
-    for (let i = 0; i < keys.length; i++) {
-      const name = keys[i]
-      let value = attributes[name]
+    for (let prop in props) {
+      if (hasOwnProperty.call(props, prop)) {
+        let value = props[prop]
 
-      if (name === 'style' && value && typeof value === 'object') {
-        value = stringifyStyles(value)
-      }
+        if (
+          value != null &&
+          prop !== 'key' &&
+          prop !== 'innerHTML' &&
+          prop !== '__source' && // babel-plugin-transform-react-jsx-source
+          !(prop[0] === 'o' && prop[1] === 'n')
+        ) {
+          if (prop === 'class' || prop === 'className') {
+            prop = 'class'
+            value = concatClassNames(value) || false
+          } else if (prop === 'style' && value && typeof value === 'object') {
+            value = stringifyStyles(value) || false
+          }
 
-      if (
-        value != null &&
-        value !== false &&
-        typeof value !== 'function' &&
-        !ignoreAttributes.has(name)
-      ) {
-        out += ' ' + name
+          if (value !== false) {
+            out += ' ' + prop
 
-        if (value !== true) {
-          out += '="' + escapeHtml(value) + '"'
+            if (value !== true) {
+              out += '="' + escapeHtml(value) + '"'
+            }
+          }
         }
       }
     }
 
-    if (voidElements.has(nodeName)) {
+    if (voidElements.has(name)) {
       out += '/>'
     } else {
       out += '>'
-      footer = '</' + nodeName + '>'
+      footer = '</' + name + '>'
     }
   }
 
-  const { innerHTML } = attributes
+  const { innerHTML } = props
 
   if (innerHTML != null) {
     out += innerHTML
@@ -165,6 +224,7 @@ export function renderer(view, state, actions) {
     },
   ]
   let end = false
+
   return (bytes) => {
     if (end) {
       return null
@@ -187,18 +247,22 @@ export function renderer(view, state, actions) {
         const node = resolveNode(frame.children[frame.childIndex++], state, actions)
 
         if (node != null && typeof node !== 'boolean') {
-          if (node.pop) {
-            // array
+          if (isArray(node)) {
             stack.push({
               childIndex: 0,
               children: node,
               footer: '',
             })
-          } else if (node.attributes) {
-            // element
-            out += renderFragment(node, stack)
+          } else if (node.type === 3) {
+            out += escapeHtml(node.name)
+          } else if (typeof node === 'object') {
+            out += renderFragment(
+              node.name || node.nodeName,
+              node.props || node.attributes,
+              node.children,
+              stack,
+            )
           } else {
-            // text node
             out += escapeHtml(node)
           }
         }

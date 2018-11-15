@@ -1,11 +1,15 @@
 {
-  "extends": [
-    "airbnb",
-    "eslint-config-prettier",
-    "eslint-config-prettier/react"
-  ],
+  "extends": ["airbnb", "eslint-config-prettier", "eslint-config-prettier/react"],
   "rules": {
+    "import/prefer-default-export": "off",
+    "no-continue": "off",
     "no-plusplus": "off",
+    "no-restricted-syntax": "off",
     "prefer-template": "off"
+  },
+  "settings": {
+    "react": {
+      "pragma": "h"
+    }
   }
 }

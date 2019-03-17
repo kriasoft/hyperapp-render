@@ -108,12 +108,15 @@ export function concatClassNames(value) {
 // "msTransition" => "-ms-transition"
 function hyphenateStyleName(styleName) {
   if (!styleNameCache.has(styleName)) {
-    const name = styleName.replace(uppercasePattern, '-$&').toLowerCase().replace(msPattern, '-ms-')
+    const name = styleName
+      .replace(uppercasePattern, '-$&')
+      .toLowerCase()
+      .replace(msPattern, '-ms-')
     styleNameCache.set(styleName, name)
   }
   return styleNameCache.get(styleName)
 }
-    
+
 export function stringifyStyles(style) {
   let out = ''
   let delimiter = ''

@@ -107,18 +107,14 @@ export function concatClassNames(value) {
 // "MozTransition" => "-moz-transition"
 // "msTransition" => "-ms-transition"
 function hyphenateStyleName(styleName) {
-  return (
-    styleNameCache.get(styleName) ||
-    styleNameCache
-      .set(
-        styleName,
-        styleName
-          .replace(uppercasePattern, '-$&')
-          .toLowerCase()
-          .replace(msPattern, '-ms-'),
-      )
-      .get(styleName)
-  )
+  if (!styleNameCache.has(styleName)) {
+    const name = styleName
+      .replace(uppercasePattern, '-$&')
+      .toLowerCase()
+      .replace(msPattern, '-ms-')
+    styleNameCache.set(styleName, name)
+  }
+  return styleNameCache.get(styleName)
 }
 
 export function stringifyStyles(style) {

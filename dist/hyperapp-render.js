@@ -96,7 +96,12 @@
   }
 
   function hyphenateStyleName(styleName) {
-    return styleNameCache.get(styleName) || styleNameCache.set(styleName, styleName.replace(uppercasePattern, '-$&').toLowerCase().replace(msPattern, '-ms-')).get(styleName);
+    if (!styleNameCache.has(styleName)) {
+      var name = styleName.replace(uppercasePattern, '-$&').toLowerCase().replace(msPattern, '-ms-');
+      styleNameCache.set(styleName, name);
+    }
+
+    return styleNameCache.get(styleName);
   }
 
   function stringifyStyles(style) {

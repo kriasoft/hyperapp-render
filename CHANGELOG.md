@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [3.1.0] - 2019-03-18
+
+- Ignore `innerHTML` attribute when child nodes exist.
+- Fix styles rendering in IE11 ([#14](https://github.com/kriasoft/hyperapp-render/pull/14)).
+
 ## [3.0.0] - 2018-11-15
 
 - [BREAKING] Remove higher-order app `withRender` from the library due to redundancy.
@@ -41,7 +46,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Initial public release.
 
-[unreleased]: https://github.com/kriasoft/hyperapp-render/compare/v3.0.0...HEAD
+[unreleased]: https://github.com/kriasoft/hyperapp-render/compare/v3.1.0...HEAD
+[3.0.1]: https://github.com/kriasoft/hyperapp-render/compare/v3.0.0...v3.1.0
 [3.0.0]: https://github.com/kriasoft/hyperapp-render/compare/v2.1.0...v3.0.0
 [2.1.0]: https://github.com/kriasoft/hyperapp-render/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/kriasoft/hyperapp-render/compare/v1.3.0...v2.0.0

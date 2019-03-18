@@ -142,7 +142,7 @@
             if (prop === 'class' || prop === 'className') {
               prop = 'class';
               value = concatClassNames(value) || false;
-            } else if (prop === 'style' && value && typeof value === 'object') {
+            } else if (prop === 'style' && typeof value === 'object') {
               value = stringifyStyles(value) || false;
             }
 
@@ -165,12 +165,6 @@
       }
     }
 
-    var innerHTML = props.innerHTML;
-
-    if (innerHTML != null) {
-      out += innerHTML;
-    }
-
     if (children.length > 0) {
       stack.push({
         childIndex: 0,
@@ -178,6 +172,12 @@
         footer: footer
       });
     } else {
+      var innerHTML = props.innerHTML;
+
+      if (innerHTML != null) {
+        out += innerHTML;
+      }
+
       out += footer;
     }
 

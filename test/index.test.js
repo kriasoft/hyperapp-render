@@ -332,6 +332,11 @@ describe('attributes', () => {
     expect(html).toBe('<div></div>')
   })
 
+  it('should prefer child nodes over innerHTML attribute', () => {
+    const html = renderToString(<div innerHTML="foo">bar</div>)
+    expect(html).toBe('<div>bar</div>')
+  })
+
   it('should not render __source attribute', () => {
     const source = { fileName: 'this/file.js', lineNumber: 10 }
     const html = renderToString(<div __source={source} />)

@@ -112,6 +112,8 @@ function hyphenateStyleName(styleName) {
       .replace(uppercasePattern, '-$&')
       .toLowerCase()
       .replace(msPattern, '-ms-')
+
+    // returns 'undefined' instead of the 'Map' object in IE11
     styleNameCache.set(styleName, name)
   }
   return styleNameCache.get(styleName)
@@ -161,7 +163,7 @@ function renderFragment(name, props, children, stack) {
           if (prop === 'class' || prop === 'className') {
             prop = 'class'
             value = concatClassNames(value) || false
-          } else if (prop === 'style' && value && typeof value === 'object') {
+          } else if (prop === 'style' && typeof value === 'object') {
             value = stringifyStyles(value) || false
           }
 
@@ -184,12 +186,6 @@ function renderFragment(name, props, children, stack) {
     }
   }
 
-  const { innerHTML } = props
-
-  if (innerHTML != null) {
-    out += innerHTML
-  }
-
   if (children.length > 0) {
     stack.push({
       childIndex: 0,
@@ -197,6 +193,12 @@ function renderFragment(name, props, children, stack) {
       footer,
     })
   } else {
+    const { innerHTML } = props
+
+    if (innerHTML != null) {
+      out += innerHTML
+    }
+
     out += footer
   }
 

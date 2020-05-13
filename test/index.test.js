@@ -471,6 +471,35 @@ describe('renderToString(view, state, actions)', () => {
     expect(html).toBe('<div>foo bar baz</div>')
   })
 
+  it('should support Hyperapp V2 lazy nodes', () => {
+    const VNode = {
+      lazy: {
+        view: ({ name }) => <div>{name}</div>,
+        name: 'foo',
+      },
+      type: 2,
+    }
+    const html = renderToString(VNode)
+    expect(html).toBe('<div>foo</div>')
+  })
+
+  it('should support Hyperapp V2 nested lazy nodes', () => {
+    const VNode = {
+      lazy: {
+        view: () => ({
+          lazy: {
+            view: ({ name }) => <div>{name}</div>,
+            name: 'foo',
+          },
+          type: 2,
+        }),
+      },
+      type: 2,
+    }
+    const html = renderToString(VNode)
+    expect(html).toBe('<div>foo</div>')
+  })
+
   it('should render counter', () => {
     const testState = { count: 100 }
     const testActions = {

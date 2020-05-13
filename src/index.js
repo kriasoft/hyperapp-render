@@ -209,6 +209,9 @@ function resolveNode(node, state, actions) {
   if (typeof node === 'function') {
     return resolveNode(node(state, actions), state, actions)
   }
+  if (node && node.type === 2) {
+    return resolveNode(node.lazy.view(node.lazy), state, actions)
+  }
 
   return node
 }

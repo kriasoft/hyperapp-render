@@ -66,6 +66,7 @@ async function build() {
                   loose: true,
                   useBuiltIns: 'entry',
                   exclude: ['transform-typeof-symbol'],
+                  corejs: 3,
                 },
               ],
             ],

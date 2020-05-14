@@ -212,7 +212,6 @@ function resolveNode(node, state, actions) {
   if (node && node.type === 2) {
     return resolveNode(node.lazy.view(node.lazy), state, actions)
   }
-
   return node
 }
 

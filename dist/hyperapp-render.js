@@ -4,7 +4,7 @@
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
   (global = global || self, factory(global.hyperappRender = {}));
-}(this, function (exports) { 'use strict';
+}(this, (function (exports) { 'use strict';
 
   var isArray = Array.isArray;
   var hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -189,6 +189,10 @@
       return resolveNode(node(state, actions), state, actions);
     }
 
+    if (node && node.type === 2) {
+      return resolveNode(node.lazy.view(node.lazy), state, actions);
+    }
+
     return node;
   }
 
@@ -249,5 +253,5 @@
 
   Object.defineProperty(exports, '__esModule', { value: true });
 
-}));
+})));
 //# sourceMappingURL=hyperapp-render.js.map

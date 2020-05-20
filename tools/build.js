@@ -82,8 +82,7 @@ async function build() {
         sourcemap: true,
         exports: 'named',
         name: file.name,
-        banner:
-          '/*! Hyperapp Render | MIT Licence | https://github.com/kriasoft/hyperapp-render */\n',
+        banner: `/*! Hyperapp Render v${pkg.version} | MIT Licence | https://github.com/kriasoft/hyperapp-render */\n`,
       })
     }),
   )

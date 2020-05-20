@@ -60,12 +60,12 @@ npm install hyperapp-render --save
 ```
 
 Or using a [CDN](https://en.wikipedia.org/wiki/Content_delivery_network) like
-[unpkg.com](https://unpkg.com/hyperapp-render/hyperapp-render.min.js) or
-[jsDelivr](https://cdn.jsdelivr.net/npm/hyperapp-render/hyperapp-render.min.js)
+[unpkg.com](https://unpkg.com/hyperapp-render) or
+[jsDelivr](https://cdn.jsdelivr.net/npm/hyperapp-render)
 with the following script tag:
 
 ```html
-<script src="https://unpkg.com/hyperapp-render/hyperapp-render.min.js"></script>
+<script src="https://unpkg.com/hyperapp-render"></script>
 ```
 
 You can find the library in `window.hyperappRender`.

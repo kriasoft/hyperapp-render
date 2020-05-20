@@ -19,11 +19,23 @@
   "module": "node/module.js",
   "types": "src/node.d.ts",
   "esnext": "src/node.js",
+  "unpkg": "hyperapp-render.min.js",
+  "jsdelivr": "hyperapp-render.min.js",
   "browser": {
     "node/index.js": "./browser/index.js",
     "node/module.js": "./browser/module.js",
     "src/node.d.ts": "./src/browser.d.ts",
     "src/node.js": "./src/browser.js"
+  },
+  "exports": {
+    "node": {
+      "import": "./node/module.js",
+      "require": "./node/index.js"
+    },
+    "default": {
+      "import": "./browser/module.js",
+      "require": "./browser/index.js"
+    }
   },
   "dependencies": {
     "@types/node": "*"

@@ -16,7 +16,7 @@
     "ssr"
   ],
   "main": "node/index.js",
-  "module": "node/module.js",
+  "module": "node/module.mjs",
   "types": "src/node.d.ts",
   "esnext": "src/node.js",
   "unpkg": "hyperapp-render.min.js",
@@ -29,7 +29,7 @@
   },
   "exports": {
     "node": {
-      "import": "./node/module.js",
+      "import": "./node/module.mjs",
       "require": "./node/index.js"
     },
     "default": {

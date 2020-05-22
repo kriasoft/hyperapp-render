@@ -35,7 +35,7 @@ const files = [
   },
   {
     input: 'dist/src/node.js',
-    output: 'dist/node/module.js',
+    output: 'dist/node/module.mjs',
     format: 'es',
   },
 ]

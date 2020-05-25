@@ -15,27 +15,26 @@
     "html",
     "ssr"
   ],
-  "main": "node/index.js",
-  "module": "node/module.js",
+  "type": "commonjs",
+  "main": "commonjs/node.js",
+  "module": "esm/node.js",
   "types": "src/node.d.ts",
   "esnext": "src/node.js",
   "unpkg": "hyperapp-render.min.js",
   "jsdelivr": "hyperapp-render.min.js",
   "browser": {
-    "node/index.js": "./browser/index.js",
-    "node/module.js": "./browser/module.js",
+    "commonjs/node.js": "./commonjs/browser.js",
+    "esm/node.js": "./esm/browser.js",
     "src/node.d.ts": "./src/browser.d.ts",
     "src/node.js": "./src/browser.js"
   },
   "exports": {
     "node": {
-      "import": "./node/module.js",
-      "require": "./node/index.js"
+      "require": "./commonjs/node.js",
+      "default": "./esm/node.js"
     },
-    "default": {
-      "import": "./browser/module.js",
-      "require": "./browser/index.js"
-    }
+    "require": "./commonjs/browser.js",
+    "default": "./esm/browser.js"
   },
   "dependencies": {
     "@types/node": "*"
@@ -66,10 +65,10 @@
     "typescript": "^3.3.3333"
   },
   "scripts": {
-    "lint": "node tools/lint",
-    "test": "node tools/test",
-    "build": "node tools/build",
+    "lint": "node tools/lint.js",
+    "test": "node tools/test.js",
+    "build": "node tools/build.js",
     "benchmark": "benchr benchmark/benchmark.js --require @babel/register",
-    "pre-commit": "node tools/pre-commit"
+    "pre-commit": "node tools/pre-commit.js"
   }
 }

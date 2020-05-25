@@ -20,22 +20,22 @@ const files = [
   },
   {
     input: 'dist/src/browser.js',
-    output: 'dist/browser/index.js',
+    output: 'dist/commonjs/browser.js',
+    format: 'cjs',
+  },
+  {
+    input: 'dist/src/node.js',
+    output: 'dist/commonjs/node.js',
     format: 'cjs',
   },
   {
     input: 'dist/src/browser.js',
-    output: 'dist/browser/module.js',
+    output: 'dist/esm/browser.js',
     format: 'es',
   },
   {
     input: 'dist/src/node.js',
-    output: 'dist/node/index.js',
-    format: 'cjs',
-  },
-  {
-    input: 'dist/src/node.js',
-    output: 'dist/node/module.js',
+    output: 'dist/esm/node.js',
     format: 'es',
   },
 ]
@@ -88,41 +88,18 @@ async function build() {
   )
 
   // Create package.json for npm publishing
-  const libPkg = Object.assign({}, pkg)
-  delete libPkg.private
-  delete libPkg.devDependencies
-  delete libPkg.scripts
-  await fs.outputJson('dist/package.json', libPkg, { spaces: 2 })
-
-  // Create browser/package.json for convenient import
   await fs.outputJson(
-    'dist/browser/package.json',
+    'dist/package.json',
     {
-      private: true,
-      name: 'browser',
-      version: pkg.version,
-      main: 'index.js',
-      module: 'module.js',
-      types: '../src/browser.d.ts',
-      esnext: '../src/browser.js',
+      ...pkg,
+      private: undefined,
+      devDependencies: undefined,
+      scripts: undefined,
     },
     { spaces: 2 },
   )
-
-  // Create node/package.json for convenient import
-  await fs.outputJson(
-    'dist/node/package.json',
-    {
-      private: true,
-      name: 'node',
-      version: pkg.version,
-      main: 'index.js',
-      module: 'module.js',
-      types: '../src/node.d.ts',
-      esnext: '../src/node.js',
-    },
-    { spaces: 2 },
-  )
+  await fs.outputJson('dist/commonjs/package.json', { type: 'commonjs' }, { spaces: 2 })
+  await fs.outputJson('dist/esm/package.json', { type: 'module' }, { spaces: 2 })
 }
 
 module.exports = build()

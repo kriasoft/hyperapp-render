@@ -1,4 +1,4 @@
-/*! Hyperapp Render v3.3.0 | MIT Licence | https://github.com/kriasoft/hyperapp-render */
+/*! Hyperapp Render v3.4.0 | MIT Licence | https://github.com/kriasoft/hyperapp-render */
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :

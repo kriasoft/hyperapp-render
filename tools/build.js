@@ -1,7 +1,7 @@
 const fs = require('fs-extra')
 const rollup = require('rollup')
 const babel = require('rollup-plugin-babel')
-const { uglify } = require('rollup-plugin-uglify')
+const { terser } = require('rollup-plugin-terser')
 const pkg = require('../package.json')
 
 // The source files to be compiled by Rollup
@@ -72,7 +72,7 @@ async function build() {
             ],
             comments: false,
           }),
-          ...(file.output.endsWith('.min.js') ? [uglify({ output: { comments: '/^!/' } })] : []),
+          ...(file.output.endsWith('.min.js') ? [terser({ output: { comments: '/^!/' } })] : []),
         ],
       })
 

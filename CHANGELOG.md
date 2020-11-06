@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [3.5.0] - 2020-11-06
+
+- Compatibility with Hyperapp [v2.0.6](https://github.com/hyperapp/hyperapp/releases/tag/2.0.6)
+  after internal VNode schema change.
+
 ## [3.4.0] - 2020-05-25
 
 - Hybrid npm package with both CommonJS and ESM versions
@@ -61,7 +66,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Initial public release.
 
-[unreleased]: https://github.com/kriasoft/hyperapp-render/compare/v3.4.0...HEAD
+[unreleased]: https://github.com/kriasoft/hyperapp-render/compare/v3.5.0...HEAD
+[3.5.0]: https://github.com/kriasoft/hyperapp-render/compare/v3.4.0...v3.5.0
 [3.4.0]: https://github.com/kriasoft/hyperapp-render/compare/v3.3.0...v3.4.0
 [3.3.0]: https://github.com/kriasoft/hyperapp-render/compare/v3.2.0...v3.3.0
 [3.2.0]: https://github.com/kriasoft/hyperapp-render/compare/v3.1.0...v3.2.0

@@ -1,4 +1,4 @@
-/*! Hyperapp Render v3.5.0 | MIT Licence | https://github.com/kriasoft/hyperapp-render */
+/*! Hyperapp Render v4.0.0 | MIT Licence | https://github.com/kriasoft/hyperapp-render */
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
@@ -231,12 +231,10 @@
                 children: node,
                 footer: ''
               });
-            } else if (node.tag === 3) {
-              out += escapeHtml(node.type);
             } else if (node.type === 3) {
-              out += escapeHtml(node.name);
+              out += escapeHtml(node.tag || node.name);
             } else if (typeof node === 'object') {
-              out += renderFragment(node.name || node.type || node.nodeName, node.props || node.attributes, node.children, stack);
+              out += renderFragment(node.tag || node.nodeName, node.props || node.attributes, node.children, stack);
             } else {
               out += escapeHtml(node);
             }

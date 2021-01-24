@@ -449,45 +449,23 @@ describe('renderToString(view, state, actions)', () => {
     expect(html).toBe('<meta/><link/>')
   })
 
-  it('should support Hyperapp v2.0.0', () => {
+  it('should support Hyperapp v2.0.9', () => {
     const VNode = {
-      name: 'div',
+      tag: 'div',
       props: {},
+      key: null,
       children: [
         {
-          name: 'foo bar baz',
+          tag: 'foo bar baz',
           props: {},
-          children: [],
-          element: null,
           key: null,
+          children: [],
           type: 3,
-        },
-      ],
-      element: null,
-      key: null,
-      type: 1,
-    }
-    const html = renderToString(VNode)
-    expect(html).toBe('<div>foo bar baz</div>')
-  })
-
-  it('should support Hyperapp v2.0.6', () => {
-    const VNode = {
-      type: 'div',
-      props: {},
-      children: [
-        {
-          type: 'foo bar baz',
-          props: {},
-          children: [],
           node: null,
-          key: null,
-          tag: 3,
         },
       ],
+      type: 1,
       node: null,
-      key: null,
-      tag: 1,
     }
     const html = renderToString(VNode)
     expect(html).toBe('<div>foo bar baz</div>')

@@ -478,6 +478,28 @@ describe('renderToString(view, state, actions)', () => {
     expect(html).toBe('<div>foo bar baz</div>')
   })
 
+  it('should correctly render empty text nodes', () => {
+    const VNode = {
+      tag: 'div',
+      props: {},
+      key: null,
+      children: [
+        {
+          tag: '',
+          props: {},
+          key: null,
+          children: [],
+          type: 3,
+          node: null,
+        },
+      ],
+      type: 1,
+      node: null,
+    }
+    const html = renderToString(VNode)
+    expect(html).toBe('<div></div>')
+  })
+
   it('should support Hyperapp V2 lazy nodes', () => {
     const VNode = {
       lazy: {

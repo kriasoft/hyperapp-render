@@ -27,6 +27,7 @@ const voidElements = new Set([
 
 // credits to https://github.com/component/escape-html
 export function escapeHtml(value) {
+  if (value == null) return '';
   const str = '' + value
   if (typeof value === 'number') {
     // better performance for safe values

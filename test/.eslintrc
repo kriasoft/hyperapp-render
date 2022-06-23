@@ -3,10 +3,13 @@
     "jest": true
   },
   "rules": {
-    "import/no-extraneous-dependencies": ["error", {
-      "optionalDependencies": false,
-      "peerDependencies": false
-    }],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "optionalDependencies": false,
+        "peerDependencies": false
+      }
+    ],
     "jsx-a11y/accessible-emoji": "off",
     "jsx-a11y/alt-text": "off",
     "jsx-a11y/control-has-associated-label": "off",

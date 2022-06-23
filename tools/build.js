@@ -1,6 +1,6 @@
 const fs = require('fs-extra')
 const rollup = require('rollup')
-const babel = require('rollup-plugin-babel')
+const { babel } = require('@rollup/plugin-babel')
 const { terser } = require('rollup-plugin-terser')
 const pkg = require('../package.json')
 
@@ -58,6 +58,7 @@ async function build() {
         plugins: [
           babel({
             babelrc: false,
+            babelHelpers: 'inline',
             presets: [
               [
                 '@babel/preset-env',

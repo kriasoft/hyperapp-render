@@ -96,7 +96,9 @@ suite('renderAttributes(props)', () => {
 
 suite('renderToString(node)', () => {
   const Fragment = ''
-  const Component = (attributes, children) => <h1 {...attributes}>{children}</h1>
+  function Component(attributes, children) {
+    return <h1 {...attributes}>{children}</h1>
+  }
 
   benchmark('basic', () => {
     renderToString(<h1>Hello World</h1>)
@@ -122,14 +124,12 @@ suite('renderToString(node)', () => {
 
   benchmark('nested', () => {
     renderToString(
-      <Fragment>
+      <span>
+        A
         <span>
-          A
-          <span>
-            B<span>C</span>
-          </span>
+          B<span>C</span>
         </span>
-      </Fragment>,
+      </span>,
     )
   })
 })

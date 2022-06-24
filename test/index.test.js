@@ -323,7 +323,7 @@ describe('attributes', () => {
   })
 
   it('should not render key attribute', () => {
-    const html = renderToString(<div key />)
+    const html = renderToString(<div key="key" />)
     expect(html).toBe('<div></div>')
   })
 
@@ -397,18 +397,24 @@ describe('renderToString(view, state, actions)', () => {
   })
 
   it('should render empty markup for components which return null', () => {
-    const NullComponent = () => null
+    function NullComponent() {
+      return null
+    }
     const html = renderToString(<NullComponent />)
     expect(html).toBe('')
   })
 
   it('should render composite components', () => {
-    const Child = ({ name }) => <h1>Hello {name}</h1>
-    const Parent = () => (
-      <div>
-        <Child name="World" />
-      </div>
-    )
+    function Child({ name }) {
+      return <h1>Hello {name}</h1>
+    }
+    function Parent() {
+      return (
+        <div>
+          <Child name="World" />
+        </div>
+      )
+    }
     const html = renderToString(<Parent />)
     expect(html).toBe('<div><h1>Hello World</h1></div>')
   })
@@ -440,6 +446,7 @@ describe('renderToString(view, state, actions)', () => {
 
   it('should render raw html without extra markup', () => {
     const Fragment = ''
+    // eslint-disable-next-line react/jsx-no-useless-fragment
     const html = renderToString(<Fragment innerHTML="<sciprt>alert('hello world')</sciprt>" />)
     expect(html).toBe(`<sciprt>alert('hello world')</sciprt>`)
   })

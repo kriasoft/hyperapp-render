@@ -41,7 +41,9 @@ describe('renderToStream(view, state, actions)', () => {
       err = e
     }
     expect(err).toBeInstanceOf(Error)
-    expect(err.message).toBe("Cannot read property 'length' of null")
+    expect(err.message).toMatch(
+      /^Cannot read property 'length' of null|Cannot read properties of null \(reading 'length'\)$/,
+    )
   })
 
   it('should render markup', async () => {

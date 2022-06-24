@@ -4,7 +4,7 @@
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.hyperappRender = {}));
-}(this, (function (exports) { 'use strict';
+})(this, (function (exports) { 'use strict';
 
   var isArray = Array.isArray;
   var hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -253,5 +253,5 @@
 
   Object.defineProperty(exports, '__esModule', { value: true });
 
-})));
+}));
 //# sourceMappingURL=hyperapp-render.js.map

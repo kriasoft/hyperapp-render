@@ -1,5 +1,5 @@
 {
-  "extends": ["airbnb", "eslint-config-prettier", "eslint-config-prettier/react"],
+  "extends": ["airbnb", "prettier"],
   "rules": {
     "import/prefer-default-export": "off",
     "no-continue": "off",
@@ -10,7 +10,7 @@
   "settings": {
     "react": {
       "pragma": "h",
-      "version": "*"
+      "version": "v18.2.0"
     }
   }
 }

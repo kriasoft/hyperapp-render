@@ -3,7 +3,7 @@
 [![npm version](https://img.shields.io/npm/v/hyperapp-render.svg)](https://www.npmjs.com/package/hyperapp-render)
 [![npm downloads](https://img.shields.io/npm/dw/hyperapp-render.svg)](https://www.npmjs.com/package/hyperapp-render)
 [![library size](https://img.shields.io/bundlephobia/minzip/hyperapp-render.svg)](https://bundlephobia.com/result?p=hyperapp-render)
-[![slack chat](https://hyperappjs.herokuapp.com/badge.svg)](https://hyperappjs.herokuapp.com 'Join us')
+[![discord chat](https://img.shields.io/discord/804672552348680192)](https://discord.gg/eFvZXzXF9U 'Join us')
 
 This library is allowing you to render
 [Hyperapp](https://github.com/hyperapp/hyperapp) views to an HTML string.

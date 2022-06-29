@@ -1,4 +1,4 @@
-/*! Hyperapp Render v4.0.0 | MIT Licence | https://github.com/kriasoft/hyperapp-render */
+/*! Hyperapp Render v4.0.1 | MIT Licence | https://github.com/kriasoft/hyperapp-render */
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
@@ -14,6 +14,7 @@
   var escapeRegExp = /["&'<>]/;
   var voidElements = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr']);
   function escapeHtml(value) {
+    if (value == null) return '';
     var str = '' + value;
 
     if (typeof value === 'number') {

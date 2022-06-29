@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [4.0.1] - 2022-06-29
+
+- Allow empty string text nodes ([#23](https://github.com/kriasoft/hyperapp-render/pull/23)).
+
 ## [4.0.0] - 2021-01-25
 
 - [BREAKING] Drop support for legacy Hyperapp v2.0.0-v2.0.8.
@@ -72,7 +76,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Initial public release.
 
-[unreleased]: https://github.com/kriasoft/hyperapp-render/compare/v4.0.0...HEAD
+[unreleased]: https://github.com/kriasoft/hyperapp-render/compare/v4.0.1...HEAD
+[4.0.1]: https://github.com/kriasoft/hyperapp-render/compare/v4.0.0...v4.0.1
 [4.0.0]: https://github.com/kriasoft/hyperapp-render/compare/v3.5.0...v4.0.0
 [3.5.0]: https://github.com/kriasoft/hyperapp-render/compare/v3.4.0...v3.5.0
 [3.4.0]: https://github.com/kriasoft/hyperapp-render/compare/v3.3.0...v3.4.0
